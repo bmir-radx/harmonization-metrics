@@ -6,6 +6,11 @@ public class DataFile {
     private int version;
     private HashSet<String> variableNames;
 
+    public DataFile(int version, HashSet<String> variableNames) {
+        this.version = version;
+        this.variableNames = variableNames;
+    }
+
     public int getVersion() {
         return version;
     }

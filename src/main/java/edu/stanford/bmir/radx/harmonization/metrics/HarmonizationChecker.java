@@ -11,10 +11,22 @@ public class HarmonizationChecker {
     }
 
     public int countHarmonizableElements(HashSet<String> elements) {
-        return elements.size();
+        int nHarmonizableElements = 0;
+        for (String element: elements) {
+            if (harmonizationRules.isHarmonizable(element)) {
+                nHarmonizableElements++;
+            }
+        }
+        return nHarmonizableElements;
     }
 
     public int countHarmonizedElements(HashSet<String> elements) {
-        return elements.size();
+        int nHarmonizedElements = 0;
+        for (String element: elements) {
+            if (harmonizationRules.isHarmonized(element)) {
+                nHarmonizedElements++;
+            }
+        }
+        return nHarmonizedElements;
     }
 }

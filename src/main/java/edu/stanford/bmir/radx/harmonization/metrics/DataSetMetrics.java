@@ -8,13 +8,69 @@ public record DataSetMetrics(
         String program,
         String studyId,
         Optional<Integer> versionOrig,
-        Optional<Integer> numDataElementsOrig,
-        Optional<Integer> numHarmonizableDataElementsOrig,
-        Optional<Integer> numHarmonizedDataElementsOrig,
+        Optional<Integer> nDataElementsOrig,
+        Optional<Integer> nHarmonizableDataElementsOrig,
+        Optional<Integer> nHarmonizedDataElementsOrig,
         Optional<Integer> versionTransform,
-        Optional<Integer> numDataElementsTransform,
-        Optional<Integer> numHarmonizableDataElementsTransform,
-        Optional<Integer> numHarmonizedDataElementsTransform) {
+        Optional<Integer> nDataElementsTransform,
+        Optional<Integer> nHarmonizableDataElementsTransform,
+        Optional<Integer> nHarmonizedDataElementsTransform) {
+
+    public boolean hasOrig() {
+        return versionOrig.isPresent();
+    }
+
+    public boolean hasTransform() {
+        return versionTransform.isPresent();
+    }
+
+    public boolean hasHarmonizableElementsOrig() {
+        return nHarmonizableDataElementsOrig.isPresent() && nHarmonizableDataElementsOrig.get() > 0;
+    }
+
+    public boolean hasNoHarmonizableElementsOrig() {
+        return nHarmonizableDataElementsOrig.isPresent() && nHarmonizableDataElementsOrig.get() == 0;
+    }
+
+    public boolean hasHarmonizedElementsOrig() {
+        return nHarmonizedDataElementsOrig.isPresent() && nHarmonizedDataElementsOrig.get() > 0;
+    }
+
+    public boolean isHarmonizableOrig() {
+        return hasHarmonizableElementsOrig();
+    }
+
+    public boolean isPartiallyHarmonizedOrig() {
+        return hasHarmonizableElementsOrig() && hasHarmonizedElementsOrig();
+    }
+
+    public boolean isHarmonizedOrig() {
+        return hasNoHarmonizableElementsOrig();
+    }
+
+    public boolean hasHarmonizableElementsTransform() {
+        return nHarmonizableDataElementsTransform.isPresent() && nHarmonizableDataElementsTransform.get() > 0;
+    }
+
+    public boolean hasNoHarmonizableElementsTransform() {
+        return nHarmonizableDataElementsTransform.isPresent() && nHarmonizableDataElementsTransform.get() == 0;
+    }
+
+    public boolean hasHarmonizedElementsTransform() {
+        return nHarmonizedDataElementsTransform.isPresent() && nHarmonizedDataElementsTransform.get() > 0;
+    }
+
+    public boolean isHarmonizableTransform() {
+        return hasHarmonizableElementsTransform();
+    }
+
+    public boolean isPartiallyHarmonizedTransform() {
+        return hasHarmonizableElementsTransform() && hasHarmonizedElementsTransform();
+    }
+
+    public boolean isHarmonizedTransform() {
+        return hasNoHarmonizableElementsTransform();
+    }
 
     public static DataSetMetrics createMetricsFromDataSet(DataSet dataSet, HarmonizationChecker harmonizationChecker) {
         String name = dataSet.getName();
@@ -24,44 +80,44 @@ public record DataSetMetrics(
         Optional<DataFile> transformData = dataSet.getTransformData();
 
         Optional<Integer> versionOrig;
-        Optional<Integer> numDataElementsOrig;
-        Optional<Integer> numHarmonizableDataElementsOrig;
-        Optional<Integer> numHarmonizedDataElementsOrig;
+        Optional<Integer> nDataElementsOrig;
+        Optional<Integer> nHarmonizableDataElementsOrig;
+        Optional<Integer> nHarmonizedDataElementsOrig;
 
         if (origData.isPresent()) {
             versionOrig = Optional.of(origData.get().getVersion());
             HashSet<String> variableNames = origData.get().getVariableNames();
-            numDataElementsOrig = Optional.of(variableNames.size());
-            numHarmonizableDataElementsOrig = Optional.of(harmonizationChecker.countHarmonizableElements(variableNames));
-            numHarmonizedDataElementsOrig = Optional.of(harmonizationChecker.countHarmonizedElements(variableNames));
+            nDataElementsOrig = Optional.of(variableNames.size());
+            nHarmonizableDataElementsOrig = Optional.of(harmonizationChecker.countHarmonizableElements(variableNames));
+            nHarmonizedDataElementsOrig = Optional.of(harmonizationChecker.countHarmonizedElements(variableNames));
         } else {
             versionOrig = Optional.empty();
-            numDataElementsOrig = Optional.empty();
-            numHarmonizableDataElementsOrig = Optional.empty();
-            numHarmonizedDataElementsOrig = Optional.empty();
+            nDataElementsOrig = Optional.empty();
+            nHarmonizableDataElementsOrig = Optional.empty();
+            nHarmonizedDataElementsOrig = Optional.empty();
         }
 
         Optional<Integer> versionTransform;
-        Optional<Integer> numDataElementsTransform;
-        Optional<Integer> numHarmonizableDataElementsTransform;
-        Optional<Integer> numHarmonizedDataElementsTransform;
+        Optional<Integer> nDataElementsTransform;
+        Optional<Integer> nHarmonizableDataElementsTransform;
+        Optional<Integer> nHarmonizedDataElementsTransform;
 
         if (transformData.isPresent()) {
             versionTransform = Optional.of(transformData.get().getVersion());
             HashSet<String> variableNames = transformData.get().getVariableNames();
-            numDataElementsTransform = Optional.of(variableNames.size());
-            numHarmonizableDataElementsTransform = Optional.of(harmonizationChecker.countHarmonizableElements(variableNames));
-            numHarmonizedDataElementsTransform = Optional.of(harmonizationChecker.countHarmonizedElements(variableNames));
+            nDataElementsTransform = Optional.of(variableNames.size());
+            nHarmonizableDataElementsTransform = Optional.of(harmonizationChecker.countHarmonizableElements(variableNames));
+            nHarmonizedDataElementsTransform = Optional.of(harmonizationChecker.countHarmonizedElements(variableNames));
         } else {
             versionTransform = Optional.empty();
-            numDataElementsTransform = Optional.empty();
-            numHarmonizableDataElementsTransform = Optional.empty();
-            numHarmonizedDataElementsTransform = Optional.empty();
+            nDataElementsTransform = Optional.empty();
+            nHarmonizableDataElementsTransform = Optional.empty();
+            nHarmonizedDataElementsTransform = Optional.empty();
         }
 
         return new DataSetMetrics(name, program, studyId,
-                versionOrig, numDataElementsOrig, numHarmonizableDataElementsOrig,
-                numHarmonizedDataElementsOrig, versionTransform, numDataElementsTransform,
-                numHarmonizableDataElementsTransform, numHarmonizedDataElementsTransform);
+                versionOrig, nDataElementsOrig, nHarmonizableDataElementsOrig,
+                nHarmonizedDataElementsOrig, versionTransform, nDataElementsTransform,
+                nHarmonizableDataElementsTransform, nHarmonizedDataElementsTransform);
     }
 }

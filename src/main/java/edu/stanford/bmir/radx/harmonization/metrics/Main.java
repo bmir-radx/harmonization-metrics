@@ -1,19 +1,33 @@
 package edu.stanford.bmir.radx.harmonization.metrics;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static void main(String[] args) {
-        // Press Opt+Enter with your caret at the highlighted text to see how
-        // IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        // get harmonization rules from somewhere
+        HarmonizationRules rules = new SimpleRules();
 
-        // Press Ctrl+R or click the green arrow button in the gutter to run the code.
-        for (int i = 1; i <= 5; i++) {
+        // generate a checker from these rules
+        HarmonizationChecker checker = new HarmonizationChecker(rules);
 
-            // Press Ctrl+D to start debugging your code. We have set one breakpoint
-            // for you, but you can always add more by pressing Cmd+F8.
-            System.out.println("i = " + i);
+        // crawl over the data hub to generate DataSet objects
+        ArrayList<DataSet> dataSets = new ArrayList<>();
+
+        // generate metrics on each data set
+        // generate aggregate internal harmonization metrics from metrics per data set
+        HashMap<String, DataSetMetrics> metrics = new HashMap<>();
+        AggregateMetricsInternal internalMetrics = new AggregateMetricsInternal();
+        for (DataSet dataSet: dataSets) {
+            String name = dataSet.getName();
+            DataSetMetrics dataSetMetrics = DataSetMetrics.createMetricsFromDataSet(dataSet, checker);
+            metrics.put(name, dataSetMetrics);
+            internalMetrics.incrementCountsWithDataSetMetrics(dataSetMetrics);
         }
+
+        // produce final summary metrics
+        AggregateMetricsExternal externalMetrics = AggregateMetricsExternal.createFromInternalMetrics(internalMetrics);
     }
 }
