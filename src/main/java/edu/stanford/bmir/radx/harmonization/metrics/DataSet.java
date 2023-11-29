@@ -9,6 +9,10 @@ public class DataSet {
     private Optional<DataFile> transformData;
     private Optional<DataFile> origData;
 
+    public DataSet(String name, String program, String studyId) {
+        this(name, program, studyId, Optional.empty(), Optional.empty());
+    }
+
     public DataSet(String name, String program, String studyId,
                    Optional<DataFile> transformData,
                    Optional<DataFile> origData) {
