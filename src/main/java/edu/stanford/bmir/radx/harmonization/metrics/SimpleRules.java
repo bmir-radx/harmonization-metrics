@@ -1,10 +1,10 @@
 package edu.stanford.bmir.radx.harmonization.metrics;
 
-import java.util.HashMap;
+import java.util.Map;
 
 public class SimpleRules implements HarmonizationRules {
 
-    HashMap<String, String> map;
+    Map<String, String> map;
 
     public boolean isHarmonizable(String element) {
         return map.containsKey(element);

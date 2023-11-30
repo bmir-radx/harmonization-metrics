@@ -1,7 +1,7 @@
 package edu.stanford.bmir.radx.harmonization.metrics;
 
-import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 public record DataSetMetrics(
         String name,
@@ -86,7 +86,7 @@ public record DataSetMetrics(
 
         if (origData.isPresent()) {
             versionOrig = Optional.of(origData.get().getVersion());
-            HashSet<String> variableNames = origData.get().getVariableNames();
+            Set<String> variableNames = origData.get().getVariableNames();
             nDataElementsOrig = Optional.of(variableNames.size());
             nHarmonizableDataElementsOrig = Optional.of(harmonizationChecker.countHarmonizableElements(variableNames));
             nHarmonizedDataElementsOrig = Optional.of(harmonizationChecker.countHarmonizedElements(variableNames));
@@ -104,7 +104,7 @@ public record DataSetMetrics(
 
         if (transformData.isPresent()) {
             versionTransform = Optional.of(transformData.get().getVersion());
-            HashSet<String> variableNames = transformData.get().getVariableNames();
+            Set<String> variableNames = transformData.get().getVariableNames();
             nDataElementsTransform = Optional.of(variableNames.size());
             nHarmonizableDataElementsTransform = Optional.of(harmonizationChecker.countHarmonizableElements(variableNames));
             nHarmonizedDataElementsTransform = Optional.of(harmonizationChecker.countHarmonizedElements(variableNames));

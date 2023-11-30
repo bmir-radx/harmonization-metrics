@@ -1,6 +1,6 @@
 package edu.stanford.bmir.radx.harmonization.metrics;
 
-import java.util.HashSet;
+import java.util.Set;
 
 public class HarmonizationChecker {
 
@@ -10,7 +10,7 @@ public class HarmonizationChecker {
         harmonizationRules = rules;
     }
 
-    public int countHarmonizableElements(HashSet<String> elements) {
+    public int countHarmonizableElements(Set<String> elements) {
         int nHarmonizableElements = 0;
         for (String element: elements) {
             if (harmonizationRules.isHarmonizable(element)) {
@@ -20,7 +20,7 @@ public class HarmonizationChecker {
         return nHarmonizableElements;
     }
 
-    public int countHarmonizedElements(HashSet<String> elements) {
+    public int countHarmonizedElements(Set<String> elements) {
         int nHarmonizedElements = 0;
         for (String element: elements) {
             if (harmonizationRules.isHarmonized(element)) {

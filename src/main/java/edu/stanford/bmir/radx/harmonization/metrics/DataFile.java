@@ -1,12 +1,12 @@
 package edu.stanford.bmir.radx.harmonization.metrics;
 
-import java.util.HashSet;
+import java.util.Set;
 
 public class DataFile {
     private int version;
-    private HashSet<String> variableNames;
+    private Set<String> variableNames;
 
-    public DataFile(int version, HashSet<String> variableNames) {
+    public DataFile(int version, Set<String> variableNames) {
         this.version = version;
         this.variableNames = variableNames;
     }
@@ -15,7 +15,7 @@ public class DataFile {
         return version;
     }
 
-    public HashSet<String> getVariableNames() {
+    public Set<String> getVariableNames() {
         return this.variableNames;
     }
 }
