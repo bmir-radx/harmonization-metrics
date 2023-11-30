@@ -10,20 +10,20 @@ public class HarmonizationChecker {
         harmonizationRules = rules;
     }
 
-    public int countHarmonizableElements(Set<String> elements) {
+    public int countHarmonizableElements(String program, Set<String> elements) {
         int nHarmonizableElements = 0;
         for (String element: elements) {
-            if (harmonizationRules.isHarmonizable(element)) {
+            if (harmonizationRules.isHarmonizable(program, element)) {
                 nHarmonizableElements++;
             }
         }
         return nHarmonizableElements;
     }
 
-    public int countHarmonizedElements(Set<String> elements) {
+    public int countHarmonizedElements(String program, Set<String> elements) {
         int nHarmonizedElements = 0;
         for (String element: elements) {
-            if (harmonizationRules.isHarmonized(element)) {
+            if (harmonizationRules.isHarmonized(program, element)) {
                 nHarmonizedElements++;
             }
         }

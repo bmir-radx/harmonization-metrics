@@ -6,11 +6,11 @@ public class SimpleRules implements HarmonizationRules {
 
     Map<String, String> map;
 
-    public boolean isHarmonizable(String element) {
+    public boolean isHarmonizable(String program, String element) {
         return map.containsKey(element);
     }
 
-    public boolean isHarmonized(String element) {
+    public boolean isHarmonized(String program, String element) {
         return map.containsValue(element);
     }
 

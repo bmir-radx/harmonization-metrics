@@ -88,8 +88,8 @@ public record DataSetMetrics(
             versionOrig = Optional.of(origData.get().getVersion());
             Set<String> variableNames = origData.get().getVariableNames();
             nDataElementsOrig = Optional.of(variableNames.size());
-            nHarmonizableDataElementsOrig = Optional.of(harmonizationChecker.countHarmonizableElements(variableNames));
-            nHarmonizedDataElementsOrig = Optional.of(harmonizationChecker.countHarmonizedElements(variableNames));
+            nHarmonizableDataElementsOrig = Optional.of(harmonizationChecker.countHarmonizableElements(program, variableNames));
+            nHarmonizedDataElementsOrig = Optional.of(harmonizationChecker.countHarmonizedElements(program, variableNames));
         } else {
             versionOrig = Optional.empty();
             nDataElementsOrig = Optional.empty();
@@ -106,8 +106,8 @@ public record DataSetMetrics(
             versionTransform = Optional.of(transformData.get().getVersion());
             Set<String> variableNames = transformData.get().getVariableNames();
             nDataElementsTransform = Optional.of(variableNames.size());
-            nHarmonizableDataElementsTransform = Optional.of(harmonizationChecker.countHarmonizableElements(variableNames));
-            nHarmonizedDataElementsTransform = Optional.of(harmonizationChecker.countHarmonizedElements(variableNames));
+            nHarmonizableDataElementsTransform = Optional.of(harmonizationChecker.countHarmonizableElements(program, variableNames));
+            nHarmonizedDataElementsTransform = Optional.of(harmonizationChecker.countHarmonizedElements(program, variableNames));
         } else {
             versionTransform = Optional.empty();
             nDataElementsTransform = Optional.empty();
