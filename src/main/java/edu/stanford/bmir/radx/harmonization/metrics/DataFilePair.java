@@ -23,7 +23,7 @@ public record DataFilePair(
      */
     public DataFilePair updateOrigData(DataFile newOrigData) {
         if (origData.isEmpty() ||
-                (origData.get().getVersion() < newOrigData.getVersion())) {
+                (origData.get().version() < newOrigData.version())) {
             return new DataFilePair(name, program, studyId,
                     Optional.of(newOrigData), transformData);
         } else {
@@ -36,7 +36,7 @@ public record DataFilePair(
      */
     public DataFilePair updateTransformData(DataFile newTransformData) {
         if (transformData.isEmpty() ||
-                (transformData.get().getVersion() < newTransformData.getVersion())) {
+                (transformData.get().version() < newTransformData.version())) {
             return new DataFilePair(name, program, studyId,
                     origData, Optional.of(newTransformData));
         } else {

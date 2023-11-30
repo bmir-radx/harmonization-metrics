@@ -14,7 +14,7 @@ public class TestDataFile {
         HashSet<String> variableNames = new HashSet<>();
         DataFile dataFile = new DataFile(version, variableNames);
 
-        assertEquals(version, dataFile.getVersion());
+        assertEquals(version, dataFile.version());
     }
 
     @Test
@@ -23,6 +23,6 @@ public class TestDataFile {
         HashSet<String> variableNames = new HashSet<>(Arrays.asList("var1", "var2"));
         DataFile dataFile = new DataFile(version, variableNames);
 
-        assertEquals(variableNames, dataFile.getVariableNames());
+        assertEquals(variableNames, dataFile.variableNames());
     }
 }
