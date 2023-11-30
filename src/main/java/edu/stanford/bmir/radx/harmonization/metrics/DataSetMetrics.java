@@ -72,12 +72,12 @@ public record DataSetMetrics(
         return hasNoHarmonizableElementsTransform();
     }
 
-    public static DataSetMetrics createMetricsFromDataSet(DataSet dataSet, HarmonizationChecker harmonizationChecker) {
-        String name = dataSet.getName();
-        Program program = dataSet.getProgram();
-        StudyId studyId = dataSet.getStudyId();
-        Optional<DataFile> origData = dataSet.getOrigData();
-        Optional<DataFile> transformData = dataSet.getTransformData();
+    public static DataSetMetrics createMetricsFromDataSet(DataFilePair dataSet, HarmonizationChecker harmonizationChecker) {
+        String name = dataSet.name();
+        Program program = dataSet.program();
+        StudyId studyId = dataSet.studyId();
+        Optional<DataFile> origData = dataSet.origData();
+        Optional<DataFile> transformData = dataSet.transformData();
 
         Optional<Integer> versionOrig;
         Optional<Integer> nDataElementsOrig;

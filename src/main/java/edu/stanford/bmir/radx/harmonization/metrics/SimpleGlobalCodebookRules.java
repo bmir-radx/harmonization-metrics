@@ -37,7 +37,6 @@ public class SimpleGlobalCodebookRules implements HarmonizationRules {
 
         Map<Program, Map<String, String>> codebook = new HashMap<>();
         for (String key: map.keySet()) {
-            System.out.println(Program.fromString(key));
             codebook.put(Program.fromString(key), map.get(key));
         }
 
