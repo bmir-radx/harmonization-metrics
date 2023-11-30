@@ -5,8 +5,8 @@ import java.util.Set;
 
 public record DataSetMetrics(
         String name,
-        String program,
-        String studyId,
+        Program program,
+        StudyId studyId,
         Optional<Integer> versionOrig,
         Optional<Integer> nDataElementsOrig,
         Optional<Integer> nHarmonizableDataElementsOrig,
@@ -74,8 +74,8 @@ public record DataSetMetrics(
 
     public static DataSetMetrics createMetricsFromDataSet(DataSet dataSet, HarmonizationChecker harmonizationChecker) {
         String name = dataSet.getName();
-        String program = dataSet.getProgram();
-        String studyId = dataSet.getStudyId();
+        Program program = dataSet.getProgram();
+        StudyId studyId = dataSet.getStudyId();
         Optional<DataFile> origData = dataSet.getOrigData();
         Optional<DataFile> transformData = dataSet.getTransformData();
 

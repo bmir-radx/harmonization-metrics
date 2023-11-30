@@ -4,16 +4,21 @@ import java.util.Optional;
 
 public class DataSet {
     private String name;
-    private String program;
-    private String studyId;
+    private Program program;
+    private StudyId studyId;
     private Optional<DataFile> transformData;
     private Optional<DataFile> origData;
 
-    public DataSet(String name, String program, String studyId) {
+    public DataSet(String name, Program program, StudyId studyId) {
         this(name, program, studyId, Optional.empty(), Optional.empty());
     }
 
-    public DataSet(String name, String program, String studyId,
+    public DataSet(String name, String program, String studyId) {
+        this(name, Program.fromString(program), StudyId.valueOf(studyId),
+                Optional.empty(), Optional.empty());
+    }
+
+    public DataSet(String name, Program program, StudyId studyId,
                    Optional<DataFile> transformData,
                    Optional<DataFile> origData) {
         this.name = name;
@@ -27,11 +32,11 @@ public class DataSet {
         return name;
     }
 
-    public String getProgram() {
+    public Program getProgram() {
         return program;
     }
 
-    public String getStudyId() {
+    public StudyId getStudyId() {
         return studyId;
     }
 

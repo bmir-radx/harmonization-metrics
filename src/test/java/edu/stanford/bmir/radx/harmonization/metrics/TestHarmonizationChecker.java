@@ -12,7 +12,7 @@ public class TestHarmonizationChecker {
 
     @Test
     public void testCountHarmonizableElements() {
-        String program = "testProgram";
+        Program program = Program.RADXUP;
         HarmonizationRules rules = new TestRules();
         HarmonizationChecker checker = new HarmonizationChecker(rules);
 
@@ -24,7 +24,7 @@ public class TestHarmonizationChecker {
 
     @Test
     public void testCountHarmonizedElements() {
-        String program = "testProgram";
+        Program program = Program.RADXUP;
         HarmonizationRules rules = new TestRules();
         HarmonizationChecker checker = new HarmonizationChecker(rules);
 
@@ -36,7 +36,7 @@ public class TestHarmonizationChecker {
 
     @Test
     public void testHarmonizationCounts() {
-        String program = "testProgram";
+        Program program = Program.RADXUP;
         HarmonizationRules rules = new TestRules();
         HarmonizationChecker checker = new HarmonizationChecker(rules);
 
@@ -45,19 +45,5 @@ public class TestHarmonizationChecker {
         int nHarmonizedElements = checker.countHarmonizedElements(program, variables);
         assertEquals(1, nHarmonizableElements);
         assertEquals(2, nHarmonizedElements);
-    }
-
-    @Test
-    public void testHarmonizationCountsInvalidProgram() {
-        // testProgram2 is not a recognized program in the harmonization rules
-        String program = "testProgram2";
-        HarmonizationRules rules = new TestRules();
-        HarmonizationChecker checker = new HarmonizationChecker(rules);
-
-        HashSet<String> variables = new HashSet<>(Arrays.asList("var1", "harmonizedVar2", "harmonizedVar3", "var4"));
-        int nHarmonizableElements = checker.countHarmonizableElements(program, variables);
-        int nHarmonizedElements = checker.countHarmonizedElements(program, variables);
-        assertEquals(0, nHarmonizableElements);
-        assertEquals(0, nHarmonizedElements);
     }
 }

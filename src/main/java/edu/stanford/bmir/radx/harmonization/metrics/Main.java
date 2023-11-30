@@ -1,12 +1,14 @@
 package edu.stanford.bmir.radx.harmonization.metrics;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // get harmonization rules from somewhere
-        HarmonizationRules rules = new SimpleRules();
+        HarmonizationRules rules = new SimpleGlobalCodebookRules();
+        System.out.println(Program.fromString("RADx-rad"));
 
         // generate a checker from these rules
         HarmonizationChecker checker = new HarmonizationChecker(rules);

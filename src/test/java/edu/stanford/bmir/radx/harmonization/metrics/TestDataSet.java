@@ -13,8 +13,8 @@ public class TestDataSet {
     @Test
     public void testNoDataFileConstructor() {
         String testName = "testName";
-        String testProgram = "testProgram";
-        String testStudyId = "testStudyId";
+        Program testProgram = Program.RADXUP;
+        StudyId testStudyId = StudyId.valueOf("testStudyId");
         DataSet dataSet = new DataSet(testName, testProgram, testStudyId);
 
         assertEquals(testName, dataSet.getName());
@@ -25,9 +25,23 @@ public class TestDataSet {
     }
 
     @Test
+    public void testNoDataFileConstructorWithStrings() {
+        String testName = "testName";
+        String testProgram = "RADx-UP";
+        String testStudyId = "testStudyId";
+        DataSet dataSet = new DataSet(testName, testProgram, testStudyId);
+
+        assertEquals(testName, dataSet.getName());
+        assertEquals(Program.fromString(testProgram), dataSet.getProgram());
+        assertEquals(testStudyId, dataSet.getStudyId().value());
+        assertTrue(dataSet.getOrigData().isEmpty());
+        assertTrue(dataSet.getTransformData().isEmpty());
+    }
+
+    @Test
     public void testSetOrigData() {
         String testName = "testName";
-        String testProgram = "testProgram";
+        String testProgram = "RADx-UP";
         String testStudyId = "testStudyId";
         DataSet dataSet = new DataSet(testName, testProgram, testStudyId);
 
@@ -52,7 +66,7 @@ public class TestDataSet {
     @Test
     public void testSetTransformData() {
         String testName = "testName";
-        String testProgram = "testProgram";
+        String testProgram = "RADx-UP";
         String testStudyId = "testStudyId";
         DataSet dataSet = new DataSet(testName, testProgram, testStudyId);
 

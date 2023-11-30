@@ -1,6 +1,8 @@
 package edu.stanford.bmir.radx.harmonization.metrics;
 
+import java.util.Map;
+
 public interface HarmonizationRules {
-    boolean isHarmonized(String program, String element);
-    boolean isHarmonizable(String program, String element);
+    boolean isHarmonized(Program program, String element);
+    boolean isHarmonizable(Program program, String element);
 }

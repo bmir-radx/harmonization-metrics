@@ -15,8 +15,8 @@ public class TestDataSetMetrics {
         HarmonizationChecker checker = new HarmonizationChecker(new TestRules());
 
         String testName = "testName";
-        String testProgram = "testProgram";
-        String testStudyId = "testStudyId";
+        Program testProgram = Program.RADXUP;
+        StudyId testStudyId = StudyId.valueOf("testProgram");
         DataSet dataSet = new DataSet(testName, testProgram, testStudyId);
 
         HashSet<String> origVariables = new HashSet<>(Arrays.asList("var1", "var2", "var4"));
@@ -35,8 +35,8 @@ public class TestDataSetMetrics {
         HarmonizationChecker checker = new HarmonizationChecker(new TestRules());
 
         String testName = "testName";
-        String testProgram = "testProgram";
-        String testStudyId = "testStudyId";
+        Program testProgram = Program.RADXUP;
+        StudyId testStudyId = StudyId.valueOf("testProgram");
         DataSet dataSet = new DataSet(testName, testProgram, testStudyId);
 
         HashSet<String> origVariables = new HashSet<>(Arrays.asList("var1", "var2", "var4"));
