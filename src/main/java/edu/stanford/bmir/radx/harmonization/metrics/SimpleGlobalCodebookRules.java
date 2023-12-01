@@ -8,6 +8,11 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+/*
+This is a simple implementation of Harmonization mappings to get this
+library off the group. Further work on representing the Harmonization
+rules programmatically will improve the accuracy of metrics computed.
+ */
 public class SimpleGlobalCodebookRules implements HarmonizationRules {
 
     private Map<Program, Map<String, String>> map;
