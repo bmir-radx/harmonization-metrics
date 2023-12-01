@@ -2,8 +2,6 @@ package edu.stanford.bmir.radx.harmonization.metrics;
 
 import org.junit.Test;
 
-import java.util.HashSet;
-
 import static org.junit.Assert.assertEquals;
 
 public class TestProgram {

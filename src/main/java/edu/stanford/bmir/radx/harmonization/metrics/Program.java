@@ -4,25 +4,28 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum Program {
-    RADXUP, RADXRAD, RADXTECH, DHT;
+    RADXUP("RADx-UP"),
+    RADXRAD("RADx-rad"),
+    RADXTECH("RADx-Tech"),
+    DHT("Digital Health Technologies");
 
-    private static final Map<Program, String> programToString;
+    private final String value;
+
+    Program(String value) {
+        this.value = value;
+    }
+
     private static final Map<String, Program> stringToProgram;
     static {
-        programToString = new HashMap<>();
-        programToString.put(RADXUP, "RADx-UP");
-        programToString.put(RADXRAD, "RADx-rad");
-        programToString.put(RADXTECH, "RADx-Tech");
-        programToString.put(DHT, "Digital Health Technologies");
-
         stringToProgram = new HashMap<>();
-        for (Map.Entry<Program, String> entry: programToString.entrySet()) {
-            stringToProgram.put(entry.getValue(), entry.getKey());
-        }
+        stringToProgram.put(RADXUP.value, RADXUP);
+        stringToProgram.put(RADXRAD.value, RADXRAD);
+        stringToProgram.put(RADXTECH.value, RADXTECH);
+        stringToProgram.put(DHT.value, DHT);
     }
 
     public String toString() {
-        return programToString.get(this);
+        return this.value;
     }
 
     public static Program fromString(String programString) throws InvalidProgramException {
