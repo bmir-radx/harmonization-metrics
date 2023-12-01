@@ -19,12 +19,12 @@ public class Main {
         // generate metrics on each data set
         // generate aggregate internal harmonization metrics from metrics per data set
         HashMap<String, DataSetMetrics> metrics = new HashMap<>();
-        AggregateMetricsInternal internalMetrics = new AggregateMetricsInternal();
+        AggregateMetricsInternal internalMetrics = new AggregateMetricsInternal.AggregateMetricsInternalBuilder().build();
         for (DataFilePair dataSet: dataSets) {
             String name = dataSet.name();
             DataSetMetrics dataSetMetrics = DataSetMetrics.createMetricsFromDataSet(dataSet, checker);
             metrics.put(name, dataSetMetrics);
-            internalMetrics.incrementCountsWithDataSetMetrics(dataSetMetrics);
+            internalMetrics = internalMetrics.incrementCountsWithDataSetMetrics(dataSetMetrics);
         }
 
         // produce final summary metrics
