@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InvalidProgramException {
         // get harmonization rules from somewhere
         HarmonizationRules rules = new SimpleGlobalCodebookRules();
         System.out.println(Program.fromString("RADx-rad"));

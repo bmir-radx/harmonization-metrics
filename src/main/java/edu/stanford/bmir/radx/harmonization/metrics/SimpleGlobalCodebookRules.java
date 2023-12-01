@@ -25,7 +25,7 @@ public class SimpleGlobalCodebookRules implements HarmonizationRules {
         return map.containsValue(element);
     }
 
-    public SimpleGlobalCodebookRules() throws IOException {
+    public SimpleGlobalCodebookRules() throws IOException, InvalidProgramException {
         map = readJsonToMap("global_codebook_rules.json");
     }
 
@@ -33,7 +33,8 @@ public class SimpleGlobalCodebookRules implements HarmonizationRules {
         return map;
     }
 
-    private Map<Program, Map<String, String>> readJsonToMap(String fileName) throws IOException {
+    private Map<Program, Map<String, String>> readJsonToMap(String fileName)
+            throws IOException, InvalidProgramException {
         ObjectMapper mapper = new ObjectMapper();
         InputStream is = getClass().getClassLoader().getResourceAsStream(fileName);
         String jsonString = new String(is.readAllBytes());

@@ -25,7 +25,10 @@ public enum Program {
         return programToString.get(this);
     }
 
-    public static Program fromString(String programString) {
+    public static Program fromString(String programString) throws InvalidProgramException {
+        if (!stringToProgram.containsKey(programString)) {
+            throw new InvalidProgramException(programString);
+        }
         return stringToProgram.get(programString);
     }
 }
