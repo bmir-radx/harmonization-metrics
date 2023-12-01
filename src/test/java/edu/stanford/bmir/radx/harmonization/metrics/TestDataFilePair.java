@@ -25,24 +25,10 @@ public class TestDataFilePair {
     }
 
     @Test
-    public void testNoDataFileConstructorWithStrings() {
-        String testName = "testName";
-        String testProgram = "RADx-UP";
-        String testStudyId = "testStudyId";
-        DataFilePair dataFilePair = new DataFilePair(testName, testProgram, testStudyId);
-
-        assertEquals(testName, dataFilePair.name());
-        assertEquals(Program.fromString(testProgram), dataFilePair.program());
-        assertEquals(testStudyId, dataFilePair.studyId().value());
-        assertTrue(dataFilePair.origData().isEmpty());
-        assertTrue(dataFilePair.transformData().isEmpty());
-    }
-
-    @Test
     public void testUpdateOrigData() {
         String testName = "testName";
-        String testProgram = "RADx-UP";
-        String testStudyId = "testStudyId";
+        Program testProgram = Program.RADXUP;
+        StudyId testStudyId = StudyId.valueOf("testStudyId");
         DataFilePair dataFilePair = new DataFilePair(testName, testProgram, testStudyId);
 
         int testVersion1 = 1;
@@ -68,8 +54,8 @@ public class TestDataFilePair {
     @Test
     public void testSetTransformData() {
         String testName = "testName";
-        String testProgram = "RADx-UP";
-        String testStudyId = "testStudyId";
+        Program testProgram = Program.RADXUP;
+        StudyId testStudyId = StudyId.valueOf("testStudyId");
         DataFilePair dataFilePair = new DataFilePair(testName, testProgram, testStudyId);
 
         int testVersion1 = 1;

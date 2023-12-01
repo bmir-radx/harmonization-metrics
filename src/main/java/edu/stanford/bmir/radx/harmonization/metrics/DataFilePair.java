@@ -13,11 +13,6 @@ public record DataFilePair(
         this(name, program, studyId, Optional.empty(), Optional.empty());
     }
 
-    public DataFilePair(String name, String program, String studyId) {
-        this(name, Program.fromString(program), StudyId.valueOf(studyId),
-                Optional.empty(), Optional.empty());
-    }
-
     /*
     Keep data from origcopy if it is newer than the current data.
      */
