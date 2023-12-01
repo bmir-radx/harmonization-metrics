@@ -3,13 +3,13 @@ package edu.stanford.bmir.radx.harmonization.metrics;
 import java.util.Optional;
 
 public record DataFilePair(
-        String name,
+        ReducedFileName name,
         Program program,
         StudyId studyId,
         Optional<DataFile> origData,
         Optional<DataFile> transformData) {
 
-    public DataFilePair(String name, Program program, StudyId studyId) {
+    public DataFilePair(ReducedFileName name, Program program, StudyId studyId) {
         this(name, program, studyId, Optional.empty(), Optional.empty());
     }
 

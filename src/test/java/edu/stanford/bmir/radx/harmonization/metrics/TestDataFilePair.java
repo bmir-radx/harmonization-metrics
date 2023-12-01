@@ -12,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 public class TestDataFilePair {
     @Test
     public void testNoDataFileConstructor() {
-        String testName = "testName";
+        ReducedFileName testName = ReducedFileName.valueOf("testName");
         Program testProgram = Program.RADXUP;
         StudyId testStudyId = StudyId.valueOf("testStudyId");
         DataFilePair dataSet = new DataFilePair(testName, testProgram, testStudyId);
@@ -26,7 +26,7 @@ public class TestDataFilePair {
 
     @Test
     public void testUpdateOrigData() {
-        String testName = "testName";
+        ReducedFileName testName = ReducedFileName.valueOf("testName");
         Program testProgram = Program.RADXUP;
         StudyId testStudyId = StudyId.valueOf("testStudyId");
         DataFilePair dataFilePair = new DataFilePair(testName, testProgram, testStudyId);
@@ -53,7 +53,7 @@ public class TestDataFilePair {
 
     @Test
     public void testSetTransformData() {
-        String testName = "testName";
+        ReducedFileName testName = ReducedFileName.valueOf("testName");
         Program testProgram = Program.RADXUP;
         StudyId testStudyId = StudyId.valueOf("testStudyId");
         DataFilePair dataFilePair = new DataFilePair(testName, testProgram, testStudyId);

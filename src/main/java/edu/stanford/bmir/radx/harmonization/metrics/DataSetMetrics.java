@@ -4,7 +4,7 @@ import java.util.Optional;
 import java.util.Set;
 
 public record DataSetMetrics(
-        String name,
+        ReducedFileName name,
         Program program,
         StudyId studyId,
         Optional<Integer> versionOrig,
@@ -73,7 +73,7 @@ public record DataSetMetrics(
     }
 
     public static DataSetMetrics createMetricsFromDataSet(DataFilePair dataSet, HarmonizationChecker harmonizationChecker) {
-        String name = dataSet.name();
+        ReducedFileName name = dataSet.name();
         Program program = dataSet.program();
         StudyId studyId = dataSet.studyId();
         Optional<DataFile> origData = dataSet.origData();
