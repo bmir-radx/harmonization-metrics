@@ -17,12 +17,18 @@ public class SimpleGlobalCodebookRules implements HarmonizationRules {
 
     private Map<Program, Map<String, String>> map;
 
-    public boolean isHarmonizable(Program program, String element) {
-        return map.containsKey(element);
+    public boolean isHarmonizable(Program program, String element) throws InvalidProgramException {
+        if (!map.containsKey(program)) {
+            throw new InvalidProgramException(program.toString());
+        }
+        return map.get(program).containsKey(element);
     }
 
-    public boolean isHarmonized(Program program, String element) {
-        return map.containsValue(element);
+    public boolean isHarmonized(Program program, String element) throws InvalidProgramException {
+        if (!map.containsKey(program)) {
+            throw new InvalidProgramException(program.toString());
+        }
+        return map.get(program).containsValue(element);
     }
 
     public SimpleGlobalCodebookRules() throws IOException, InvalidProgramException {

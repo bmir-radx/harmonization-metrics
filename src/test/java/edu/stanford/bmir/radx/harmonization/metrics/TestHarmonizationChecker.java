@@ -11,7 +11,7 @@ import static org.junit.Assert.assertNotEquals;
 public class TestHarmonizationChecker {
 
     @Test
-    public void testCountHarmonizableElements() {
+    public void testCountHarmonizableElements() throws InvalidProgramException {
         Program program = Program.RADXUP;
         HarmonizationRules rules = new TestRules();
         HarmonizationChecker checker = new HarmonizationChecker(rules);
@@ -23,7 +23,7 @@ public class TestHarmonizationChecker {
     }
 
     @Test
-    public void testCountHarmonizedElements() {
+    public void testCountHarmonizedElements() throws InvalidProgramException {
         Program program = Program.RADXUP;
         HarmonizationRules rules = new TestRules();
         HarmonizationChecker checker = new HarmonizationChecker(rules);
@@ -35,7 +35,7 @@ public class TestHarmonizationChecker {
     }
 
     @Test
-    public void testHarmonizationCounts() {
+    public void testHarmonizationCounts() throws InvalidProgramException {
         Program program = Program.RADXUP;
         HarmonizationRules rules = new TestRules();
         HarmonizationChecker checker = new HarmonizationChecker(rules);

@@ -72,7 +72,7 @@ public record DataSetMetrics(
         return hasNoHarmonizableElementsTransform();
     }
 
-    public static DataSetMetrics createMetricsFromDataSet(DataFilePair dataSet, HarmonizationChecker harmonizationChecker) {
+    public static DataSetMetrics createMetricsFromDataSet(DataFilePair dataSet, HarmonizationChecker harmonizationChecker) throws InvalidProgramException {
         ReducedFileName name = dataSet.name();
         Program program = dataSet.program();
         StudyId studyId = dataSet.studyId();
