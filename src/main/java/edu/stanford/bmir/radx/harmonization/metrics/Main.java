@@ -4,38 +4,40 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Main {
-    public static void main(String[] args) throws IOException, InvalidProgramException {
+    public static void main(String[] args) throws IOException, InvalidProgramException,
+            InvalidDataFileCategoryException, NoVersionNumberException {
         // get harmonization rules from somewhere
         HarmonizationRules rules = new SimpleGlobalCodebookRules();
-        System.out.println(Program.fromString("RADx-rad"));
 
         // generate a checker from these rules
         HarmonizationChecker checker = new HarmonizationChecker(rules);
 
         // crawl over the data hub to generate DataSet objects
-        // 1. need full file name, studyId, program, and list of headers
-        // 2. the full file name should be reduced to the "name" identifier
-        // 3. check hashmap: if DataFilePair exists, attempt to add the file
-        //                   otherwise, create the DataFilePair and add the file
         TrialDataProcessor trialDataFiles = new TrialDataProcessor();
         List<DataFileExternal> externalDataFiles = trialDataFiles.getDataFiles();
-        System.out.println(externalDataFiles.get(0));
-        ArrayList<DataFilePair> dataSets = new ArrayList<>();
+
+        DataFileProcessor processor = new DataFileProcessor();
+        Map<ReducedFileName, DataFilePair> dataFilePairMap = processor.processDataFiles(externalDataFiles);
 
         // generate metrics on each data set
         // generate aggregate internal harmonization metrics from metrics per data set
         HashMap<ReducedFileName, DataSetMetrics> metrics = new HashMap<>();
-        AggregateMetricsInternal internalMetrics = new AggregateMetricsInternal.AggregateMetricsInternalBuilder().build();
-        for (DataFilePair dataSet: dataSets) {
+        for (DataFilePair dataSet: dataFilePairMap.values()) {
             ReducedFileName name = dataSet.name();
             DataSetMetrics dataSetMetrics = DataSetMetrics.createMetricsFromDataSet(dataSet, checker);
             metrics.put(name, dataSetMetrics);
-            internalMetrics = internalMetrics.incrementCountsWithDataSetMetrics(dataSetMetrics);
         }
+
+        AggregateMetricsInternal internalMetrics = AggregateMetricsInternal.aggregateMetricsFromDataSetMetrics(new ArrayList<>(metrics.values()));
+        System.out.println(internalMetrics);
 
         // produce final summary metrics
         AggregateMetricsExternal externalMetrics = AggregateMetricsExternal.createFromInternalMetrics(internalMetrics);
+        System.out.println(externalMetrics);
     }
 }

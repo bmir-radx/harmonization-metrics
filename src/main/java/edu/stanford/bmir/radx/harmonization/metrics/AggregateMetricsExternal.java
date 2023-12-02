@@ -1,5 +1,7 @@
 package edu.stanford.bmir.radx.harmonization.metrics;
 
+// note that PartiallyHarmonizedDataSets is a subset of HarmonizableDataSets
+// nDataSets = nHarmonizableDataSets + nHarmonizedDataSets
 public record AggregateMetricsExternal(
         int nDataSets,
         int nHarmonizableDataSets,
