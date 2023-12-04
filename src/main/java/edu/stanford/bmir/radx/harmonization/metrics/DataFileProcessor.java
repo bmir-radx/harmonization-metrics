@@ -1,6 +1,7 @@
 package edu.stanford.bmir.radx.harmonization.metrics;
 
-import java.util.ArrayList;
+import org.springframework.stereotype.Component;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -15,6 +16,7 @@ This processor takes Java objects from the Data Hub that
 contain information about data files and converts them
 into DataFile and DataFilePair objects.
  */
+@Component
 public class DataFileProcessor {
     private Pattern VERSION_TAG_REGEX = Pattern.compile("_v(\\d+)\\.csv");
     private Pattern VARIABLE_CLEANER_REGEX = Pattern.compile("(_+\\d+)+$");

@@ -1,7 +1,10 @@
 package edu.stanford.bmir.radx.harmonization.metrics;
 
+import org.springframework.stereotype.Component;
+
 import java.util.Set;
 
+@Component
 public class HarmonizationChecker {
 
     private HarmonizationRules harmonizationRules;

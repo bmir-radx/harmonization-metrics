@@ -1,15 +1,26 @@
 package edu.stanford.bmir.radx.harmonization.metrics;
 
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-public class Main {
-    public static void main(String[] args) throws IOException, InvalidProgramException,
+@SpringBootApplication
+public class Application implements CommandLineRunner {
+
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+
+    @Override
+    public void run(String[] args) throws IOException, InvalidProgramException,
             InvalidDataFileCategoryException, NoVersionNumberException {
         // get harmonization rules from somewhere
         HarmonizationRules rules = new SimpleGlobalCodebookRules();

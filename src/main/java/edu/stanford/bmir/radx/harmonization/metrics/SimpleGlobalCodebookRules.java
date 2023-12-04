@@ -2,6 +2,7 @@ package edu.stanford.bmir.radx.harmonization.metrics;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,6 +14,7 @@ This is a simple implementation of Harmonization mappings to get this
 library off the group. Further work on representing the Harmonization
 rules programmatically will improve the accuracy of metrics computed.
  */
+@Component
 public class SimpleGlobalCodebookRules implements HarmonizationRules {
 
     private Map<Program, Map<String, String>> map;
@@ -33,10 +35,6 @@ public class SimpleGlobalCodebookRules implements HarmonizationRules {
 
     public SimpleGlobalCodebookRules() throws IOException, InvalidProgramException {
         map = readJsonToMap("global_codebook_rules.json");
-    }
-
-    public Map<Program, Map<String, String>> getRules() {
-        return map;
     }
 
     private Map<Program, Map<String, String>> readJsonToMap(String fileName)

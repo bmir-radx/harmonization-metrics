@@ -2,12 +2,14 @@ package edu.stanford.bmir.radx.harmonization.metrics;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class TrialDataProcessor {
 
     private final List<DataFileExternal> dataFiles;
