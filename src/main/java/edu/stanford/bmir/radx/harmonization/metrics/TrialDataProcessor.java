@@ -12,15 +12,10 @@ import java.util.List;
 @Component
 public class TrialDataProcessor {
 
-    private final List<DataFileExternal> dataFiles;
     private final ObjectMapper mapper = new ObjectMapper();
 
-    public TrialDataProcessor() throws IOException {
-        dataFiles = readJsonToList("trial_data_files.json");
-    }
-
-    public List<DataFileExternal> getDataFiles() {
-        return dataFiles;
+    public List<DataFileExternal> readExternalData(String fileName) throws IOException {
+        return readJsonToList(fileName);
     }
 
     private List<DataFileExternal> readJsonToList(String fileName) throws IOException {
