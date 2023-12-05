@@ -1,6 +1,6 @@
 package edu.stanford.bmir.radx.harmonization.metrics;
 
 public interface HarmonizationRules {
-    boolean isHarmonized(Program program, String element) throws InvalidProgramException;
-    boolean isHarmonizable(Program program, String element) throws InvalidProgramException;
+    boolean isHarmonized(ProgramIdentifier programIdentifier, String element) throws InvalidProgramIdentifierException;
+    boolean isHarmonizable(ProgramIdentifier programIdentifier, String element) throws InvalidProgramIdentifierException;
 }

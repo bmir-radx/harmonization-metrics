@@ -5,7 +5,7 @@ import java.util.Set;
 
 public record DataFilePairMetrics(
         ReducedFileName name,
-        Program program,
+        ProgramIdentifier programIdentifier,
         StudyId studyId,
         Optional<Integer> versionOrig,
         Optional<Integer> nDataElementsOrig,
@@ -72,9 +72,9 @@ public record DataFilePairMetrics(
         return hasNoHarmonizableElementsTransform();
     }
 
-    public static DataFilePairMetrics createMetricsFromDataSet(DataFilePair dataSet, HarmonizationChecker harmonizationChecker) throws InvalidProgramException {
+    public static DataFilePairMetrics createMetricsFromDataSet(DataFilePair dataSet, HarmonizationChecker harmonizationChecker) throws InvalidProgramIdentifierException {
         ReducedFileName name = dataSet.name();
-        Program program = dataSet.program();
+        ProgramIdentifier programIdentifier = dataSet.programIdentifier();
         StudyId studyId = dataSet.studyId();
         Optional<DataFile> origData = dataSet.origData();
         Optional<DataFile> transformData = dataSet.transformData();
@@ -88,8 +88,8 @@ public record DataFilePairMetrics(
             versionOrig = Optional.of(origData.get().version());
             Set<String> variableNames = origData.get().variableNames();
             nDataElementsOrig = Optional.of(variableNames.size());
-            nHarmonizableDataElementsOrig = Optional.of(harmonizationChecker.countHarmonizableElements(program, variableNames));
-            nHarmonizedDataElementsOrig = Optional.of(harmonizationChecker.countHarmonizedElements(program, variableNames));
+            nHarmonizableDataElementsOrig = Optional.of(harmonizationChecker.countHarmonizableElements(programIdentifier, variableNames));
+            nHarmonizedDataElementsOrig = Optional.of(harmonizationChecker.countHarmonizedElements(programIdentifier, variableNames));
         } else {
             versionOrig = Optional.empty();
             nDataElementsOrig = Optional.empty();
@@ -106,8 +106,8 @@ public record DataFilePairMetrics(
             versionTransform = Optional.of(transformData.get().version());
             Set<String> variableNames = transformData.get().variableNames();
             nDataElementsTransform = Optional.of(variableNames.size());
-            nHarmonizableDataElementsTransform = Optional.of(harmonizationChecker.countHarmonizableElements(program, variableNames));
-            nHarmonizedDataElementsTransform = Optional.of(harmonizationChecker.countHarmonizedElements(program, variableNames));
+            nHarmonizableDataElementsTransform = Optional.of(harmonizationChecker.countHarmonizableElements(programIdentifier, variableNames));
+            nHarmonizedDataElementsTransform = Optional.of(harmonizationChecker.countHarmonizedElements(programIdentifier, variableNames));
         } else {
             versionTransform = Optional.empty();
             nDataElementsTransform = Optional.empty();
@@ -115,7 +115,7 @@ public record DataFilePairMetrics(
             nHarmonizedDataElementsTransform = Optional.empty();
         }
 
-        return new DataFilePairMetrics(name, program, studyId,
+        return new DataFilePairMetrics(name, programIdentifier, studyId,
                 versionOrig, nDataElementsOrig, nHarmonizableDataElementsOrig,
                 nHarmonizedDataElementsOrig, versionTransform, nDataElementsTransform,
                 nHarmonizableDataElementsTransform, nHarmonizedDataElementsTransform);

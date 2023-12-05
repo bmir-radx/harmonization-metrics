@@ -3,7 +3,7 @@ package edu.stanford.bmir.radx.harmonization.metrics;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum Program {
+public enum ProgramIdentifier {
     RADXUP("RADx-UP"),
     RADXRAD("RADx-rad"),
     RADXTECH("RADx-Tech"),
@@ -11,11 +11,11 @@ public enum Program {
 
     private final String value;
 
-    Program(String value) {
+    ProgramIdentifier(String value) {
         this.value = value;
     }
 
-    private static final Map<String, Program> stringToProgram;
+    private static final Map<String, ProgramIdentifier> stringToProgram;
     static {
         stringToProgram = new HashMap<>();
         stringToProgram.put(RADXUP.value, RADXUP);
@@ -28,9 +28,9 @@ public enum Program {
         return this.value;
     }
 
-    public static Program fromString(String programString) throws InvalidProgramException {
+    public static ProgramIdentifier fromString(String programString) throws InvalidProgramIdentifierException {
         if (!stringToProgram.containsKey(programString)) {
-            throw new InvalidProgramException(programString);
+            throw new InvalidProgramIdentifierException(programString);
         }
         return stringToProgram.get(programString);
     }

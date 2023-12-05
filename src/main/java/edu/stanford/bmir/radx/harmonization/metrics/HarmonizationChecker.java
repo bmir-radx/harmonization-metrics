@@ -13,20 +13,20 @@ public class HarmonizationChecker {
         harmonizationRules = rules;
     }
 
-    public int countHarmonizableElements(Program program, Set<String> elements) throws InvalidProgramException {
+    public int countHarmonizableElements(ProgramIdentifier programIdentifier, Set<String> elements) throws InvalidProgramIdentifierException {
         var nHarmonizableElements = 0;
         for (var element: elements) {
-            if (harmonizationRules.isHarmonizable(program, element)) {
+            if (harmonizationRules.isHarmonizable(programIdentifier, element)) {
                 nHarmonizableElements++;
             }
         }
         return nHarmonizableElements;
     }
 
-    public int countHarmonizedElements(Program program, Set<String> elements) throws InvalidProgramException {
+    public int countHarmonizedElements(ProgramIdentifier programIdentifier, Set<String> elements) throws InvalidProgramIdentifierException {
         int nHarmonizedElements = 0;
         for (String element: elements) {
-            if (harmonizationRules.isHarmonized(program, element)) {
+            if (harmonizationRules.isHarmonized(programIdentifier, element)) {
                 nHarmonizedElements++;
             }
         }

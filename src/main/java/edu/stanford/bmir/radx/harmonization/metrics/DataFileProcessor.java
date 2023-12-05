@@ -31,12 +31,12 @@ public class DataFileProcessor {
     and the origcopy/transformcopy label.
      */
     public Map<ReducedFileName, DataFilePair> processDataFiles(List<DataFileExternal> externalDataFiles)
-            throws InvalidProgramException, InvalidOrigTransformIdentifierException, NoVersionNumberException {
+            throws InvalidProgramIdentifierException, InvalidOrigTransformIdentifierException, NoVersionNumberException {
         Map<ReducedFileName, DataFilePair> dataFilePairMap = new HashMap<>();
         for (DataFileExternal externalDataFile: externalDataFiles) {
             // pull relevant information out of external representation of the data file
             StudyId studyId = StudyId.valueOf(externalDataFile.studyId());
-            Program program = Program.fromString(externalDataFile.program());
+            ProgramIdentifier programIdentifier = ProgramIdentifier.fromString(externalDataFile.program());
             OrigTransformIdentifier otIdentifier = OrigTransformIdentifier.fromString(externalDataFile.category());
             int version = fileNameExtractor.extractVersion(externalDataFile.fileName());
             ReducedFileName name = fileNameExtractor.extractReducedFileName(externalDataFile.fileName());
@@ -44,7 +44,7 @@ public class DataFileProcessor {
 
             // store the information in the internal data file pair representation
             if (!dataFilePairMap.containsKey(name)) {
-                dataFilePairMap.put(name, new DataFilePair(name, program, studyId));
+                dataFilePairMap.put(name, new DataFilePair(name, programIdentifier, studyId));
             }
             DataFilePair currentPair = dataFilePairMap.get(name);
             switch(otIdentifier) {

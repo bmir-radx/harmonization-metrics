@@ -4,13 +4,13 @@ import java.util.Optional;
 
 public record DataFilePair(
         ReducedFileName name,
-        Program program,
+        ProgramIdentifier programIdentifier,
         StudyId studyId,
         Optional<DataFile> origData,
         Optional<DataFile> transformData) {
 
-    public DataFilePair(ReducedFileName name, Program program, StudyId studyId) {
-        this(name, program, studyId, Optional.empty(), Optional.empty());
+    public DataFilePair(ReducedFileName name, ProgramIdentifier programIdentifier, StudyId studyId) {
+        this(name, programIdentifier, studyId, Optional.empty(), Optional.empty());
     }
 
     /*
@@ -19,7 +19,7 @@ public record DataFilePair(
     public DataFilePair updateOrigData(OrigFile newOrigData) {
         if (origData.isEmpty() ||
                 (origData.get().version() < newOrigData.version())) {
-            return new DataFilePair(name, program, studyId,
+            return new DataFilePair(name, programIdentifier, studyId,
                     Optional.of(newOrigData), transformData);
         } else {
             return this;
@@ -32,7 +32,7 @@ public record DataFilePair(
     public DataFilePair updateTransformData(TransformFile newTransformData) {
         if (transformData.isEmpty() ||
                 (transformData.get().version() < newTransformData.version())) {
-            return new DataFilePair(name, program, studyId,
+            return new DataFilePair(name, programIdentifier, studyId,
                     origData, Optional.of(newTransformData));
         } else {
             return this;

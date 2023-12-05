@@ -17,37 +17,37 @@ rules programmatically will improve the accuracy of metrics computed.
 @Component
 public class SimpleGlobalCodebookRules implements HarmonizationRules {
 
-    private Map<Program, Map<String, String>> map;
+    private Map<ProgramIdentifier, Map<String, String>> map;
 
-    public boolean isHarmonizable(Program program, String element) throws InvalidProgramException {
-        if (!map.containsKey(program)) {
-            throw new InvalidProgramException(program.toString());
+    public boolean isHarmonizable(ProgramIdentifier programIdentifier, String element) throws InvalidProgramIdentifierException {
+        if (!map.containsKey(programIdentifier)) {
+            throw new InvalidProgramIdentifierException(programIdentifier.toString());
         }
-        return map.get(program).containsKey(element);
+        return map.get(programIdentifier).containsKey(element);
     }
 
-    public boolean isHarmonized(Program program, String element) throws InvalidProgramException {
-        if (!map.containsKey(program)) {
-            throw new InvalidProgramException(program.toString());
+    public boolean isHarmonized(ProgramIdentifier programIdentifier, String element) throws InvalidProgramIdentifierException {
+        if (!map.containsKey(programIdentifier)) {
+            throw new InvalidProgramIdentifierException(programIdentifier.toString());
         }
-        return map.get(program).containsValue(element);
+        return map.get(programIdentifier).containsValue(element);
     }
 
-    public SimpleGlobalCodebookRules() throws IOException, InvalidProgramException {
+    public SimpleGlobalCodebookRules() throws IOException, InvalidProgramIdentifierException {
         map = readJsonToMap("global_codebook_rules.json");
     }
 
-    private Map<Program, Map<String, String>> readJsonToMap(String fileName)
-            throws IOException, InvalidProgramException {
+    private Map<ProgramIdentifier, Map<String, String>> readJsonToMap(String fileName)
+            throws IOException, InvalidProgramIdentifierException {
         ObjectMapper mapper = new ObjectMapper();
         InputStream is = getClass().getClassLoader().getResourceAsStream(fileName);
         String jsonString = new String(is.readAllBytes());
         JsonNode tree = mapper.readTree(jsonString);
         Map<String, Map<String, String>> map = mapper.convertValue(tree, Map.class);
 
-        Map<Program, Map<String, String>> codebook = new HashMap<>();
+        Map<ProgramIdentifier, Map<String, String>> codebook = new HashMap<>();
         for (String key: map.keySet()) {
-            codebook.put(Program.fromString(key), map.get(key));
+            codebook.put(ProgramIdentifier.fromString(key), map.get(key));
         }
 
         return codebook;

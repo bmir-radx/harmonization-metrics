@@ -34,7 +34,7 @@ public class DataFileProcessorTest {
 
     @Test
     public void testProcessDataFiles()
-            throws InvalidOrigTransformIdentifierException, InvalidProgramException, NoVersionNumberException {
+            throws InvalidOrigTransformIdentifierException, InvalidProgramIdentifierException, NoVersionNumberException {
         List<DataFileExternal> externalDataFiles = generateExternalDataForTest();
         Map<ReducedFileName, DataFilePair> dataFilePairMap = processor.processDataFiles(externalDataFiles);
         String expectedKey1 = "file1";

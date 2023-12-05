@@ -13,12 +13,12 @@ public class DataFilePairTest {
     @Test
     public void testNoDataFileConstructor() {
         ReducedFileName testName = ReducedFileName.valueOf("testName");
-        Program testProgram = Program.RADXUP;
+        ProgramIdentifier testProgramIdentifier = ProgramIdentifier.RADXUP;
         StudyId testStudyId = StudyId.valueOf("testStudyId");
-        DataFilePair dataSet = new DataFilePair(testName, testProgram, testStudyId);
+        DataFilePair dataSet = new DataFilePair(testName, testProgramIdentifier, testStudyId);
 
         assertEquals(testName, dataSet.name());
-        assertEquals(testProgram, dataSet.program());
+        assertEquals(testProgramIdentifier, dataSet.programIdentifier());
         assertEquals(testStudyId, dataSet.studyId());
         assertTrue(dataSet.origData().isEmpty());
         assertTrue(dataSet.transformData().isEmpty());
@@ -28,9 +28,9 @@ public class DataFilePairTest {
     public void testUpdateOrigData() {
         String fileName = "filename";
         ReducedFileName testName = ReducedFileName.valueOf("testName");
-        Program testProgram = Program.RADXUP;
+        ProgramIdentifier testProgramIdentifier = ProgramIdentifier.RADXUP;
         StudyId testStudyId = StudyId.valueOf("testStudyId");
-        DataFilePair dataFilePair = new DataFilePair(testName, testProgram, testStudyId);
+        DataFilePair dataFilePair = new DataFilePair(testName, testProgramIdentifier, testStudyId);
 
         int testVersion1 = 1;
         HashSet<String> variableNames1 = new HashSet<>(Arrays.asList("var1", "var2"));
@@ -56,9 +56,9 @@ public class DataFilePairTest {
     public void testSetTransformData() {
         String fileName = "fileName";
         ReducedFileName testName = ReducedFileName.valueOf("testName");
-        Program testProgram = Program.RADXUP;
+        ProgramIdentifier testProgramIdentifier = ProgramIdentifier.RADXUP;
         StudyId testStudyId = StudyId.valueOf("testStudyId");
-        DataFilePair dataFilePair = new DataFilePair(testName, testProgram, testStudyId);
+        DataFilePair dataFilePair = new DataFilePair(testName, testProgramIdentifier, testStudyId);
 
         int testVersion1 = 1;
         HashSet<String> variableNames1 = new HashSet<>(Arrays.asList("var1", "var2"));
