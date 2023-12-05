@@ -12,9 +12,9 @@
     </parent>
 
     <groupId>edu.stanford.bmir.radx</groupId>
-    <artifactId>harmonization-metrics</artifactId>
+    <artifactId>harmonization.metrics</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>harmonization-metrics</name>
+    <name>harmonization.metrics</name>
     <description>RADx Data Hub Harmonization Metrics</description>
 
     <properties>
@@ -37,6 +37,11 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.vintage</groupId>
+            <artifactId>junit-vintage-engine</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>

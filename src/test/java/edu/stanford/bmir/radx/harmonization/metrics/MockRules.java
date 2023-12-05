@@ -8,7 +8,7 @@ Implementation of dumb HarmonizationRules based on a hash map
 used to test the HarmonizationChecker
  */
 public class MockRules implements HarmonizationRules {
-    private Map<Program, Map<String, String>> map;
+    private Map<ProgramIdentifier, Map<String, String>> map;
 
     public MockRules() {
         Map<String, String> programMap = new HashMap<>();
@@ -17,19 +17,20 @@ public class MockRules implements HarmonizationRules {
         programMap.put("var3", "harmonizedVar3");
 
         map = new HashMap<>();
-        map.put(Program.RADXUP, programMap);
+        map.put(ProgramIdentifier.RADXUP, programMap);
     }
 
-    public boolean isHarmonizable(Program program, String element) {
-        if (map.containsKey(program)) {
-            return map.get(program).containsKey(element);
+    public boolean isHarmonizable(ProgramIdentifier programIdentifier, String element) {
+        if (map.containsKey(programIdentifier)) {
+            return map.get(programIdentifier).containsKey(element);
         } else {
             return false;
         }
     }
-    public boolean isHarmonized(Program program, String element) {
-        if (map.containsKey(program)) {
-            return map.get(program).containsValue(element);
+
+    public boolean isHarmonized(ProgramIdentifier programIdentifier, String element) {
+        if (map.containsKey(programIdentifier)) {
+            return map.get(programIdentifier).containsValue(element);
         } else {
             return false;
         }

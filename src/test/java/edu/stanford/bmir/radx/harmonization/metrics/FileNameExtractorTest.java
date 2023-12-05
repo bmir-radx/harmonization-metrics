@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-class FileNameExtractorTest {
+public class FileNameExtractorTest {
 
     private FileNameExtractor fileNameExtractor = new FileNameExtractor();
 
@@ -37,7 +37,7 @@ class FileNameExtractorTest {
     public void testExtractReducedFileName_differentVersions() {
         String test_v3_name = "example_DATA_transformcopy_v3.csv";
         ReducedFileName reducedNameV3 = fileNameExtractor.extractReducedFileName(test_v3_name);
-        String test_v7_name = "example_DATA_tranformcopy_v7.csv";
+        String test_v7_name = "example_DATA_transformcopy_v7.csv";
         ReducedFileName reducedNameV7 = fileNameExtractor.extractReducedFileName(test_v7_name);
         assertEquals(reducedNameV7, reducedNameV3);
     }
