@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
-public class TestDataFilePair {
+public class DataFilePairTest {
     @Test
     public void testNoDataFileConstructor() {
         ReducedFileName testName = ReducedFileName.valueOf("testName");

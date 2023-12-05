@@ -7,7 +7,7 @@ import java.util.HashSet;
 
 import static org.junit.Assert.assertEquals;
 
-public class TestTransformFile {
+public class TransformFileTest {
     @Test
     public void testGetVersion() {
         int version = 1;

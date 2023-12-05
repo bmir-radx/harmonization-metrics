@@ -1,14 +1,9 @@
 package edu.stanford.bmir.radx.harmonization.metrics;
 
-import org.junit.Test;
-
-import java.util.Arrays;
-import java.util.HashSet;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-public class TestDataSetMetrics {
+public class DataSetMetricsTest {
 
 //    @Test
 //    public void testCreateMetricsOrigOnly() {

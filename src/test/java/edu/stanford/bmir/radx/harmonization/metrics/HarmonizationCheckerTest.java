@@ -8,12 +8,12 @@ import java.util.HashSet;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
-public class TestHarmonizationChecker {
+public class HarmonizationCheckerTest {
 
     @Test
     public void testCountHarmonizableElements() throws InvalidProgramException {
         Program program = Program.RADXUP;
-        HarmonizationRules rules = new TestRules();
+        HarmonizationRules rules = new MockRules();
         HarmonizationChecker checker = new HarmonizationChecker(rules);
 
         HashSet<String> nonHarmonizedVariables = new HashSet<>(Arrays.asList("var1", "var2", "var4"));
@@ -25,7 +25,7 @@ public class TestHarmonizationChecker {
     @Test
     public void testCountHarmonizedElements() throws InvalidProgramException {
         Program program = Program.RADXUP;
-        HarmonizationRules rules = new TestRules();
+        HarmonizationRules rules = new MockRules();
         HarmonizationChecker checker = new HarmonizationChecker(rules);
 
         HashSet<String> variables = new HashSet<>(Arrays.asList("var1", "harmonizedVar2", "harmonizedVar3"));
@@ -37,7 +37,7 @@ public class TestHarmonizationChecker {
     @Test
     public void testHarmonizationCounts() throws InvalidProgramException {
         Program program = Program.RADXUP;
-        HarmonizationRules rules = new TestRules();
+        HarmonizationRules rules = new MockRules();
         HarmonizationChecker checker = new HarmonizationChecker(rules);
 
         HashSet<String> variables = new HashSet<>(Arrays.asList("var1", "harmonizedVar2", "harmonizedVar3", "var4"));

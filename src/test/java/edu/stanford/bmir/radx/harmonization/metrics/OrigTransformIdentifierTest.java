@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class TestOrigTransformIdentifier {
+public class OrigTransformIdentifierTest {
     @Test
     public void testValidCategoriesFromString() throws InvalidOrigTransformIdentifierException {
         assertEquals(OrigTransformIdentifier.ORIG,

@@ -1,4 +1,4 @@
 package edu.stanford.bmir.radx.harmonization.metrics;
 
-public class TestDataFileProcessor {
+public class DataFileProcessorTest {
 }

@@ -7,10 +7,10 @@ import java.util.Map;
 Implementation of dumb HarmonizationRules based on a hash map
 used to test the HarmonizationChecker
  */
-public class TestRules implements HarmonizationRules {
+public class MockRules implements HarmonizationRules {
     private Map<Program, Map<String, String>> map;
 
-    public TestRules() {
+    public MockRules() {
         Map<String, String> programMap = new HashMap<>();
         programMap.put("var1", "harmonizedVar1");
         programMap.put("var2", "harmonizedVar2");
