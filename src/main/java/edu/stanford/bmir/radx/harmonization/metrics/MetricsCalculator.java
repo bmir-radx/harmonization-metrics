@@ -25,7 +25,7 @@ public class MetricsCalculator {
     }
 
     public AggregateMetricsInternal computeInternalHarmonizationMetrics(List<DataFileExternal> dataFiles)
-            throws InvalidProgramException, InvalidDataFileCategoryException, NoVersionNumberException {
+            throws InvalidProgramException, InvalidOrigTransformIdentifierException, NoVersionNumberException {
         Map<ReducedFileName, DataFilePair> dataFilePairMap = dataFileProcessor.processDataFiles(dataFiles);
         List<DataFilePairMetrics> metricsPerDataFilePair = new ArrayList<>();
         for (DataFilePair dataFilePair: dataFilePairMap.values()) {
@@ -36,7 +36,7 @@ public class MetricsCalculator {
     }
 
     public AggregateMetricsExternal computeHarmonizationMetrics(List<DataFileExternal> dataFiles)
-            throws InvalidProgramException, InvalidDataFileCategoryException, NoVersionNumberException {
+            throws InvalidProgramException, InvalidOrigTransformIdentifierException, NoVersionNumberException {
         AggregateMetricsInternal internalMetrics = computeInternalHarmonizationMetrics(dataFiles);
         return AggregateMetricsExternal.createFromInternalMetrics(internalMetrics);
     }
