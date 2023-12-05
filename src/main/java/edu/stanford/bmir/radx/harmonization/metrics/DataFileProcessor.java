@@ -11,7 +11,7 @@ import java.util.Set;
 /*
 This processor takes Java objects from the Data Hub that
 contain information about data files and converts them
-into DataFile and DataFilePair objects.
+into DataFile and OrigTransformFilePair objects.
  */
 @Component
 public class DataFileProcessor {
@@ -30,9 +30,9 @@ public class DataFileProcessor {
     internal form that connects data files whose names differ only by version number
     and the origcopy/transformcopy label.
      */
-    public Map<ReducedFileName, DataFilePair> processDataFiles(List<DataFileExternal> externalDataFiles)
+    public Map<ReducedFileName, OrigTransformFilePair> processDataFiles(List<DataFileExternal> externalDataFiles)
             throws InvalidProgramIdentifierException, InvalidOrigTransformIdentifierException, NoVersionNumberException {
-        Map<ReducedFileName, DataFilePair> dataFilePairMap = new HashMap<>();
+        Map<ReducedFileName, OrigTransformFilePair> dataFilePairMap = new HashMap<>();
         for (DataFileExternal externalDataFile: externalDataFiles) {
             // pull relevant information out of external representation of the data file
             StudyId studyId = StudyId.valueOf(externalDataFile.studyId());
@@ -44,9 +44,9 @@ public class DataFileProcessor {
 
             // store the information in the internal data file pair representation
             if (!dataFilePairMap.containsKey(name)) {
-                dataFilePairMap.put(name, new DataFilePair(name, programIdentifier, studyId));
+                dataFilePairMap.put(name, new OrigTransformFilePair(name, programIdentifier, studyId));
             }
-            DataFilePair currentPair = dataFilePairMap.get(name);
+            OrigTransformFilePair currentPair = dataFilePairMap.get(name);
             switch(otIdentifier) {
                 case TRANSFORM:
                     TransformFile transformFile = new TransformFile(externalDataFile.fileName(), version, variableNames);

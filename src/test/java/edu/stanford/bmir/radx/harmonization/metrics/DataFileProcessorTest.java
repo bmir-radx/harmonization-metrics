@@ -36,7 +36,7 @@ public class DataFileProcessorTest {
     public void testProcessDataFiles()
             throws InvalidOrigTransformIdentifierException, InvalidProgramIdentifierException, NoVersionNumberException {
         List<DataFileExternal> externalDataFiles = generateExternalDataForTest();
-        Map<ReducedFileName, DataFilePair> dataFilePairMap = processor.processDataFiles(externalDataFiles);
+        Map<ReducedFileName, OrigTransformFilePair> dataFilePairMap = processor.processDataFiles(externalDataFiles);
         ReducedFileName expectedKey1 = new ReducedFileName("file1");
         ReducedFileName expectedKey2 = new ReducedFileName("file5");
         assertEquals(2, dataFilePairMap.size());

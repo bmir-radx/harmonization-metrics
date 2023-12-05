@@ -3,7 +3,7 @@ package edu.stanford.bmir.radx.harmonization.metrics;
 import java.util.Optional;
 import java.util.Set;
 
-public record DataFilePairMetrics(
+public record OrigTransformFilePairMetrics(
         ReducedFileName name,
         ProgramIdentifier programIdentifier,
         StudyId studyId,
@@ -72,7 +72,7 @@ public record DataFilePairMetrics(
         return hasNoHarmonizableElementsTransform();
     }
 
-    public static DataFilePairMetrics createMetricsFromDataSet(DataFilePair dataSet, HarmonizationChecker harmonizationChecker) throws InvalidProgramIdentifierException {
+    public static OrigTransformFilePairMetrics createMetricsFromDataSet(OrigTransformFilePair dataSet, HarmonizationChecker harmonizationChecker) throws InvalidProgramIdentifierException {
         ReducedFileName name = dataSet.name();
         ProgramIdentifier programIdentifier = dataSet.programIdentifier();
         StudyId studyId = dataSet.studyId();
@@ -115,7 +115,7 @@ public record DataFilePairMetrics(
             nHarmonizedDataElementsTransform = Optional.empty();
         }
 
-        return new DataFilePairMetrics(name, programIdentifier, studyId,
+        return new OrigTransformFilePairMetrics(name, programIdentifier, studyId,
                 versionOrig, nDataElementsOrig, nHarmonizableDataElementsOrig,
                 nHarmonizedDataElementsOrig, versionTransform, nDataElementsTransform,
                 nHarmonizableDataElementsTransform, nHarmonizedDataElementsTransform);

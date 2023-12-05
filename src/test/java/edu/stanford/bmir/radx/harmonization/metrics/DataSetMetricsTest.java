@@ -12,7 +12,7 @@ public class DataSetMetricsTest {
 //        String testName = "testName";
 //        Program testProgram = Program.RADXUP;
 //        StudyId testStudyId = StudyId.valueOf("testProgram");
-//        DataFilePair dataSet = new DataFilePair(testName, testProgram, testStudyId);
+//        OrigTransformFilePair dataSet = new OrigTransformFilePair(testName, testProgram, testStudyId);
 
 //        HashSet<String> origVariables = new HashSet<>(Arrays.asList("var1", "var2", "var4"));
 //        DataFile origData = new DataFile(1, origVariables);
@@ -32,7 +32,7 @@ public class DataSetMetricsTest {
 //        String testName = "testName";
 //        Program testProgram = Program.RADXUP;
 //        StudyId testStudyId = StudyId.valueOf("testProgram");
-//        DataFilePair dataSet = new DataFilePair(testName, testProgram, testStudyId);
+//        OrigTransformFilePair dataSet = new OrigTransformFilePair(testName, testProgram, testStudyId);
 
 //        HashSet<String> origVariables = new HashSet<>(Arrays.asList("var1", "var2", "var4"));
 //        DataFile origData = new DataFile(1, origVariables);
