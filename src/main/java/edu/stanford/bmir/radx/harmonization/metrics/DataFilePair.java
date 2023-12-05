@@ -16,7 +16,7 @@ public record DataFilePair(
     /*
     Keep data from origcopy if it is newer than the current data.
      */
-    public DataFilePair updateOrigData(DataFile newOrigData) {
+    public DataFilePair updateOrigData(OrigFile newOrigData) {
         if (origData.isEmpty() ||
                 (origData.get().version() < newOrigData.version())) {
             return new DataFilePair(name, program, studyId,
@@ -29,7 +29,7 @@ public record DataFilePair(
     /*
     Keep data from transformcopy if it is newer than the current data.
      */
-    public DataFilePair updateTransformData(DataFile newTransformData) {
+    public DataFilePair updateTransformData(TransformFile newTransformData) {
         if (transformData.isEmpty() ||
                 (transformData.get().version() < newTransformData.version())) {
             return new DataFilePair(name, program, studyId,

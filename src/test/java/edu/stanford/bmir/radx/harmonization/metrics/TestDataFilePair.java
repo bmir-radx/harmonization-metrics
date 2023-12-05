@@ -34,7 +34,7 @@ public class TestDataFilePair {
 
         int testVersion1 = 1;
         HashSet<String> variableNames1 = new HashSet<>(Arrays.asList("var1", "var2"));
-        DataFile origData1 = new DataFile(fileName, testVersion1, variableNames1);
+        OrigFile origData1 = new OrigFile(fileName, testVersion1, variableNames1);
         DataFilePair updatedDataFilePair1 = dataFilePair.updateOrigData(origData1);
 
         assertNotEquals(dataFilePair, updatedDataFilePair1);
@@ -44,7 +44,7 @@ public class TestDataFilePair {
 
         int testVersion2 = 2;
         HashSet<String> variableNames2 = new HashSet<>(Arrays.asList("var3", "var4"));
-        DataFile origData2 = new DataFile(fileName, testVersion2, variableNames2);
+        OrigFile origData2 = new OrigFile(fileName, testVersion2, variableNames2);
         DataFilePair updatedDataFilePair2 = updatedDataFilePair1.updateOrigData(origData2);
 
         assertNotEquals(updatedDataFilePair1, updatedDataFilePair2);
@@ -62,7 +62,7 @@ public class TestDataFilePair {
 
         int testVersion1 = 1;
         HashSet<String> variableNames1 = new HashSet<>(Arrays.asList("var1", "var2"));
-        DataFile transformData1 = new DataFile(fileName, testVersion1, variableNames1);
+        TransformFile transformData1 = new TransformFile(fileName, testVersion1, variableNames1);
         DataFilePair updatedDataFilePair1 = dataFilePair.updateTransformData(transformData1);
 
         assertNotEquals(dataFilePair, updatedDataFilePair1);
@@ -72,7 +72,7 @@ public class TestDataFilePair {
 
         int testVersion2 = 2;
         HashSet<String> variableNames2 = new HashSet<>(Arrays.asList("var3", "var4"));
-        DataFile transformData2 = new DataFile(fileName, testVersion2, variableNames2);
+        TransformFile transformData2 = new TransformFile(fileName, testVersion2, variableNames2);
         DataFilePair updatedDataFilePair2 = updatedDataFilePair1.updateTransformData(transformData2);
 
         assertNotEquals(updatedDataFilePair1, updatedDataFilePair2);
