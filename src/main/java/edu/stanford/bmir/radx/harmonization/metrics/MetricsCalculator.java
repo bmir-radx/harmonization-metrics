@@ -6,6 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/*
+This is the main worker for this library. MetricsCalculator uses the
+DataFileProcessor to process information about data files into
+DataFilePair objects, which are then checked against the
+HarmonizationChecker. Metrics regarding the extent of harmonization
+are computed per DataFilePair and then aggregated for reporting.
+ */
 @Component
 public class MetricsCalculator {
     private final HarmonizationChecker harmonizationChecker; // this is set up to have rules injected
@@ -20,12 +27,12 @@ public class MetricsCalculator {
     public AggregateMetricsInternal computeInternalHarmonizationMetrics(List<DataFileExternal> dataFiles)
             throws InvalidProgramException, InvalidDataFileCategoryException, NoVersionNumberException {
         Map<ReducedFileName, DataFilePair> dataFilePairMap = dataFileProcessor.processDataFiles(dataFiles);
-        List<DataSetMetrics> metricsPerDataSet = new ArrayList<>();
+        List<DataFilePairMetrics> metricsPerDataFilePair = new ArrayList<>();
         for (DataFilePair dataFilePair: dataFilePairMap.values()) {
-            DataSetMetrics dataSetMetrics = DataSetMetrics.createMetricsFromDataSet(dataFilePair, harmonizationChecker);
-            metricsPerDataSet.add(dataSetMetrics);
+            DataFilePairMetrics dataSetMetrics = DataFilePairMetrics.createMetricsFromDataSet(dataFilePair, harmonizationChecker);
+            metricsPerDataFilePair.add(dataSetMetrics);
         }
-        return AggregateMetricsInternal.aggregateMetricsFromDataSetMetrics(metricsPerDataSet);
+        return AggregateMetricsInternal.aggregateMetricsFromDataSetMetrics(metricsPerDataFilePair);
     }
 
     public AggregateMetricsExternal computeHarmonizationMetrics(List<DataFileExternal> dataFiles)

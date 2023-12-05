@@ -26,7 +26,7 @@ public class DataFileProcessor {
     public Map<ReducedFileName, DataFilePair> processDataFiles(List<DataFileExternal> externalDataFiles)
             throws InvalidProgramException, InvalidDataFileCategoryException, NoVersionNumberException {
         Map<ReducedFileName, DataFilePair> dataFilePairMap = new HashMap<>();
-        for (var externalDataFile: externalDataFiles) {
+        for (DataFileExternal externalDataFile: externalDataFiles) {
             StudyId studyId = StudyId.valueOf(externalDataFile.studyId());
             Program program = Program.fromString(externalDataFile.program());
             DataFileCategory category = DataFileCategory.fromString(externalDataFile.category());

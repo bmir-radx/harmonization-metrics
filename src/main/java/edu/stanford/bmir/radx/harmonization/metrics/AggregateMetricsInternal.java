@@ -32,7 +32,7 @@ public record AggregateMetricsInternal(
         return numHarmonizedOrig + numHarmonizedTransform + numHarmonizedMatched;
     }
 
-    public static AggregateMetricsInternal aggregateMetricsFromDataSetMetrics(List<DataSetMetrics> metricsList) {
+    public static AggregateMetricsInternal aggregateMetricsFromDataSetMetrics(List<DataFilePairMetrics> metricsList) {
         int numFilesOrig = 0;
         int numFilesTransform = 0;
         int numFilesMatched = 0;
