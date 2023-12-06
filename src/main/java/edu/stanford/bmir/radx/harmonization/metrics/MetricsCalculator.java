@@ -17,11 +17,14 @@ are computed per OrigTransformFilePair and then aggregated for reporting.
 public class MetricsCalculator {
     private final HarmonizationChecker harmonizationChecker; // this is set up to have rules injected
     private final DataFileProcessor dataFileProcessor; // component with no additional bean dependencies
+    private final OrigTransformFilePairMetricsGenerator metricsGenerator;
 
     public MetricsCalculator(HarmonizationChecker harmonizationChecker,
-                             DataFileProcessor dataFileProcessor) {
+                             DataFileProcessor dataFileProcessor,
+                             OrigTransformFilePairMetricsGenerator metricsGenerator) {
         this.harmonizationChecker = harmonizationChecker;
         this.dataFileProcessor = dataFileProcessor;
+        this.metricsGenerator = metricsGenerator;
     }
 
     public AggregateMetrics computeHarmonizationMetrics(List<DataFileExternal> dataFiles)
@@ -29,7 +32,7 @@ public class MetricsCalculator {
         Map<ReducedFileName, OrigTransformFilePair> dataFilePairMap = dataFileProcessor.processDataFiles(dataFiles);
         List<OrigTransformFilePairMetrics> metricsPerDataFilePair = new ArrayList<>();
         for (OrigTransformFilePair origTransformFilePair : dataFilePairMap.values()) {
-            OrigTransformFilePairMetrics dataSetMetrics = OrigTransformFilePairMetrics.createMetricsFromFilePair(origTransformFilePair, harmonizationChecker);
+            OrigTransformFilePairMetrics dataSetMetrics = metricsGenerator.createMetricsFromFilePair(origTransformFilePair);
             metricsPerDataFilePair.add(dataSetMetrics);
         }
         return AggregateMetrics.aggregateMetricsFromFilePairMetrics(metricsPerDataFilePair);
