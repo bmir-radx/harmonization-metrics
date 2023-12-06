@@ -14,13 +14,13 @@ public class OrigTransformFilePairMetricsGenerator {
         this.harmonizationChecker = harmonizationChecker;
     }
 
-    public OrigTransformFilePairMetrics createMetricsFromFilePair(OrigTransformFilePair dataSet)
+    public OrigTransformFilePairMetrics createMetricsFromFilePair(OrigTransformFilePair filePair)
             throws InvalidProgramIdentifierException {
-        ReducedFileName pairName = dataSet.pairName();
-        ProgramIdentifier programIdentifier = dataSet.programIdentifier();
-        StudyId studyId = dataSet.studyId();
-        Optional<OrigFile> origData = dataSet.origFile();
-        Optional<TransformFile> transformData = dataSet.transformFile();
+        ReducedFileName pairName = filePair.pairName();
+        ProgramIdentifier programIdentifier = filePair.programIdentifier();
+        StudyId studyId = filePair.studyId();
+        Optional<OrigFile> origData = filePair.origFile();
+        Optional<TransformFile> transformData = filePair.transformFile();
 
         Optional<Integer> versionOrig;
         Optional<Integer> nDataElementsOrig;
