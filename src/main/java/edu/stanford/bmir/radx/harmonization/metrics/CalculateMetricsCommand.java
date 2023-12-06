@@ -24,7 +24,7 @@ public class CalculateMetricsCommand implements Callable<Integer> {
     @Override
     public Integer call() throws Exception {
         List<DataFileExternal> externalData = trialDataProcessor.readExternalData(fileName);
-        AggregateMetricsExternal metrics = metricsCalculator.computeHarmonizationMetrics(externalData);
+        AggregateMetrics metrics = metricsCalculator.computeHarmonizationMetrics(externalData);
         System.out.println(metrics);
         return 0;
     }

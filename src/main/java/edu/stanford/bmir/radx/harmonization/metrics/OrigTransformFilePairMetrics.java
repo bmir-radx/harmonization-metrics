@@ -14,7 +14,10 @@ public record OrigTransformFilePairMetrics(
         Optional<Integer> versionTransform,
         Optional<Integer> nDataElementsTransform,
         Optional<Integer> nHarmonizableDataElementsTransform,
-        Optional<Integer> nHarmonizedDataElementsTransform) {
+        Optional<Integer> nHarmonizedDataElementsTransform,
+        Integer nHarmonizableDataElements,
+        Integer nHarmonizedDataElements,
+        Integer nNonHarmonizableDataElements) {
 
     public boolean hasOrig() {
         return versionOrig.isPresent();
@@ -24,55 +27,41 @@ public record OrigTransformFilePairMetrics(
         return versionTransform.isPresent();
     }
 
-    public boolean hasHarmonizableElementsOrig() {
-        return nHarmonizableDataElementsOrig.isPresent() && nHarmonizableDataElementsOrig.get() > 0;
+    public boolean hasHarmonizableElements() {
+        return nHarmonizableDataElements > 0;
     }
 
-    public boolean hasNoHarmonizableElementsOrig() {
-        return nHarmonizableDataElementsOrig.isPresent() && nHarmonizableDataElementsOrig.get() == 0;
+    public boolean hasNoHarmonizableElements() {
+        return nHarmonizableDataElements == 0;
     }
 
-    public boolean hasHarmonizedElementsOrig() {
-        return nHarmonizedDataElementsOrig.isPresent() && nHarmonizedDataElementsOrig.get() > 0;
+    public boolean hasHarmonizedElements() {
+        return nHarmonizedDataElements > 0;
     }
 
-    public boolean isHarmonizableOrig() {
-        return hasHarmonizableElementsOrig();
+    public boolean hasNoHarmonizedElements() {
+        return nHarmonizedDataElements == 0;
     }
 
-    public boolean isPartiallyHarmonizedOrig() {
-        return hasHarmonizableElementsOrig() && hasHarmonizedElementsOrig();
+    public boolean isHarmonizable() {
+        return hasHarmonizableElements();
     }
 
-    public boolean isHarmonizedOrig() {
-        return hasNoHarmonizableElementsOrig();
+    public boolean isPartiallyHarmonized() {
+        return hasHarmonizableElements() && hasHarmonizedElements();
     }
 
-    public boolean hasHarmonizableElementsTransform() {
-        return nHarmonizableDataElementsTransform.isPresent() && nHarmonizableDataElementsTransform.get() > 0;
+    public boolean isHarmonized() {
+        return hasNoHarmonizableElements();
     }
 
-    public boolean hasNoHarmonizableElementsTransform() {
-        return nHarmonizableDataElementsTransform.isPresent() && nHarmonizableDataElementsTransform.get() == 0;
+    public boolean isTriviallyHarmonized() {
+        return hasNoHarmonizableElements() && hasNoHarmonizedElements();
     }
 
-    public boolean hasHarmonizedElementsTransform() {
-        return nHarmonizedDataElementsTransform.isPresent() && nHarmonizedDataElementsTransform.get() > 0;
-    }
-
-    public boolean isHarmonizableTransform() {
-        return hasHarmonizableElementsTransform();
-    }
-
-    public boolean isPartiallyHarmonizedTransform() {
-        return hasHarmonizableElementsTransform() && hasHarmonizedElementsTransform();
-    }
-
-    public boolean isHarmonizedTransform() {
-        return hasNoHarmonizableElementsTransform();
-    }
-
-    public static OrigTransformFilePairMetrics createMetricsFromDataSet(OrigTransformFilePair dataSet, HarmonizationChecker harmonizationChecker) throws InvalidProgramIdentifierException {
+    public static OrigTransformFilePairMetrics createMetricsFromFilePair(
+            OrigTransformFilePair dataSet, HarmonizationChecker harmonizationChecker)
+            throws InvalidProgramIdentifierException {
         ReducedFileName pairName = dataSet.pairName();
         ProgramIdentifier programIdentifier = dataSet.programIdentifier();
         StudyId studyId = dataSet.studyId();
@@ -115,9 +104,28 @@ public record OrigTransformFilePairMetrics(
             nHarmonizedDataElementsTransform = Optional.empty();
         }
 
+        Integer nHarmonizableDataElements;
+        Integer nHarmonizedDataElements;
+        Integer nNonHarmonizableDataElements;
+        if (transformData.isPresent()) {
+            // this includes the case in which only the transformcopy exists
+            // and the case in which both the transformcopy and origcopy exist
+            nHarmonizableDataElements = nHarmonizableDataElementsTransform.get();
+            nHarmonizedDataElements = nHarmonizedDataElementsTransform.get();
+            nNonHarmonizableDataElements = nDataElementsTransform.get() - nHarmonizableDataElements - nHarmonizedDataElements;
+        } else {
+            // this covers the case in which only the origcopy exists, since
+            // it is impossible for an OrigTransformFilePair to exist without
+            // at least one of the origcopy or transformcopy
+            nHarmonizableDataElements = nHarmonizableDataElementsOrig.get();
+            nHarmonizedDataElements = nHarmonizedDataElementsOrig.get();
+            nNonHarmonizableDataElements = nDataElementsOrig.get() - nHarmonizableDataElements - nHarmonizedDataElements;
+        }
+
         return new OrigTransformFilePairMetrics(pairName, programIdentifier, studyId,
                 versionOrig, nDataElementsOrig, nHarmonizableDataElementsOrig,
                 nHarmonizedDataElementsOrig, versionTransform, nDataElementsTransform,
-                nHarmonizableDataElementsTransform, nHarmonizedDataElementsTransform);
+                nHarmonizableDataElementsTransform, nHarmonizedDataElementsTransform,
+                nHarmonizableDataElements, nHarmonizedDataElements, nNonHarmonizableDataElements);
     }
 }

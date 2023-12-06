@@ -24,20 +24,14 @@ public class MetricsCalculator {
         this.dataFileProcessor = dataFileProcessor;
     }
 
-    public AggregateMetricsInternal computeInternalHarmonizationMetrics(List<DataFileExternal> dataFiles)
+    public AggregateMetrics computeHarmonizationMetrics(List<DataFileExternal> dataFiles)
             throws InvalidProgramIdentifierException, InvalidOrigTransformIdentifierException, NoVersionNumberException {
         Map<ReducedFileName, OrigTransformFilePair> dataFilePairMap = dataFileProcessor.processDataFiles(dataFiles);
         List<OrigTransformFilePairMetrics> metricsPerDataFilePair = new ArrayList<>();
         for (OrigTransformFilePair origTransformFilePair : dataFilePairMap.values()) {
-            OrigTransformFilePairMetrics dataSetMetrics = OrigTransformFilePairMetrics.createMetricsFromDataSet(origTransformFilePair, harmonizationChecker);
+            OrigTransformFilePairMetrics dataSetMetrics = OrigTransformFilePairMetrics.createMetricsFromFilePair(origTransformFilePair, harmonizationChecker);
             metricsPerDataFilePair.add(dataSetMetrics);
         }
-        return AggregateMetricsInternal.aggregateMetricsFromDataSetMetrics(metricsPerDataFilePair);
-    }
-
-    public AggregateMetricsExternal computeHarmonizationMetrics(List<DataFileExternal> dataFiles)
-            throws InvalidProgramIdentifierException, InvalidOrigTransformIdentifierException, NoVersionNumberException {
-        AggregateMetricsInternal internalMetrics = computeInternalHarmonizationMetrics(dataFiles);
-        return AggregateMetricsExternal.createFromInternalMetrics(internalMetrics);
+        return AggregateMetrics.aggregateMetricsFromFilePairMetrics(metricsPerDataFilePair);
     }
 }
