@@ -17,11 +17,11 @@ public class OrigTransformFilePairTest {
         StudyId testStudyId = StudyId.valueOf("testStudyId");
         OrigTransformFilePair dataSet = new OrigTransformFilePair(testName, testProgramIdentifier, testStudyId);
 
-        assertEquals(testName, dataSet.name());
+        assertEquals(testName, dataSet.pairName());
         assertEquals(testProgramIdentifier, dataSet.programIdentifier());
         assertEquals(testStudyId, dataSet.studyId());
-        assertTrue(dataSet.origData().isEmpty());
-        assertTrue(dataSet.transformData().isEmpty());
+        assertTrue(dataSet.origFile().isEmpty());
+        assertTrue(dataSet.transformFile().isEmpty());
     }
 
     @Test
@@ -38,9 +38,9 @@ public class OrigTransformFilePairTest {
         OrigTransformFilePair updatedOrigTransformFilePair1 = origTransformFilePair.updateOrigData(origData1);
 
         assertNotEquals(origTransformFilePair, updatedOrigTransformFilePair1);
-        assertTrue(origTransformFilePair.origData().isEmpty());
-        assertTrue(updatedOrigTransformFilePair1.origData().isPresent());
-        assertEquals(origData1, updatedOrigTransformFilePair1.origData().get());
+        assertTrue(origTransformFilePair.origFile().isEmpty());
+        assertTrue(updatedOrigTransformFilePair1.origFile().isPresent());
+        assertEquals(origData1, updatedOrigTransformFilePair1.origFile().get());
 
         int testVersion2 = 2;
         HashSet<String> variableNames2 = new HashSet<>(Arrays.asList("var3", "var4"));
@@ -48,8 +48,8 @@ public class OrigTransformFilePairTest {
         OrigTransformFilePair updatedOrigTransformFilePair2 = updatedOrigTransformFilePair1.updateOrigData(origData2);
 
         assertNotEquals(updatedOrigTransformFilePair1, updatedOrigTransformFilePair2);
-        assertTrue(updatedOrigTransformFilePair2.origData().isPresent());
-        assertEquals(origData2, updatedOrigTransformFilePair2.origData().get());
+        assertTrue(updatedOrigTransformFilePair2.origFile().isPresent());
+        assertEquals(origData2, updatedOrigTransformFilePair2.origFile().get());
     }
 
     @Test
@@ -66,9 +66,9 @@ public class OrigTransformFilePairTest {
         OrigTransformFilePair updatedOrigTransformFilePair1 = origTransformFilePair.updateTransformData(transformData1);
 
         assertNotEquals(origTransformFilePair, updatedOrigTransformFilePair1);
-        assertTrue(origTransformFilePair.transformData().isEmpty());
-        assertTrue(updatedOrigTransformFilePair1.transformData().isPresent());
-        assertEquals(transformData1, updatedOrigTransformFilePair1.transformData().get());
+        assertTrue(origTransformFilePair.transformFile().isEmpty());
+        assertTrue(updatedOrigTransformFilePair1.transformFile().isPresent());
+        assertEquals(transformData1, updatedOrigTransformFilePair1.transformFile().get());
 
         int testVersion2 = 2;
         HashSet<String> variableNames2 = new HashSet<>(Arrays.asList("var3", "var4"));
@@ -76,7 +76,7 @@ public class OrigTransformFilePairTest {
         OrigTransformFilePair updatedOrigTransformFilePair2 = updatedOrigTransformFilePair1.updateTransformData(transformData2);
 
         assertNotEquals(updatedOrigTransformFilePair1, updatedOrigTransformFilePair2);
-        assertTrue(updatedOrigTransformFilePair2.transformData().isPresent());
-        assertEquals(transformData2, updatedOrigTransformFilePair2.transformData().get());
+        assertTrue(updatedOrigTransformFilePair2.transformFile().isPresent());
+        assertEquals(transformData2, updatedOrigTransformFilePair2.transformFile().get());
     }
 }

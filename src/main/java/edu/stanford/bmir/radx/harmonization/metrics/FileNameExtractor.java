@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /*
-Helper class for extracting substrings from a file name.
+Helper class for extracting substrings from a file pairName.
  */
 @Component
 public class FileNameExtractor {
@@ -17,7 +17,7 @@ public class FileNameExtractor {
             "_v(\\d+)", "_DATA", "_origcopy", "_transformcopy", ".csv");
 
     /*
-    Shorten the name of a data file to a canonical form that ignores the
+    Shorten the pairName of a data file to a canonical form that ignores the
     version tag and the origcopy/transformcopy identifier on the file.
     This allows associating multiple data files that have the same
     ReducedFileName.
@@ -33,7 +33,7 @@ public class FileNameExtractor {
     }
 
     /*
-    Extract the version number from the name of a data file.
+    Extract the version number from the pairName of a data file.
     Example: "example_study_origcopy_v2.csv" yields version number 2.
      */
     public int extractVersion(String filename) throws NoVersionNumberException {

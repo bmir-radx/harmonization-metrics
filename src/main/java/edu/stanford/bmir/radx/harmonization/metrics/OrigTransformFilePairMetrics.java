@@ -4,7 +4,7 @@ import java.util.Optional;
 import java.util.Set;
 
 public record OrigTransformFilePairMetrics(
-        ReducedFileName name,
+        ReducedFileName pairName,
         ProgramIdentifier programIdentifier,
         StudyId studyId,
         Optional<Integer> versionOrig,
@@ -73,11 +73,11 @@ public record OrigTransformFilePairMetrics(
     }
 
     public static OrigTransformFilePairMetrics createMetricsFromDataSet(OrigTransformFilePair dataSet, HarmonizationChecker harmonizationChecker) throws InvalidProgramIdentifierException {
-        ReducedFileName name = dataSet.name();
+        ReducedFileName pairName = dataSet.pairName();
         ProgramIdentifier programIdentifier = dataSet.programIdentifier();
         StudyId studyId = dataSet.studyId();
-        Optional<DataFile> origData = dataSet.origData();
-        Optional<DataFile> transformData = dataSet.transformData();
+        Optional<OrigFile> origData = dataSet.origFile();
+        Optional<TransformFile> transformData = dataSet.transformFile();
 
         Optional<Integer> versionOrig;
         Optional<Integer> nDataElementsOrig;
@@ -115,7 +115,7 @@ public record OrigTransformFilePairMetrics(
             nHarmonizedDataElementsTransform = Optional.empty();
         }
 
-        return new OrigTransformFilePairMetrics(name, programIdentifier, studyId,
+        return new OrigTransformFilePairMetrics(pairName, programIdentifier, studyId,
                 versionOrig, nDataElementsOrig, nHarmonizableDataElementsOrig,
                 nHarmonizedDataElementsOrig, versionTransform, nDataElementsTransform,
                 nHarmonizableDataElementsTransform, nHarmonizedDataElementsTransform);

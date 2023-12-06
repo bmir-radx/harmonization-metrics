@@ -15,8 +15,8 @@ public class DataSetMetricsTest {
 //        OrigTransformFilePair dataSet = new OrigTransformFilePair(testName, testProgram, testStudyId);
 
 //        HashSet<String> origVariables = new HashSet<>(Arrays.asList("var1", "var2", "var4"));
-//        DataFile origData = new DataFile(1, origVariables);
-//        dataSet.setOrigData(origData);
+//        DataFile origFile = new DataFile(1, origVariables);
+//        dataSet.setOrigData(origFile);
 
 //        DataSetMetrics metrics = DataSetMetrics.createMetricsFromDataSet(dataSet, checker);
 //        assertTrue(metrics.hasOrig());
@@ -35,12 +35,12 @@ public class DataSetMetricsTest {
 //        OrigTransformFilePair dataSet = new OrigTransformFilePair(testName, testProgram, testStudyId);
 
 //        HashSet<String> origVariables = new HashSet<>(Arrays.asList("var1", "var2", "var4"));
-//        DataFile origData = new DataFile(1, origVariables);
-//        dataSet.setOrigData(origData);
+//        DataFile origFile = new DataFile(1, origVariables);
+//        dataSet.setOrigData(origFile);
 
 //        HashSet<String> transformVariables = new HashSet<>(Arrays.asList("harmonizedVar1", "harmonizedVar2", "var4"));
-//        DataFile transformData = new DataFile(1, transformVariables);
-//        dataSet.setTransformData(transformData);
+//        DataFile transformFile = new DataFile(1, transformVariables);
+//        dataSet.setTransformData(transformFile);
 
 //        DataSetMetrics metrics = DataSetMetrics.createMetricsFromDataSet(dataSet, checker);
 //        assertTrue(metrics.hasOrig());
