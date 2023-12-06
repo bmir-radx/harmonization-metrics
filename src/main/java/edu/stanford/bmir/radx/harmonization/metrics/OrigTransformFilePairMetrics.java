@@ -23,16 +23,8 @@ public record OrigTransformFilePairMetrics(
         return nHarmonizableDataElements > 0;
     }
 
-    public boolean hasNoHarmonizableElements() {
-        return nHarmonizableDataElements == 0;
-    }
-
     public boolean hasHarmonizedElements() {
         return nHarmonizedDataElements > 0;
-    }
-
-    public boolean hasNoHarmonizedElements() {
-        return nHarmonizedDataElements == 0;
     }
 
     public boolean isHarmonizable() {
@@ -44,10 +36,10 @@ public record OrigTransformFilePairMetrics(
     }
 
     public boolean isHarmonized() {
-        return hasNoHarmonizableElements();
+        return !hasHarmonizableElements();
     }
 
     public boolean isTriviallyHarmonized() {
-        return hasNoHarmonizableElements() && hasNoHarmonizedElements();
+        return !hasHarmonizableElements() && !hasHarmonizedElements();
     }
 }
