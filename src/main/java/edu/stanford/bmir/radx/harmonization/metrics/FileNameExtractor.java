@@ -12,8 +12,8 @@ Helper class for extracting substrings from a file pairName.
  */
 @Component
 public class FileNameExtractor {
-    private Pattern VERSION_TAG_REGEX = Pattern.compile("_v(\\d+)\\.csv");
-    private List<String> SEGMENTS_TO_DELETE_FROM_FILE_NAME = Arrays.asList(
+    private final Pattern VERSION_TAG_REGEX = Pattern.compile("_v(\\d+)\\.csv");
+    private final List<String> SEGMENTS_TO_DELETE_FROM_FILE_NAME = Arrays.asList(
             "_v(\\d+)", "_DATA", "_origcopy", "_transformcopy", ".csv");
 
     /*

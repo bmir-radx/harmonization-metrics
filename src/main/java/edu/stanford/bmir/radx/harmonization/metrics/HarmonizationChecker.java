@@ -7,7 +7,7 @@ import java.util.Set;
 @Component
 public class HarmonizationChecker {
 
-    private HarmonizationRules harmonizationRules;
+    private final HarmonizationRules harmonizationRules;
 
     public HarmonizationChecker(HarmonizationRules rules) {
         harmonizationRules = rules;

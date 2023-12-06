@@ -11,7 +11,7 @@ public enum OrigTransformIdentifier {
     ORIG("orig"),
     TRANSFORM("transform");
 
-    private String text;
+    private final String text;
 
     OrigTransformIdentifier(String text) {
         this.text = text;

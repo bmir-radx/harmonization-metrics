@@ -17,7 +17,7 @@ rules programmatically will improve the accuracy of metrics computed.
 @Component
 public class SimpleGlobalCodebookRules implements HarmonizationRules {
 
-    private Map<ProgramIdentifier, Map<String, String>> map;
+    private final Map<ProgramIdentifier, Map<String, String>> map;
 
     public boolean isHarmonizable(ProgramIdentifier programIdentifier, String element) throws InvalidProgramIdentifierException {
         if (!map.containsKey(programIdentifier)) {

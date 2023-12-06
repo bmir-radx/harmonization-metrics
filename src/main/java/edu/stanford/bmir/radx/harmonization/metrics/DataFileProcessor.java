@@ -16,8 +16,8 @@ into DataFile and OrigTransformFilePair objects.
 @Component
 public class DataFileProcessor {
 
-    private FileNameExtractor fileNameExtractor;
-    private VariableNameCleaner variableNameCleaner;
+    private final FileNameExtractor fileNameExtractor;
+    private final VariableNameCleaner variableNameCleaner;
 
     public DataFileProcessor(FileNameExtractor fileNameExtractor,
                              VariableNameCleaner variableNameCleaner) {

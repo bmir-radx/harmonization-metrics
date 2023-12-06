@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 @Component
 public class VariableNameCleaner {
-    private Pattern VARIABLE_CLEANER_REGEX = Pattern.compile("(_+\\d+)+$");
+    private final Pattern VARIABLE_CLEANER_REGEX = Pattern.compile("(_+\\d+)+$");
 
     /*
     Reduce a variable pairName to its canonical form. This specifically addresses
