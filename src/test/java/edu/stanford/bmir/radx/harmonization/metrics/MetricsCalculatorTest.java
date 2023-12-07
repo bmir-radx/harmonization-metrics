@@ -80,7 +80,7 @@ class MetricsCalculatorTest {
         assertEquals(1, aggregateMetrics.nPartiallyHarmonizedOrigTransformFilePairs());
         assertEquals(2, aggregateMetrics.nHarmonizedOrigTransformFilePairs());
         assertEquals(1, aggregateMetrics.nTriviallyHarmonizedOrigTransformFilePairs());
-        assertEquals(7, aggregateMetrics.nHarmonizableDataElements());
+        assertEquals(7, aggregateMetrics.nMissedHarmonizableDataElements());
         assertEquals(14, aggregateMetrics.nHarmonizedDataElements());
         assertEquals(5, aggregateMetrics.nNonHarmonizableDataElements());
     }

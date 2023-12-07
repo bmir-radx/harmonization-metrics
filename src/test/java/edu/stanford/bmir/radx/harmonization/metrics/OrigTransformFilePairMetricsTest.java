@@ -23,7 +23,7 @@ class OrigTransformFilePairMetricsTest {
                 Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
                 Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
                 nHarmonizableDataElements, nHarmonizedDataElements, nNonHarmonizableDataElements);
-        assertTrue(metrics.hasHarmonizableElements());
+        assertTrue(metrics.hasMissedHarmonizableElements());
     }
 
     @Test
@@ -36,7 +36,7 @@ class OrigTransformFilePairMetricsTest {
                 Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
                 Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
                 nHarmonizableDataElements, nHarmonizedDataElements, nNonHarmonizableDataElements);
-        assertFalse(metrics.hasHarmonizableElements());
+        assertFalse(metrics.hasMissedHarmonizableElements());
     }
 
     @Test

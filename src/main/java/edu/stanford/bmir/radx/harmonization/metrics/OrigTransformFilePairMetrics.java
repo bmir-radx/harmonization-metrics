@@ -1,7 +1,6 @@
 package edu.stanford.bmir.radx.harmonization.metrics;
 
 import java.util.Optional;
-import java.util.Set;
 
 /*
 Metrics per OrigTransformFilePair. Each OrigTranformFilePair
@@ -20,12 +19,12 @@ public record OrigTransformFilePairMetrics(
         Optional<Integer> nDataElementsTransform,
         Optional<Integer> nHarmonizableDataElementsTransform,
         Optional<Integer> nHarmonizedDataElementsTransform,
-        Integer nHarmonizableDataElements,
+        Integer nMissedHarmonizableDataElements,
         Integer nHarmonizedDataElements,
         Integer nNonHarmonizableDataElements) {
 
-    public boolean hasHarmonizableElements() {
-        return nHarmonizableDataElements > 0;
+    public boolean hasMissedHarmonizableElements() {
+        return nMissedHarmonizableDataElements > 0;
     }
 
     public boolean hasHarmonizedElements() {
@@ -33,18 +32,18 @@ public record OrigTransformFilePairMetrics(
     }
 
     public boolean isHarmonizable() {
-        return hasHarmonizableElements();
+        return hasMissedHarmonizableElements();
     }
 
     public boolean isPartiallyHarmonized() {
-        return hasHarmonizableElements() && hasHarmonizedElements();
+        return hasMissedHarmonizableElements() && hasHarmonizedElements();
     }
 
     public boolean isHarmonized() {
-        return !hasHarmonizableElements();
+        return !hasMissedHarmonizableElements();
     }
 
     public boolean isTriviallyHarmonized() {
-        return !hasHarmonizableElements() && !hasHarmonizedElements();
+        return !hasMissedHarmonizableElements() && !hasHarmonizedElements();
     }
 }

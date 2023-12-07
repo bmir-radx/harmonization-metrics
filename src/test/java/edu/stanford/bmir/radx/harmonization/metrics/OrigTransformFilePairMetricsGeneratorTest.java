@@ -58,7 +58,7 @@ class OrigTransformFilePairMetricsGeneratorTest {
         assertFalse(metrics.nDataElementsTransform().isPresent());
         assertFalse(metrics.nHarmonizableDataElementsTransform().isPresent());
         assertFalse(metrics.nHarmonizedDataElementsTransform().isPresent());
-        assertEquals(nHarmonizableDataElementsOrig, metrics.nHarmonizableDataElements());
+        assertEquals(nHarmonizableDataElementsOrig, metrics.nMissedHarmonizableDataElements());
         assertEquals(nHarmonizedDataElementsOrig, metrics.nHarmonizedDataElements());
         Integer nNonHarmonizableDataElements = variableNames.size() - nHarmonizableDataElementsOrig - nHarmonizedDataElementsOrig;
         assertEquals(nNonHarmonizableDataElements, metrics.nNonHarmonizableDataElements());
@@ -110,7 +110,7 @@ class OrigTransformFilePairMetricsGeneratorTest {
         assertEquals(variableNames.size(), metrics.nDataElementsTransform().get());
         assertEquals(nHarmonizableDataElementsTransform, metrics.nHarmonizableDataElementsTransform().get());
         assertEquals(nHarmonizedDataElementsTransform, metrics.nHarmonizedDataElementsTransform().get());
-        assertEquals(nHarmonizableDataElementsTransform, metrics.nHarmonizableDataElements());
+        assertEquals(nHarmonizableDataElementsTransform, metrics.nMissedHarmonizableDataElements());
         assertEquals(nHarmonizedDataElementsTransform, metrics.nHarmonizedDataElements());
         Integer nNonHarmonizableDataElements = variableNames.size() - nHarmonizableDataElementsTransform - nHarmonizedDataElementsTransform;
         assertEquals(nNonHarmonizableDataElements, metrics.nNonHarmonizableDataElements());
@@ -173,7 +173,7 @@ class OrigTransformFilePairMetricsGeneratorTest {
         assertEquals(transformVariableNames.size(), metrics.nDataElementsTransform().get());
         assertEquals(nHarmonizableDataElementsTransform, metrics.nHarmonizableDataElementsTransform().get());
         assertEquals(nHarmonizedDataElementsTransform, metrics.nHarmonizedDataElementsTransform().get());
-        assertEquals(nHarmonizableDataElementsTransform, metrics.nHarmonizableDataElements());
+        assertEquals(nHarmonizableDataElementsTransform, metrics.nMissedHarmonizableDataElements());
         assertEquals(nHarmonizedDataElementsTransform, metrics.nHarmonizedDataElements());
         Integer nNonHarmonizableDataElements = transformVariableNames.size() - nHarmonizableDataElementsTransform - nHarmonizedDataElementsTransform;
         assertEquals(nNonHarmonizableDataElements, metrics.nNonHarmonizableDataElements());

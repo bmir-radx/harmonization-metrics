@@ -8,7 +8,7 @@ public record AggregateMetrics(
     int nPartiallyHarmonizedOrigTransformFilePairs,
     int nHarmonizedOrigTransformFilePairs,
     int nTriviallyHarmonizedOrigTransformFilePairs,
-    int nHarmonizableDataElements,
+    int nMissedHarmonizableDataElements,
     int nHarmonizedDataElements,
     int nNonHarmonizableDataElements) {
 
@@ -19,7 +19,7 @@ public record AggregateMetrics(
         int nPartiallyHarmonizedOrigTransformFilePairs = 0;
         int nHarmonizedOrigTransformFilePairs = 0;
         int nTriviallyHarmonizedOrigTransformFilePairs = 0;
-        int nHarmonizableDataElements = 0;
+        int nMissedHarmonizableDataElements = 0;
         int nHarmonizedDataElements = 0;
         int nNonHarmonizableDataElements = 0;
 
@@ -36,7 +36,7 @@ public record AggregateMetrics(
             if (metrics.isTriviallyHarmonized()) {
                 nTriviallyHarmonizedOrigTransformFilePairs++;
             }
-            nHarmonizableDataElements = nHarmonizableDataElements + metrics.nHarmonizableDataElements();
+            nMissedHarmonizableDataElements = nMissedHarmonizableDataElements + metrics.nMissedHarmonizableDataElements();
             nHarmonizedDataElements = nHarmonizedDataElements + metrics.nHarmonizedDataElements();
             nNonHarmonizableDataElements = nNonHarmonizableDataElements + metrics.nNonHarmonizableDataElements();
         }
@@ -47,7 +47,7 @@ public record AggregateMetrics(
                 nPartiallyHarmonizedOrigTransformFilePairs,
                 nHarmonizedOrigTransformFilePairs,
                 nTriviallyHarmonizedOrigTransformFilePairs,
-                nHarmonizableDataElements,
+                nMissedHarmonizableDataElements,
                 nHarmonizedDataElements,
                 nNonHarmonizableDataElements);
     }
