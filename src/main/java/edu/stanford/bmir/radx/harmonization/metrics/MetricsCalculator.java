@@ -15,14 +15,11 @@ are computed per OrigTransformFilePair and then aggregated for reporting.
  */
 @Component
 public class MetricsCalculator {
-    private final HarmonizationChecker harmonizationChecker; // this is set up to have rules injected
     private final DataFileProcessor dataFileProcessor; // component with no additional bean dependencies
     private final OrigTransformFilePairMetricsGenerator metricsGenerator; // has a harmonization checker as a dependency
 
-    public MetricsCalculator(HarmonizationChecker harmonizationChecker,
-                             DataFileProcessor dataFileProcessor,
+    public MetricsCalculator(DataFileProcessor dataFileProcessor,
                              OrigTransformFilePairMetricsGenerator metricsGenerator) {
-        this.harmonizationChecker = harmonizationChecker;
         this.dataFileProcessor = dataFileProcessor;
         this.metricsGenerator = metricsGenerator;
     }
