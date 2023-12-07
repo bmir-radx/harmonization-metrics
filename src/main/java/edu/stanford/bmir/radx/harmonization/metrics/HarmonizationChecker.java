@@ -4,6 +4,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
+/*
+This is a helper that uses the provided HarmonizationRules
+to count harmonizable data elements.
+ */
 @Component
 public class HarmonizationChecker {
 

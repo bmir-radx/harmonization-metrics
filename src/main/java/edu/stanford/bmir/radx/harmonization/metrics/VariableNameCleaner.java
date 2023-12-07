@@ -10,7 +10,7 @@ public class VariableNameCleaner {
     private final Pattern VARIABLE_CLEANER_REGEX = Pattern.compile("(_+\\d+)+$");
 
     /*
-    Reduce a variable pairName to its canonical form. This specifically addresses
+    Reduce a variable to its canonical form. This specifically addresses
     the case of variable names representing one-hot encodings and variable
     names that denote RedCAP versions.
     Examples:

@@ -2,6 +2,10 @@ package edu.stanford.bmir.radx.harmonization.metrics;
 
 import java.util.Optional;
 
+/*
+This class pairs an origFile with its corresponding transformFile
+if possible. It is possible that one of the pair may not exist.
+ */
 public record OrigTransformFilePair(
         ReducedFileName pairName,
         ProgramIdentifier programIdentifier,

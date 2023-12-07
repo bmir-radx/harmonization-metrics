@@ -6,6 +6,9 @@ import picocli.CommandLine;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+/*
+This implements a command line interface for the Harmonization Metrics Library.
+ */
 @Component
 @CommandLine.Command(name = "calculate-metrics")
 public class CalculateMetricsCommand implements Callable<Integer> {

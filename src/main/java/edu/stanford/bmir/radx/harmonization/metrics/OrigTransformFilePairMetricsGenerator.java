@@ -5,6 +5,10 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 import java.util.Set;
 
+/*
+Helper class to generate one OrigTransformFilePairMetrics
+object for a given OrigTransformFilePair.
+ */
 @Component
 public class OrigTransformFilePairMetricsGenerator {
 

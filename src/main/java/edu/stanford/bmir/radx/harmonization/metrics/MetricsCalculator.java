@@ -9,9 +9,8 @@ import java.util.Map;
 /*
 This is the main worker for this library. MetricsCalculator uses the
 DataFileProcessor to process information about data files into
-OrigTransformFilePair objects, which are then checked against the
-HarmonizationChecker. Metrics regarding the extent of harmonization
-are computed per OrigTransformFilePair and then aggregated for reporting.
+OrigTransformFilePair objects. Metrics regarding the extent of harmonization
+are generated for each OrigTransformFilePair and then aggregated for reporting.
  */
 @Component
 public class MetricsCalculator {

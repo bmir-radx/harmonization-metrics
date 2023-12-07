@@ -9,9 +9,8 @@ import java.util.Map;
 import java.util.Set;
 
 /*
-This processor takes Java objects from the Data Hub that
-contain information about data files and converts them
-into DataFile and OrigTransformFilePair objects.
+This processor takes DataFileExternal objects and converts
+them into DataFile and OrigTransformFilePair objects.
  */
 @Component
 public class DataFileProcessor {

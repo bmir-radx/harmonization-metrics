@@ -9,6 +9,14 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+This is a helper class to support testing. Information about data files,
+including the file names, data element headers, etc., are read in from
+a .json file and converted to DataFileExternal objects.
+
+This should not be used by the Data Hub. The Data Hub should generate
+DataFileExternal objects directly from the stored data files instead.
+ */
 @Component
 public class TrialDataProcessor {
 
