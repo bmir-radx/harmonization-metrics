@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -27,7 +29,8 @@ public class TrialDataProcessor {
     }
 
     private List<DataFileExternal> readJsonToList(String fileName) throws IOException {
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(fileName);
+        File file = new File(fileName);
+        InputStream inputStream = new FileInputStream(file);
         String jsonString = new String(inputStream.readAllBytes());
         JsonNode tree = mapper.readTree(jsonString);
 
