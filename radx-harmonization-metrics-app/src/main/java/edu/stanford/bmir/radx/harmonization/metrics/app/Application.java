@@ -14,7 +14,6 @@ public class Application implements CommandLineRunner {
     private ApplicationContext applicationContext;
 
     public static void main(String[] args) {
-        System.setProperty("spring.main.banner-mode", "off");
         SpringApplication.run(Application.class, args);
     }
 
