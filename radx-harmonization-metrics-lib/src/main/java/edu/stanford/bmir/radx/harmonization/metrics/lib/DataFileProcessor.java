@@ -30,20 +30,20 @@ public class DataFileProcessor {
     and the origcopy/transformcopy label.
      */
     public Map<ReducedFileName, OrigTransformFilePair> processDataFiles(List<DataFileExternal> externalDataFiles)
-            throws InvalidProgramIdentifierException, InvalidOrigTransformIdentifierException, NoVersionNumberException {
+            throws InvalidProgramIdException, InvalidOrigTransformCategoryException, NoVersionNumberException {
         Map<ReducedFileName, OrigTransformFilePair> dataFilePairMap = new HashMap<>();
         for (DataFileExternal externalDataFile: externalDataFiles) {
             // pull relevant information out of external representation of the data file
             StudyId studyId = StudyId.valueOf(externalDataFile.studyId());
-            ProgramIdentifier programIdentifier = ProgramIdentifier.fromString(externalDataFile.program());
-            OrigTransformIdentifier otIdentifier = OrigTransformIdentifier.fromString(externalDataFile.category());
+            ProgramId programId = ProgramId.fromString(externalDataFile.program());
+            OrigTransformCategory otIdentifier = OrigTransformCategory.fromString(externalDataFile.category());
             int version = fileNameExtractor.extractVersion(externalDataFile.fileName());
             ReducedFileName name = fileNameExtractor.extractReducedFileName(externalDataFile.fileName());
             Set<String> variableNames = preprocessVariableNames(externalDataFile.variableNames());
 
             // store the information in the internal data file pair representation
             if (!dataFilePairMap.containsKey(name)) {
-                dataFilePairMap.put(name, new OrigTransformFilePair(name, programIdentifier, studyId));
+                dataFilePairMap.put(name, new OrigTransformFilePair(name, programId, studyId));
             }
             OrigTransformFilePair currentPair = dataFilePairMap.get(name);
             switch(otIdentifier) {

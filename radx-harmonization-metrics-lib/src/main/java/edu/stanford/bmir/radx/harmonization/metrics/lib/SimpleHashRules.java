@@ -20,55 +20,55 @@ rules programmatically will improve the accuracy of metrics computed.
 @Component
 public class SimpleHashRules implements HarmonizationRules {
 
-    private final Map<ProgramIdentifier, Map<String, String>> tier1Map;
-    private final Map<ProgramIdentifier, Set<String>> tier2Map;
+    private final Map<ProgramId, Map<String, String>> tier1Map;
+    private final Map<ProgramId, Set<String>> tier2Map;
     private final ObjectMapper mapper = new ObjectMapper();
 
-    public boolean isHarmonizable(ProgramIdentifier programIdentifier, String element) throws InvalidProgramIdentifierException {
-        if (!(tier1Map.containsKey(programIdentifier) && tier2Map.containsKey(programIdentifier))) {
-            throw new InvalidProgramIdentifierException(programIdentifier.toString());
+    public boolean isHarmonizable(ProgramId programId, String element) throws InvalidProgramIdException {
+        if (!(tier1Map.containsKey(programId) && tier2Map.containsKey(programId))) {
+            throw new InvalidProgramIdException(programId.toString());
         }
-        return tier1Map.get(programIdentifier).containsKey(element);
+        return tier1Map.get(programId).containsKey(element);
     }
 
-    public boolean isHarmonized(ProgramIdentifier programIdentifier, String element) throws InvalidProgramIdentifierException {
-        if (!(tier1Map.containsKey(programIdentifier) && tier2Map.containsKey(programIdentifier))) {
-            throw new InvalidProgramIdentifierException(programIdentifier.toString());
+    public boolean isHarmonized(ProgramId programId, String element) throws InvalidProgramIdException {
+        if (!(tier1Map.containsKey(programId) && tier2Map.containsKey(programId))) {
+            throw new InvalidProgramIdException(programId.toString());
         }
-        return tier1Map.get(programIdentifier).containsKey(element) ||
-                tier2Map.get(programIdentifier).contains(element);
+        return tier1Map.get(programId).containsKey(element) ||
+                tier2Map.get(programId).contains(element);
     }
 
-    public SimpleHashRules() throws IOException, InvalidProgramIdentifierException {
+    public SimpleHashRules() throws IOException, InvalidProgramIdException {
         tier1Map = readJsonToTier1Map("global_codebook_rules.json");
         tier2Map = readJsonToTier2Map("tier2_elements.json");
     }
 
-    private Map<ProgramIdentifier, Map<String, String>> readJsonToTier1Map(String fileName)
-            throws IOException, InvalidProgramIdentifierException {
+    private Map<ProgramId, Map<String, String>> readJsonToTier1Map(String fileName)
+            throws IOException, InvalidProgramIdException {
         InputStream is = getClass().getClassLoader().getResourceAsStream(fileName);
         String jsonString = new String(is.readAllBytes());
         JsonNode tree = mapper.readTree(jsonString);
         Map<String, Map<String, String>> map = mapper.convertValue(tree, Map.class);
 
-        Map<ProgramIdentifier, Map<String, String>> codebook = new HashMap<>();
+        Map<ProgramId, Map<String, String>> codebook = new HashMap<>();
         for (String key: map.keySet()) {
-            codebook.put(ProgramIdentifier.fromString(key), map.get(key));
+            codebook.put(ProgramId.fromString(key), map.get(key));
         }
 
         return codebook;
     }
 
-     private Map<ProgramIdentifier, Set<String>> readJsonToTier2Map(String fileName)
-             throws IOException, InvalidProgramIdentifierException {
+     private Map<ProgramId, Set<String>> readJsonToTier2Map(String fileName)
+             throws IOException, InvalidProgramIdException {
          InputStream is = getClass().getClassLoader().getResourceAsStream(fileName);
          String jsonString = new String(is.readAllBytes());
          JsonNode tree = mapper.readTree(jsonString);
          Map<String, List<String>> map = mapper.convertValue(tree, Map.class);
 
-         Map<ProgramIdentifier, Set<String>> lookupTable = new HashMap<>();
+         Map<ProgramId, Set<String>> lookupTable = new HashMap<>();
          for (String key: map.keySet()) {
-             lookupTable.put(ProgramIdentifier.fromString(key), new HashSet<>(map.get(key)));
+             lookupTable.put(ProgramId.fromString(key), new HashSet<>(map.get(key)));
          }
 
          return lookupTable;

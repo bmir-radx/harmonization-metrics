@@ -24,7 +24,7 @@ public class MetricsCalculator {
     }
 
     public AggregateMetrics computeHarmonizationMetrics(List<DataFileExternal> dataFiles)
-            throws InvalidProgramIdentifierException, InvalidOrigTransformIdentifierException, NoVersionNumberException {
+            throws InvalidProgramIdException, InvalidOrigTransformCategoryException, NoVersionNumberException {
         Map<ReducedFileName, OrigTransformFilePair> filePairMap = dataFileProcessor.processDataFiles(dataFiles);
         List<OrigTransformFilePairMetrics> metricsPerFilePair = new ArrayList<>();
         for (OrigTransformFilePair origTransformFilePair : filePairMap.values()) {

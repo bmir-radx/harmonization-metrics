@@ -13,12 +13,12 @@ public class OrigTransformFilePairTest {
     @Test
     public void testNoDataFileConstructor() {
         ReducedFileName testName = ReducedFileName.valueOf("testName");
-        ProgramIdentifier testProgramIdentifier = ProgramIdentifier.RADXUP;
+        ProgramId testProgramId = ProgramId.RADXUP;
         StudyId testStudyId = StudyId.valueOf("testStudyId");
-        OrigTransformFilePair dataSet = new OrigTransformFilePair(testName, testProgramIdentifier, testStudyId);
+        OrigTransformFilePair dataSet = new OrigTransformFilePair(testName, testProgramId, testStudyId);
 
         assertEquals(testName, dataSet.pairName());
-        assertEquals(testProgramIdentifier, dataSet.programIdentifier());
+        assertEquals(testProgramId, dataSet.programId());
         assertEquals(testStudyId, dataSet.studyId());
         assertTrue(dataSet.origFile().isEmpty());
         assertTrue(dataSet.transformFile().isEmpty());
@@ -28,9 +28,9 @@ public class OrigTransformFilePairTest {
     public void testUpdateOrigData() {
         String fileName = "filename";
         ReducedFileName testName = ReducedFileName.valueOf("testName");
-        ProgramIdentifier testProgramIdentifier = ProgramIdentifier.RADXUP;
+        ProgramId testProgramId = ProgramId.RADXUP;
         StudyId testStudyId = StudyId.valueOf("testStudyId");
-        OrigTransformFilePair origTransformFilePair = new OrigTransformFilePair(testName, testProgramIdentifier, testStudyId);
+        OrigTransformFilePair origTransformFilePair = new OrigTransformFilePair(testName, testProgramId, testStudyId);
 
         int testVersion1 = 1;
         HashSet<String> variableNames1 = new HashSet<>(Arrays.asList("var1", "var2"));
@@ -56,9 +56,9 @@ public class OrigTransformFilePairTest {
     public void testSetTransformData() {
         String fileName = "fileName";
         ReducedFileName testName = ReducedFileName.valueOf("testName");
-        ProgramIdentifier testProgramIdentifier = ProgramIdentifier.RADXUP;
+        ProgramId testProgramId = ProgramId.RADXUP;
         StudyId testStudyId = StudyId.valueOf("testStudyId");
-        OrigTransformFilePair origTransformFilePair = new OrigTransformFilePair(testName, testProgramIdentifier, testStudyId);
+        OrigTransformFilePair origTransformFilePair = new OrigTransformFilePair(testName, testProgramId, testStudyId);
 
         int testVersion1 = 1;
         HashSet<String> variableNames1 = new HashSet<>(Arrays.asList("var1", "var2"));

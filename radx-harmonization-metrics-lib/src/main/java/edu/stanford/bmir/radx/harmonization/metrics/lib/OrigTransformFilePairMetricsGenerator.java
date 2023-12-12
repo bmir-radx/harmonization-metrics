@@ -19,9 +19,9 @@ public class OrigTransformFilePairMetricsGenerator {
     }
 
     public OrigTransformFilePairMetrics createMetricsFromFilePair(OrigTransformFilePair filePair)
-            throws InvalidProgramIdentifierException {
+            throws InvalidProgramIdException {
         ReducedFileName pairName = filePair.pairName();
-        ProgramIdentifier programIdentifier = filePair.programIdentifier();
+        ProgramId programId = filePair.programId();
         StudyId studyId = filePair.studyId();
         Optional<OrigFile> origData = filePair.origFile();
         Optional<TransformFile> transformData = filePair.transformFile();
@@ -35,8 +35,8 @@ public class OrigTransformFilePairMetricsGenerator {
             versionOrig = Optional.of(origData.get().version());
             Set<String> variableNames = origData.get().variableNames();
             nDataElementsOrig = Optional.of(variableNames.size());
-            nHarmonizableDataElementsOrig = Optional.of(harmonizationChecker.countHarmonizableElements(programIdentifier, variableNames));
-            nHarmonizedDataElementsOrig = Optional.of(harmonizationChecker.countHarmonizedElements(programIdentifier, variableNames));
+            nHarmonizableDataElementsOrig = Optional.of(harmonizationChecker.countHarmonizableElements(programId, variableNames));
+            nHarmonizedDataElementsOrig = Optional.of(harmonizationChecker.countHarmonizedElements(programId, variableNames));
         } else {
             versionOrig = Optional.empty();
             nDataElementsOrig = Optional.empty();
@@ -53,8 +53,8 @@ public class OrigTransformFilePairMetricsGenerator {
             versionTransform = Optional.of(transformData.get().version());
             Set<String> variableNames = transformData.get().variableNames();
             nDataElementsTransform = Optional.of(variableNames.size());
-            nHarmonizableDataElementsTransform = Optional.of(harmonizationChecker.countHarmonizableElements(programIdentifier, variableNames));
-            nHarmonizedDataElementsTransform = Optional.of(harmonizationChecker.countHarmonizedElements(programIdentifier, variableNames));
+            nHarmonizableDataElementsTransform = Optional.of(harmonizationChecker.countHarmonizableElements(programId, variableNames));
+            nHarmonizedDataElementsTransform = Optional.of(harmonizationChecker.countHarmonizedElements(programId, variableNames));
         } else {
             versionTransform = Optional.empty();
             nDataElementsTransform = Optional.empty();
@@ -80,7 +80,7 @@ public class OrigTransformFilePairMetricsGenerator {
             nNonHarmonizableDataElements = nDataElementsOrig.get() - nHarmonizableDataElements - nHarmonizedDataElements;
         }
 
-        return new OrigTransformFilePairMetrics(pairName, programIdentifier, studyId,
+        return new OrigTransformFilePairMetrics(pairName, programId, studyId,
                 versionOrig, nDataElementsOrig, nHarmonizableDataElementsOrig,
                 nHarmonizedDataElementsOrig, versionTransform, nDataElementsTransform,
                 nHarmonizableDataElementsTransform, nHarmonizedDataElementsTransform,

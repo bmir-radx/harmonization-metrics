@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 class OrigTransformFilePairMetricsTest {
 
     ReducedFileName testName = ReducedFileName.valueOf("testName");
-    ProgramIdentifier testProgramIdentifier = ProgramIdentifier.RADXUP;
+    ProgramId testProgramId = ProgramId.RADXUP;
     StudyId testStudyId = StudyId.valueOf("testStudyId");
 
     @Test
@@ -19,7 +19,7 @@ class OrigTransformFilePairMetricsTest {
         int nHarmonizedDataElements = 2;
         int nNonHarmonizableDataElements = 3;
         OrigTransformFilePairMetrics metrics = new OrigTransformFilePairMetrics(
-                testName, testProgramIdentifier, testStudyId,
+                testName, testProgramId, testStudyId,
                 Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
                 Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
                 nHarmonizableDataElements, nHarmonizedDataElements, nNonHarmonizableDataElements);
@@ -32,7 +32,7 @@ class OrigTransformFilePairMetricsTest {
         int nHarmonizedDataElements = 2;
         int nNonHarmonizableDataElements = 3;
         OrigTransformFilePairMetrics metrics = new OrigTransformFilePairMetrics(
-                testName, testProgramIdentifier, testStudyId,
+                testName, testProgramId, testStudyId,
                 Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
                 Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
                 nHarmonizableDataElements, nHarmonizedDataElements, nNonHarmonizableDataElements);
@@ -45,7 +45,7 @@ class OrigTransformFilePairMetricsTest {
         int nHarmonizedDataElements = 2;
         int nNonHarmonizableDataElements = 3;
         OrigTransformFilePairMetrics metrics = new OrigTransformFilePairMetrics(
-                testName, testProgramIdentifier, testStudyId,
+                testName, testProgramId, testStudyId,
                 Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
                 Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
                 nHarmonizableDataElements, nHarmonizedDataElements, nNonHarmonizableDataElements);
@@ -58,7 +58,7 @@ class OrigTransformFilePairMetricsTest {
         int nHarmonizedDataElements = 0;
         int nNonHarmonizableDataElements = 3;
         OrigTransformFilePairMetrics metrics = new OrigTransformFilePairMetrics(
-                testName, testProgramIdentifier, testStudyId,
+                testName, testProgramId, testStudyId,
                 Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
                 Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
                 nHarmonizableDataElements, nHarmonizedDataElements, nNonHarmonizableDataElements);
@@ -71,7 +71,7 @@ class OrigTransformFilePairMetricsTest {
         int nHarmonizedDataElements = 2;
         int nNonHarmonizableDataElements = 3;
         OrigTransformFilePairMetrics metrics = new OrigTransformFilePairMetrics(
-                testName, testProgramIdentifier, testStudyId,
+                testName, testProgramId, testStudyId,
                 Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
                 Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
                 nHarmonizableDataElements, nHarmonizedDataElements, nNonHarmonizableDataElements);
@@ -85,7 +85,7 @@ class OrigTransformFilePairMetricsTest {
         int nHarmonizedDataElements = 0;
         int nNonHarmonizableDataElements = 3;
         OrigTransformFilePairMetrics metrics = new OrigTransformFilePairMetrics(
-                testName, testProgramIdentifier, testStudyId,
+                testName, testProgramId, testStudyId,
                 Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
                 Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
                 nHarmonizableDataElements, nHarmonizedDataElements, nNonHarmonizableDataElements);
@@ -99,7 +99,7 @@ class OrigTransformFilePairMetricsTest {
         int nHarmonizedDataElements = 2;
         int nNonHarmonizableDataElements = 3;
         OrigTransformFilePairMetrics metrics = new OrigTransformFilePairMetrics(
-                testName, testProgramIdentifier, testStudyId,
+                testName, testProgramId, testStudyId,
                 Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
                 Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
                 nHarmonizableDataElements, nHarmonizedDataElements, nNonHarmonizableDataElements);
@@ -112,7 +112,7 @@ class OrigTransformFilePairMetricsTest {
         int nHarmonizedDataElements = 2;
         int nNonHarmonizableDataElements = 3;
         OrigTransformFilePairMetrics metrics = new OrigTransformFilePairMetrics(
-                testName, testProgramIdentifier, testStudyId,
+                testName, testProgramId, testStudyId,
                 Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
                 Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
                 nHarmonizableDataElements, nHarmonizedDataElements, nNonHarmonizableDataElements);
@@ -125,7 +125,7 @@ class OrigTransformFilePairMetricsTest {
         int nHarmonizedDataElements = 2;
         int nNonHarmonizableDataElements = 3;
         OrigTransformFilePairMetrics metrics = new OrigTransformFilePairMetrics(
-                testName, testProgramIdentifier, testStudyId,
+                testName, testProgramId, testStudyId,
                 Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
                 Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
                 nHarmonizableDataElements, nHarmonizedDataElements, nNonHarmonizableDataElements);
@@ -139,7 +139,7 @@ class OrigTransformFilePairMetricsTest {
         int nHarmonizedDataElements = 0;
         int nNonHarmonizableDataElements = 3;
         OrigTransformFilePairMetrics metrics = new OrigTransformFilePairMetrics(
-                testName, testProgramIdentifier, testStudyId,
+                testName, testProgramId, testStudyId,
                 Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
                 Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
                 nHarmonizableDataElements, nHarmonizedDataElements, nNonHarmonizableDataElements);
@@ -153,7 +153,7 @@ class OrigTransformFilePairMetricsTest {
         int nHarmonizedDataElements = 1;
         int nNonHarmonizableDataElements = 3;
         OrigTransformFilePairMetrics metrics = new OrigTransformFilePairMetrics(
-                testName, testProgramIdentifier, testStudyId,
+                testName, testProgramId, testStudyId,
                 Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
                 Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
                 nHarmonizableDataElements, nHarmonizedDataElements, nNonHarmonizableDataElements);
@@ -166,7 +166,7 @@ class OrigTransformFilePairMetricsTest {
         int nHarmonizedDataElements = 2;
         int nNonHarmonizableDataElements = 3;
         OrigTransformFilePairMetrics metrics = new OrigTransformFilePairMetrics(
-                testName, testProgramIdentifier, testStudyId,
+                testName, testProgramId, testStudyId,
                 Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
                 Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
                 nHarmonizableDataElements, nHarmonizedDataElements, nNonHarmonizableDataElements);
@@ -179,7 +179,7 @@ class OrigTransformFilePairMetricsTest {
         int nHarmonizedDataElements = 0;
         int nNonHarmonizableDataElements = 3;
         OrigTransformFilePairMetrics metrics = new OrigTransformFilePairMetrics(
-                testName, testProgramIdentifier, testStudyId,
+                testName, testProgramId, testStudyId,
                 Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
                 Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
                 nHarmonizableDataElements, nHarmonizedDataElements, nNonHarmonizableDataElements);
@@ -193,7 +193,7 @@ class OrigTransformFilePairMetricsTest {
         int nHarmonizedDataElements = 1;
         int nNonHarmonizableDataElements = 3;
         OrigTransformFilePairMetrics metrics = new OrigTransformFilePairMetrics(
-                testName, testProgramIdentifier, testStudyId,
+                testName, testProgramId, testStudyId,
                 Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
                 Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
                 nHarmonizableDataElements, nHarmonizedDataElements, nNonHarmonizableDataElements);

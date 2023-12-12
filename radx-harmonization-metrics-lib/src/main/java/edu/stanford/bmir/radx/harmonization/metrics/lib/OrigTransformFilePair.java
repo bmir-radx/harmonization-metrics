@@ -8,13 +8,13 @@ if possible. It is possible that one of the pair may not exist.
  */
 public record OrigTransformFilePair(
         ReducedFileName pairName,
-        ProgramIdentifier programIdentifier,
+        ProgramId programId,
         StudyId studyId,
         Optional<OrigFile> origFile,
         Optional<TransformFile> transformFile) {
 
-    public OrigTransformFilePair(ReducedFileName name, ProgramIdentifier programIdentifier, StudyId studyId) {
-        this(name, programIdentifier, studyId, Optional.empty(), Optional.empty());
+    public OrigTransformFilePair(ReducedFileName name, ProgramId programId, StudyId studyId) {
+        this(name, programId, studyId, Optional.empty(), Optional.empty());
     }
 
     /*
@@ -23,7 +23,7 @@ public record OrigTransformFilePair(
     public OrigTransformFilePair updateOrigData(OrigFile newOrigData) {
         if (origFile.isEmpty() ||
                 (origFile.get().version() < newOrigData.version())) {
-            return new OrigTransformFilePair(pairName, programIdentifier, studyId,
+            return new OrigTransformFilePair(pairName, programId, studyId,
                     Optional.of(newOrigData), transformFile);
         } else {
             return this;
@@ -36,7 +36,7 @@ public record OrigTransformFilePair(
     public OrigTransformFilePair updateTransformData(TransformFile newTransformData) {
         if (transformFile.isEmpty() ||
                 (transformFile.get().version() < newTransformData.version())) {
-            return new OrigTransformFilePair(pairName, programIdentifier, studyId,
+            return new OrigTransformFilePair(pairName, programId, studyId,
                     origFile, Optional.of(newTransformData));
         } else {
             return this;

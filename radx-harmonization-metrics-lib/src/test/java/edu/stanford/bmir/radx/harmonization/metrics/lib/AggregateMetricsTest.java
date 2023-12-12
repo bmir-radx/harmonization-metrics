@@ -16,7 +16,7 @@ class AggregateMetricsTest {
 
         // counts toward harmonizable
         var origOnlyMetrics = new OrigTransformFilePairMetrics(
-                ReducedFileName.valueOf("1"), ProgramIdentifier.RADXUP, StudyId.valueOf("1"),
+                ReducedFileName.valueOf("1"), ProgramId.RADXUP, StudyId.valueOf("1"),
                 Optional.of(1), Optional.of(5), Optional.of(5), Optional.of(0),
                 Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
                 5, 0, 0);
@@ -24,7 +24,7 @@ class AggregateMetricsTest {
 
         // counts toward harmonized
         var transformOnlyMetrics = new OrigTransformFilePairMetrics(
-                ReducedFileName.valueOf("2"), ProgramIdentifier.RADXRAD, StudyId.valueOf("2"),
+                ReducedFileName.valueOf("2"), ProgramId.RADXRAD, StudyId.valueOf("2"),
                 Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
                 Optional.of(1), Optional.of(7), Optional.of(0), Optional.of(6),
                 0, 6, 1);
@@ -32,7 +32,7 @@ class AggregateMetricsTest {
 
         // counts toward partially harmonized and harmonizable
         var pairMetrics = new OrigTransformFilePairMetrics(
-                ReducedFileName.valueOf("3"), ProgramIdentifier.RADXTECH, StudyId.valueOf("3"),
+                ReducedFileName.valueOf("3"), ProgramId.RADXTECH, StudyId.valueOf("3"),
                 Optional.of(1), Optional.of(11), Optional.of(10), Optional.of(0),
                 Optional.of(1), Optional.of(11), Optional.of(2), Optional.of(8),
                 2, 8, 1);
@@ -40,7 +40,7 @@ class AggregateMetricsTest {
 
         // counts toward harmonized and trivially harmonized
         var triviallyHarmonizedMetrics = new OrigTransformFilePairMetrics(
-                ReducedFileName.valueOf("4"), ProgramIdentifier.DHT, StudyId.valueOf("4"),
+                ReducedFileName.valueOf("4"), ProgramId.DHT, StudyId.valueOf("4"),
                 Optional.of(1), Optional.of(3), Optional.of(0), Optional.of(0),
                 Optional.of(1), Optional.of(3), Optional.of(0), Optional.of(0),
                 0, 0, 3);
