@@ -27,11 +27,11 @@ public class OrigTransformFilePairMetricsGenerator {
         Optional<TransformFile> transformData = filePair.transformFile();
 
         Optional<String> origFileName;
-        Optional<PerFileMetrics> origMetrics;
+        Optional<FileMetrics> origMetrics;
         if (origData.isPresent()) {
             origFileName = Optional.of(origData.get().fileName());
             Set<String> variableNames = origData.get().variableNames();
-            origMetrics = Optional.of(PerFileMetrics.generatePerFileMetrics(
+            origMetrics = Optional.of(FileMetrics.generatePerFileMetrics(
                     harmonizationChecker, programId, variableNames));
         } else {
             origFileName = Optional.empty();
@@ -39,11 +39,11 @@ public class OrigTransformFilePairMetricsGenerator {
         }
 
         Optional<String> transformFileName;
-        Optional<PerFileMetrics> transformMetrics;
+        Optional<FileMetrics> transformMetrics;
         if (transformData.isPresent()) {
             transformFileName = Optional.of(transformData.get().fileName());
             Set<String> variableNames = transformData.get().variableNames();
-            transformMetrics = Optional.of(PerFileMetrics.generatePerFileMetrics(
+            transformMetrics = Optional.of(FileMetrics.generatePerFileMetrics(
                     harmonizationChecker, programId, variableNames));
         } else {
             transformFileName = Optional.empty();

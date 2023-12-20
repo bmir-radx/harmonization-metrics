@@ -2,7 +2,7 @@ package edu.stanford.bmir.radx.harmonization.metrics.lib;
 
 import java.util.Set;
 
-public record PerFileMetrics(
+public record FileMetrics(
     int nHarmonizableDataElementsTier1,
     int nHarmonizableDataElementsTier2,
     int nHarmonizableDataElementsTier3,
@@ -11,7 +11,7 @@ public record PerFileMetrics(
     int nHarmonizedDataElementsTier3,
     int nDataElements) {
 
-    public static PerFileMetrics generatePerFileMetrics(
+    public static FileMetrics generatePerFileMetrics(
             HarmonizationChecker harmonizationChecker, ProgramId programId,
             Set<String> variableNames)
             throws InvalidHarmonizationTierException, InvalidProgramIdException {
@@ -28,7 +28,7 @@ public record PerFileMetrics(
                 programId, variableNames, HarmonizationTier.TIER2);
         int nHarmonizedDataElementsTier3 = harmonizationChecker.countHarmonizedElements(
                 programId, variableNames, HarmonizationTier.TIER3);
-        return new PerFileMetrics(
+        return new FileMetrics(
                 nHarmonizableDataElementsTier1,
                 nHarmonizableDataElementsTier2,
                 nHarmonizableDataElementsTier3,
