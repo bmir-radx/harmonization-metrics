@@ -14,190 +14,58 @@ class OrigTransformFilePairMetricsTest {
     StudyId testStudyId = StudyId.valueOf("testStudyId");
 
     @Test
-    public void hasHarmonizableElements_true() {
-        int nHarmonizableDataElements = 1;
-        int nHarmonizedDataElements = 2;
-        int nNonHarmonizableDataElements = 3;
-        OrigTransformFilePairMetrics metrics = new OrigTransformFilePairMetrics(
-                testName, testProgramId, testStudyId,
-                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
-                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
-                nHarmonizableDataElements, nHarmonizedDataElements, nNonHarmonizableDataElements);
-        assertTrue(metrics.hasMissedHarmonizableElements());
+    public void testHasHamonizedDataElement_true() {
+        Optional<String> origFileName = Optional.of("testOrig");
+        Optional<String> transformFileName = Optional.of("testTransform");
+        int nHarmonizableDataElementsTier1 = 1;
+        int nHarmonizableDataElementsTier2 = 1;
+        int nHarmonizableDataElementsTier3 = 1;
+        int nHarmonizedDataElementsTier1 = 1;
+        int nHarmonizedDataElementsTier2 = 1;
+        int nHarmonizedDataElementsTier3 = 1;
+        int nDataElements = 3;
+        var metrics = new OrigTransformFilePairMetrics(
+                testName,
+                testProgramId,
+                testStudyId,
+                origFileName,
+                transformFileName,
+                nDataElements,
+                nDataElements,
+                nHarmonizableDataElementsTier1,
+                nHarmonizableDataElementsTier2,
+                nHarmonizableDataElementsTier3,
+                nHarmonizedDataElementsTier1,
+                nHarmonizedDataElementsTier2,
+                nHarmonizedDataElementsTier3);
+        assertTrue(metrics.hasHarmonizedDataElement());
     }
 
     @Test
-    public void hasHarmonizableElements_false() {
-        int nHarmonizableDataElements = 0;
-        int nHarmonizedDataElements = 2;
-        int nNonHarmonizableDataElements = 3;
-        OrigTransformFilePairMetrics metrics = new OrigTransformFilePairMetrics(
-                testName, testProgramId, testStudyId,
-                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
-                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
-                nHarmonizableDataElements, nHarmonizedDataElements, nNonHarmonizableDataElements);
-        assertFalse(metrics.hasMissedHarmonizableElements());
-    }
-
-    @Test
-    public void hasHarmonizedElements_true() {
-        int nHarmonizableDataElements = 1;
-        int nHarmonizedDataElements = 2;
-        int nNonHarmonizableDataElements = 3;
-        OrigTransformFilePairMetrics metrics = new OrigTransformFilePairMetrics(
-                testName, testProgramId, testStudyId,
-                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
-                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
-                nHarmonizableDataElements, nHarmonizedDataElements, nNonHarmonizableDataElements);
-        assertTrue(metrics.hasHarmonizedElements());
-    }
-
-    @Test
-    public void hasHarmonizedElements_false() {
-        int nHarmonizableDataElements = 1;
-        int nHarmonizedDataElements = 0;
-        int nNonHarmonizableDataElements = 3;
-        OrigTransformFilePairMetrics metrics = new OrigTransformFilePairMetrics(
-                testName, testProgramId, testStudyId,
-                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
-                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
-                nHarmonizableDataElements, nHarmonizedDataElements, nNonHarmonizableDataElements);
-        assertFalse(metrics.hasHarmonizedElements());
-    }
-
-    @Test
-    public void isHarmonizable_trueBecausePartiallyHarmonized() {
-        int nHarmonizableDataElements = 1;
-        int nHarmonizedDataElements = 2;
-        int nNonHarmonizableDataElements = 3;
-        OrigTransformFilePairMetrics metrics = new OrigTransformFilePairMetrics(
-                testName, testProgramId, testStudyId,
-                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
-                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
-                nHarmonizableDataElements, nHarmonizedDataElements, nNonHarmonizableDataElements);
-        assertTrue(metrics.isHarmonizable());
-        assertTrue(metrics.isPartiallyHarmonized());
-    }
-
-    @Test
-    public void isHarmonizable_trueBecauseNotHarmonized() {
-        int nHarmonizableDataElements = 1;
-        int nHarmonizedDataElements = 0;
-        int nNonHarmonizableDataElements = 3;
-        OrigTransformFilePairMetrics metrics = new OrigTransformFilePairMetrics(
-                testName, testProgramId, testStudyId,
-                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
-                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
-                nHarmonizableDataElements, nHarmonizedDataElements, nNonHarmonizableDataElements);
-        assertTrue(metrics.isHarmonizable());
-        assertFalse(metrics.isHarmonized());
-    }
-
-    @Test
-    public void isHarmonizable_false() {
-        int nHarmonizableDataElements = 0;
-        int nHarmonizedDataElements = 2;
-        int nNonHarmonizableDataElements = 3;
-        OrigTransformFilePairMetrics metrics = new OrigTransformFilePairMetrics(
-                testName, testProgramId, testStudyId,
-                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
-                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
-                nHarmonizableDataElements, nHarmonizedDataElements, nNonHarmonizableDataElements);
-        assertFalse(metrics.isHarmonizable());
-    }
-
-    @Test
-    public void isPartiallyHarmonized_true() {
-        int nHarmonizableDataElements = 1;
-        int nHarmonizedDataElements = 2;
-        int nNonHarmonizableDataElements = 3;
-        OrigTransformFilePairMetrics metrics = new OrigTransformFilePairMetrics(
-                testName, testProgramId, testStudyId,
-                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
-                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
-                nHarmonizableDataElements, nHarmonizedDataElements, nNonHarmonizableDataElements);
-        assertTrue(metrics.isPartiallyHarmonized());
-    }
-
-    @Test
-    public void isPartiallyHarmonized_falseBecauseFullyHarmonized() {
-        int nHarmonizableDataElements = 0;
-        int nHarmonizedDataElements = 2;
-        int nNonHarmonizableDataElements = 3;
-        OrigTransformFilePairMetrics metrics = new OrigTransformFilePairMetrics(
-                testName, testProgramId, testStudyId,
-                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
-                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
-                nHarmonizableDataElements, nHarmonizedDataElements, nNonHarmonizableDataElements);
-        assertFalse(metrics.isPartiallyHarmonized());
-        assertTrue(metrics.isHarmonized());
-    }
-
-    @Test
-    public void isPartiallyHarmonized_falseBecauseTriviallyHarmonized() {
-        int nHarmonizableDataElements = 0;
-        int nHarmonizedDataElements = 0;
-        int nNonHarmonizableDataElements = 3;
-        OrigTransformFilePairMetrics metrics = new OrigTransformFilePairMetrics(
-                testName, testProgramId, testStudyId,
-                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
-                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
-                nHarmonizableDataElements, nHarmonizedDataElements, nNonHarmonizableDataElements);
-        assertFalse(metrics.isPartiallyHarmonized());
-        assertTrue(metrics.isTriviallyHarmonized());
-    }
-
-    @Test
-    public void isHarmonized_true() {
-        int nHarmonizableDataElements = 0;
-        int nHarmonizedDataElements = 1;
-        int nNonHarmonizableDataElements = 3;
-        OrigTransformFilePairMetrics metrics = new OrigTransformFilePairMetrics(
-                testName, testProgramId, testStudyId,
-                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
-                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
-                nHarmonizableDataElements, nHarmonizedDataElements, nNonHarmonizableDataElements);
-        assertTrue(metrics.isHarmonized());
-    }
-
-    @Test
-    public void isHarmonized_false() {
-        int nHarmonizableDataElements = 1;
-        int nHarmonizedDataElements = 2;
-        int nNonHarmonizableDataElements = 3;
-        OrigTransformFilePairMetrics metrics = new OrigTransformFilePairMetrics(
-                testName, testProgramId, testStudyId,
-                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
-                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
-                nHarmonizableDataElements, nHarmonizedDataElements, nNonHarmonizableDataElements);
-        assertFalse(metrics.isHarmonized());
-    }
-
-    @Test
-    public void isTriviallyHarmonized_true() {
-        int nHarmonizableDataElements = 0;
-        int nHarmonizedDataElements = 0;
-        int nNonHarmonizableDataElements = 3;
-        OrigTransformFilePairMetrics metrics = new OrigTransformFilePairMetrics(
-                testName, testProgramId, testStudyId,
-                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
-                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
-                nHarmonizableDataElements, nHarmonizedDataElements, nNonHarmonizableDataElements);
-        assertTrue(metrics.isTriviallyHarmonized());
-        assertTrue(metrics.isHarmonized());
-    }
-
-    @Test
-    public void isTriviallyHarmonized_false() {
-        int nHarmonizableDataElements = 0;
-        int nHarmonizedDataElements = 1;
-        int nNonHarmonizableDataElements = 3;
-        OrigTransformFilePairMetrics metrics = new OrigTransformFilePairMetrics(
-                testName, testProgramId, testStudyId,
-                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
-                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
-                nHarmonizableDataElements, nHarmonizedDataElements, nNonHarmonizableDataElements);
-        assertFalse(metrics.isTriviallyHarmonized());
-        assertTrue(metrics.isHarmonized());
+    public void testHasHamonizedDataElement_false() {
+        Optional<String> origFileName = Optional.of("testOrig");
+        Optional<String> transformFileName = Optional.of("testTransform");
+        int nHarmonizableDataElementsTier1 = 1;
+        int nHarmonizableDataElementsTier2 = 1;
+        int nHarmonizableDataElementsTier3 = 1;
+        int nHarmonizedDataElementsTier1 = 0;
+        int nHarmonizedDataElementsTier2 = 0;
+        int nHarmonizedDataElementsTier3 = 0;
+        int nDataElements = 3;
+        var metrics = new OrigTransformFilePairMetrics(
+                testName,
+                testProgramId,
+                testStudyId,
+                origFileName,
+                transformFileName,
+                nDataElements,
+                nDataElements,
+                nHarmonizableDataElementsTier1,
+                nHarmonizableDataElementsTier2,
+                nHarmonizableDataElementsTier3,
+                nHarmonizedDataElementsTier1,
+                nHarmonizedDataElementsTier2,
+                nHarmonizedDataElementsTier3);
+        assertFalse(metrics.hasHarmonizedDataElement());
     }
 }
