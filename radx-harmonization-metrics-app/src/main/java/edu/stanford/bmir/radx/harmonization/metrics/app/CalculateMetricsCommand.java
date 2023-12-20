@@ -1,8 +1,8 @@
 package edu.stanford.bmir.radx.harmonization.metrics.app;
 
-import edu.stanford.bmir.radx.harmonization.metrics.lib.AggregateMetrics;
 import edu.stanford.bmir.radx.harmonization.metrics.lib.DataFileExternal;
 import edu.stanford.bmir.radx.harmonization.metrics.lib.MetricsCalculator;
+import edu.stanford.bmir.radx.harmonization.metrics.lib.MetricsReport;
 import edu.stanford.bmir.radx.harmonization.metrics.lib.TrialDataProcessor;
 import org.springframework.stereotype.Component;
 import picocli.CommandLine;
@@ -31,7 +31,7 @@ public class CalculateMetricsCommand implements Callable<Integer> {
     @Override
     public Integer call() throws Exception {
         List<DataFileExternal> externalData = trialDataProcessor.readExternalData(fileName);
-        AggregateMetrics metrics = metricsCalculator.computeHarmonizationMetrics(externalData);
+        MetricsReport metrics = metricsCalculator.computeHarmonizationMetrics(externalData);
         System.out.println(metrics);
         return 0;
     }

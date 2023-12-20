@@ -27,7 +27,7 @@ public class MetricsCalculator {
         this.studyMetricsGenerator = studyMetricsGenerator;
     }
 
-    public AggregateMetrics computeHarmonizationMetrics(List<DataFileExternal> dataFiles)
+    public MetricsReport computeHarmonizationMetrics(List<DataFileExternal> dataFiles)
             throws InvalidProgramIdException, InvalidOrigTransformCategoryException,
             NoVersionNumberException, InvalidHarmonizationTierException {
         // per file pair metrics
@@ -40,13 +40,13 @@ public class MetricsCalculator {
 
         // per study metrics
         Map<StudyId, Study> studyMap = dataFileProcessor.organizeFilePairsByStudy(filePairMap);
-        Map<StudyId, StudyMetrics> studyMetrics = new HashMap<>();
+        List<StudyMetrics> studyMetrics = new ArrayList<>();
         for (var entry: studyMap.entrySet()) {
-            StudyId studyId = entry.getKey();
             Study study = entry.getValue();
             var metrics = studyMetricsGenerator.createMetricsFromStudy(study);
-            studyMetrics.put(studyId, metrics);
+            studyMetrics.add(metrics);
         }
-        return AggregateMetrics.aggregateMetricsFromFilePairMetrics(metricsPerFilePair);
+
+        return new MetricsReport(metricsPerFilePair, studyMetrics);
     }
 }
