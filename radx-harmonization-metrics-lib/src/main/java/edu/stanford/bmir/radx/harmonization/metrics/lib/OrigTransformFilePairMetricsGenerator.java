@@ -101,10 +101,10 @@ public class OrigTransformFilePairMetricsGenerator {
 
         return new OrigTransformFilePairMetrics(
                 pairName,
-                origFileName,
-                transformFileName,
                 programId,
                 studyId,
+                origFileName,
+                transformFileName,
                 nDataElementsOrig,
                 nDataElementsTransform,
                 nHarmonizableDataElementsTier1,
