@@ -2,18 +2,16 @@ package edu.stanford.bmir.radx.harmonization.metrics.lib;
 
 import java.util.Set;
 
-public record FileMetrics(
-    int nHarmonizableDataElementsTier1,
-    int nHarmonizableDataElementsTier2,
-    int nHarmonizableDataElementsTier3,
-    int nHarmonizedDataElementsTier1,
-    int nHarmonizedDataElementsTier2,
-    int nHarmonizedDataElementsTier3,
-    int nDataElements) {
+abstract class InternalMetricsGenerator {
 
-    public static FileMetrics generatePerFileMetrics(
-            HarmonizationChecker harmonizationChecker, ProgramId programId,
-            Set<String> variableNames)
+    protected final HarmonizationChecker harmonizationChecker;
+
+    public InternalMetricsGenerator(HarmonizationChecker harmonizationChecker) {
+        this.harmonizationChecker = harmonizationChecker;
+    }
+
+    public VariableSetMetrics generateVariableSetMetrics(
+            ProgramId programId, Set<String> variableNames)
             throws InvalidHarmonizationTierException, InvalidProgramIdException {
         int nDataElements = variableNames.size();
         int nHarmonizableDataElementsTier1 = harmonizationChecker.countHarmonizableElements(
@@ -28,7 +26,7 @@ public record FileMetrics(
                 programId, variableNames, HarmonizationTier.TIER2);
         int nHarmonizedDataElementsTier3 = harmonizationChecker.countHarmonizedElements(
                 programId, variableNames, HarmonizationTier.TIER3);
-        return new FileMetrics(
+        return new VariableSetMetrics(
                 nHarmonizableDataElementsTier1,
                 nHarmonizableDataElementsTier2,
                 nHarmonizableDataElementsTier3,

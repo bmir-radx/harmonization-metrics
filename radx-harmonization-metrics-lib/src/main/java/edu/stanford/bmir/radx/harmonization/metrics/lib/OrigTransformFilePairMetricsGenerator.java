@@ -10,12 +10,10 @@ Helper class to generate one OrigTransformFilePairMetrics
 object for a given OrigTransformFilePair.
  */
 @Component
-public class OrigTransformFilePairMetricsGenerator {
-
-    private final HarmonizationChecker harmonizationChecker;
+public class OrigTransformFilePairMetricsGenerator extends InternalMetricsGenerator {
 
     public OrigTransformFilePairMetricsGenerator(HarmonizationChecker harmonizationChecker) {
-        this.harmonizationChecker = harmonizationChecker;
+        super(harmonizationChecker);
     }
 
     public OrigTransformFilePairMetrics createMetricsFromFilePair(OrigTransformFilePair filePair)
@@ -27,24 +25,24 @@ public class OrigTransformFilePairMetricsGenerator {
         Optional<TransformFile> transformData = filePair.transformFile();
 
         Optional<String> origFileName;
-        Optional<FileMetrics> origMetrics;
+        Optional<VariableSetMetrics> origMetrics;
         if (origData.isPresent()) {
             origFileName = Optional.of(origData.get().fileName());
             Set<String> variableNames = origData.get().variableNames();
-            origMetrics = Optional.of(FileMetrics.generatePerFileMetrics(
-                    harmonizationChecker, programId, variableNames));
+            origMetrics = Optional.of(generateVariableSetMetrics(
+                    programId, variableNames));
         } else {
             origFileName = Optional.empty();
             origMetrics = Optional.empty();
         }
 
         Optional<String> transformFileName;
-        Optional<FileMetrics> transformMetrics;
+        Optional<VariableSetMetrics> transformMetrics;
         if (transformData.isPresent()) {
             transformFileName = Optional.of(transformData.get().fileName());
             Set<String> variableNames = transformData.get().variableNames();
-            transformMetrics = Optional.of(FileMetrics.generatePerFileMetrics(
-                    harmonizationChecker, programId, variableNames));
+            transformMetrics = Optional.of(generateVariableSetMetrics(
+                    programId, variableNames));
         } else {
             transformFileName = Optional.empty();
             transformMetrics = Optional.empty();
