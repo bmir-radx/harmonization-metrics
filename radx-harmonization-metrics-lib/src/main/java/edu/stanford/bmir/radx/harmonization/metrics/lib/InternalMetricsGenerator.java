@@ -10,7 +10,7 @@ abstract class InternalMetricsGenerator {
         this.harmonizationChecker = harmonizationChecker;
     }
 
-    public VariableSetMetrics generateVariableSetMetrics(
+    protected VariableSetMetrics generateVariableSetMetrics(
             ProgramId programId, Set<String> variableNames)
             throws InvalidHarmonizationTierException, InvalidProgramIdException {
         int nDataElements = variableNames.size();

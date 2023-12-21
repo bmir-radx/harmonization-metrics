@@ -34,15 +34,9 @@ public class StudyMetricsGenerator extends InternalMetricsGenerator {
 
         Set<String> uniqueVariablesOrig = new HashSet<>();
         Set<String> uniqueVariablesTransform = new HashSet<>();
-        int nFiles = 0;
+        int nPairs = study.origTransformFilePairList().size();
         for (var pair: study.origTransformFilePairList()) {
             updateUniqueVariables(pair, uniqueVariablesOrig, uniqueVariablesTransform);
-            if (pair.origFile().isPresent()) {
-                nFiles += 1;
-            }
-            if (pair.transformFile().isPresent()) {
-                nFiles += 1;
-            }
         }
 
         VariableSetMetrics metricsOrig = generateVariableSetMetrics(
@@ -90,7 +84,7 @@ public class StudyMetricsGenerator extends InternalMetricsGenerator {
         return new StudyMetrics(
                 studyId,
                 programId,
-                nFiles,
+                nPairs,
                 nUniqueDataElements,
                 nUniqueHarmonizableDataElementsTier1,
                 nUniqueHarmonizableDataElementsTier2,
