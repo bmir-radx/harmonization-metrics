@@ -1,87 +1,90 @@
 package edu.stanford.bmir.radx.harmonization.metrics.lib;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class MetricsCalculatorTest {
 
+    private OrigTransformFilePair generateTestPair(int i, ProgramId programId, StudyId studyId) {
+        String origName = String.format("%d_origcopy_v%d.csv", i, i);
+        String transformName = String.format("%d_transformcopy_v%d.csv", i, i);
+        int version = i;
+        ReducedFileName reducedName = ReducedFileName.valueOf(String.format("%d", i));
+        Set<String> origVariableNames = new HashSet<>();
+        Set<String> transformVariableNames = new HashSet<>();
+        OrigFile orig = new OrigFile(origName, version, origVariableNames);
+        TransformFile transform = new TransformFile(transformName, version, transformVariableNames);
+        OrigTransformFilePair pair = new OrigTransformFilePair(reducedName, programId, studyId,
+                Optional.of(orig), Optional.of(transform));
+        return pair;
+    }
+
     @Test
     public void computeHarmonizationMetrics()
-            throws InvalidOrigTransformCategoryException, NoVersionNumberException, InvalidProgramIdException {
+            throws InvalidOrigTransformCategoryException, NoVersionNumberException,
+            InvalidProgramIdException, InvalidHarmonizationTierException {
         DataFileProcessor mockFileProcessor = Mockito.mock(DataFileProcessor.class);
-        OrigTransformFilePairMetricsGenerator mockMetricsGenerator = Mockito.mock(OrigTransformFilePairMetricsGenerator.class);
-        MetricsCalculator calculator = new MetricsCalculator(mockFileProcessor, mockMetricsGenerator);
+        HarmonizationRules rules = new MockRules();
+        HarmonizationChecker checker = new HarmonizationChecker(rules);
+        var pairMetricsGenerator = new OrigTransformFilePairMetricsGenerator(checker);
+        var studyMetricsGenerator = new StudyMetricsGenerator(checker);
+        OrigTransformFilePairMetricsGenerator mockPairMetricsGenerator = Mockito.spy(pairMetricsGenerator);
+        StudyMetricsGenerator mockStudyMetricsGenerator = Mockito.spy(studyMetricsGenerator);
+        MetricsCalculator calculator = new MetricsCalculator(
+                mockFileProcessor, mockPairMetricsGenerator, mockStudyMetricsGenerator);
 
         // mock the output of the DataFileProcessor
         Map<ReducedFileName, OrigTransformFilePair> mockPairMap = new HashMap<>();
         ProgramId program = ProgramId.RADXUP;
-        StudyId studyId = StudyId.valueOf("lol");
-        ReducedFileName name1 = ReducedFileName.valueOf("name1");
-        OrigTransformFilePair pair1 = new OrigTransformFilePair(name1, program, studyId);
-        ReducedFileName name2 = ReducedFileName.valueOf("name2");
-        OrigTransformFilePair pair2 = new OrigTransformFilePair(name2, program, studyId);
-        ReducedFileName name3 = ReducedFileName.valueOf("name3");
-        OrigTransformFilePair pair3 = new OrigTransformFilePair(name3, program, studyId);
-        ReducedFileName name4 = ReducedFileName.valueOf("name4");
-        OrigTransformFilePair pair4 = new OrigTransformFilePair(name4, program, studyId);
+        StudyId studyId1 = StudyId.valueOf("sad");
+        StudyId studyId2 = StudyId.valueOf("mad");
+        OrigTransformFilePair pair1 = generateTestPair(1, program, studyId1);
+        OrigTransformFilePair pair2 = generateTestPair(2, program, studyId1);
+        OrigTransformFilePair pair3 = generateTestPair(3, program, studyId2);
+        OrigTransformFilePair pair4 = generateTestPair(4, program, studyId2);
+        ReducedFileName name1 = ReducedFileName.valueOf("1");
+        ReducedFileName name2 = ReducedFileName.valueOf("2");
+        ReducedFileName name3 = ReducedFileName.valueOf("3");
+        ReducedFileName name4 = ReducedFileName.valueOf("4");
         mockPairMap.put(name1, pair1);
         mockPairMap.put(name2, pair2);
         mockPairMap.put(name3, pair3);
         mockPairMap.put(name4, pair4);
+
+        Map<StudyId, Study> mockStudyMap = new HashMap<>();
+        Study study1 = new Study(studyId1, program, Arrays.asList(pair1, pair2));
+        Study study2 = new Study(studyId2, program, Arrays.asList(pair1, pair2));
+        mockStudyMap.put(studyId1, study1);
+        mockStudyMap.put(studyId2, study2);
+
         Mockito.doReturn(mockPairMap).when(mockFileProcessor).processDataFiles(Mockito.anyList());
+        Mockito.doReturn(mockStudyMap).when(mockFileProcessor).organizeFilePairsByStudy(Mockito.eq(mockPairMap));
 
-        // mock the result of the metrics generator four times
-        var metrics1 = new OrigTransformFilePairMetrics(
-                ReducedFileName.valueOf("1"), ProgramId.RADXUP, StudyId.valueOf("1"),
-                Optional.of(1), Optional.of(5), Optional.of(5), Optional.of(0),
-                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
-                5, 0, 0);
-        var metrics2 = new OrigTransformFilePairMetrics(
-                ReducedFileName.valueOf("2"), ProgramId.RADXRAD, StudyId.valueOf("2"),
-                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
-                Optional.of(1), Optional.of(7), Optional.of(0), Optional.of(6),
-                0, 6, 1);
-        var metrics3 = new OrigTransformFilePairMetrics(
-                ReducedFileName.valueOf("3"), ProgramId.RADXTECH, StudyId.valueOf("3"),
-                Optional.of(1), Optional.of(11), Optional.of(10), Optional.of(0),
-                Optional.of(1), Optional.of(11), Optional.of(2), Optional.of(8),
-                2, 8, 1);
-        var metrics4 = new OrigTransformFilePairMetrics(
-                ReducedFileName.valueOf("4"), ProgramId.DHT, StudyId.valueOf("4"),
-                Optional.of(1), Optional.of(3), Optional.of(0), Optional.of(0),
-                Optional.of(1), Optional.of(3), Optional.of(0), Optional.of(0),
-                0, 0, 3);
-        Mockito.doReturn(metrics1).doReturn(metrics2).doReturn(metrics3).doReturn(metrics4)
-                .when(mockMetricsGenerator).createMetricsFromFilePair(Mockito.any(OrigTransformFilePair.class));
-
-        // run the metrics calculator with a fake input
+        // run the calculator with a fake input (empty list)
         List<DataFileExternal> fakeInput = new ArrayList<>();
-        AggregateMetrics aggregateMetrics = calculator.computeHarmonizationMetrics(fakeInput);
+        MetricsReport report = calculator.computeHarmonizationMetrics(fakeInput);
 
-        // check that the mockFileProcessor was called once
-        Mockito.verify(mockFileProcessor, Mockito.times(1))
-                .processDataFiles(Mockito.anyList());
+        // validate that the right number of entries appear for the pair metrics
+        // and study metrics based on the mocked maps above
+        assertEquals(4, report.pairMetrics().size());
+        assertEquals(2, report.studyMetrics().size());
 
-        // check that the mockMetricsGenerator was called four times
-        Mockito.verify(mockMetricsGenerator, Mockito.times(4))
-                .createMetricsFromFilePair(Mockito.any(OrigTransformFilePair.class));
-
-        // check that metrics have the right values
-        assertEquals(4, aggregateMetrics.nOrigTransfromFilePairs());
-        assertEquals(2, aggregateMetrics.nHarmonizableOrigTransformFilePairs());
-        assertEquals(1, aggregateMetrics.nPartiallyHarmonizedOrigTransformFilePairs());
-        assertEquals(2, aggregateMetrics.nHarmonizedOrigTransformFilePairs());
-        assertEquals(1, aggregateMetrics.nTriviallyHarmonizedOrigTransformFilePairs());
-        assertEquals(7, aggregateMetrics.nMissedHarmonizableDataElements());
-        assertEquals(14, aggregateMetrics.nHarmonizedDataElements());
-        assertEquals(5, aggregateMetrics.nNonHarmonizableDataElements());
+        // verify that the generators are called the right number of times
+        Mockito.verify(mockPairMetricsGenerator, Mockito.times(4))
+                .createMetricsFromFilePair(Mockito.any());
+        Mockito.verify(mockStudyMetricsGenerator, Mockito.times(2))
+                .createMetricsFromStudy(Mockito.any());
     }
 }

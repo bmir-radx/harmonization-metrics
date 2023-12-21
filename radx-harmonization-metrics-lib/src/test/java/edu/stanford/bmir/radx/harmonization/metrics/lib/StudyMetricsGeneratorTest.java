@@ -92,20 +92,5 @@ public class StudyMetricsGeneratorTest {
         assertEquals(3, metrics.nUniqueHarmonizedDataElementsTier1());
         assertEquals(2, metrics.nUniqueHarmonizedDataElementsTier2());
         assertEquals(1, metrics.nUniqueHarmonizedDataElementsTier3());
-//        assertEquals(testName, metrics.pairName());
-//        assertEquals(testProgramId, metrics.programId());
-//        assertEquals(testStudyId, metrics.studyId());
-//        assertEquals(origVersion, metrics.versionOrig().get());
-//        assertEquals(origVariableNames.size(), metrics.nDataElementsOrig().get());
-//        assertEquals(nHarmonizableDataElementsOrig, metrics.nHarmonizableDataElementsOrig().get());
-//        assertEquals(nHarmonizedDataElementsOrig, metrics.nHarmonizedDataElementsOrig().get());
-//        assertEquals(transformVersion, metrics.versionTransform().get());
-//        assertEquals(transformVariableNames.size(), metrics.nDataElementsTransform().get());
-//        assertEquals(nHarmonizableDataElementsTransform, metrics.nHarmonizableDataElementsTransform().get());
-//        assertEquals(nHarmonizedDataElementsTransform, metrics.nHarmonizedDataElementsTransform().get());
-//        assertEquals(nHarmonizableDataElementsTransform, metrics.nMissedHarmonizableDataElements());
-//        assertEquals(nHarmonizedDataElementsTransform, metrics.nHarmonizedDataElements());
-//        Integer nNonHarmonizableDataElements = transformVariableNames.size() - nHarmonizableDataElementsTransform - nHarmonizedDataElementsTransform;
-//        assertEquals(nNonHarmonizableDataElements, metrics.nNonHarmonizableDataElements());
     }
 }
