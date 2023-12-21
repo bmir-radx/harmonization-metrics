@@ -3,6 +3,7 @@ package edu.stanford.bmir.radx.harmonization.metrics.lib;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,22 +16,37 @@ are generated for each OrigTransformFilePair and then aggregated for reporting.
 @Component
 public class MetricsCalculator {
     private final DataFileProcessor dataFileProcessor; // component with no additional bean dependencies
-    private final OrigTransformFilePairMetricsGenerator metricsGenerator; // has a harmonization checker as a dependency
+    private final OrigTransformFilePairMetricsGenerator pairMetricsGenerator; // has a harmonization checker as a dependency
+    private final StudyMetricsGenerator studyMetricsGenerator;
 
     public MetricsCalculator(DataFileProcessor dataFileProcessor,
-                             OrigTransformFilePairMetricsGenerator metricsGenerator) {
+                             OrigTransformFilePairMetricsGenerator pairMetricsGenerator,
+                             StudyMetricsGenerator studyMetricsGenerator) {
         this.dataFileProcessor = dataFileProcessor;
-        this.metricsGenerator = metricsGenerator;
+        this.pairMetricsGenerator = pairMetricsGenerator;
+        this.studyMetricsGenerator = studyMetricsGenerator;
     }
 
-    public AggregateMetrics computeHarmonizationMetrics(List<DataFileExternal> dataFiles)
-            throws InvalidProgramIdException, InvalidOrigTransformCategoryException, NoVersionNumberException {
+    public MetricsReport computeHarmonizationMetrics(List<DataFileExternal> dataFiles)
+            throws InvalidProgramIdException, InvalidOrigTransformCategoryException,
+            NoVersionNumberException, InvalidHarmonizationTierException {
+        // per file pair metrics
         Map<ReducedFileName, OrigTransformFilePair> filePairMap = dataFileProcessor.processDataFiles(dataFiles);
         List<OrigTransformFilePairMetrics> metricsPerFilePair = new ArrayList<>();
-        for (OrigTransformFilePair origTransformFilePair : filePairMap.values()) {
-            OrigTransformFilePairMetrics filePairMetrics = metricsGenerator.createMetricsFromFilePair(origTransformFilePair);
+        for (var origTransformFilePair : filePairMap.values()) {
+            var filePairMetrics = pairMetricsGenerator.createMetricsFromFilePair(origTransformFilePair);
             metricsPerFilePair.add(filePairMetrics);
         }
-        return AggregateMetrics.aggregateMetricsFromFilePairMetrics(metricsPerFilePair);
+
+        // per study metrics
+        Map<StudyId, Study> studyMap = dataFileProcessor.organizeFilePairsByStudy(filePairMap);
+        List<StudyMetrics> studyMetrics = new ArrayList<>();
+        for (var entry: studyMap.entrySet()) {
+            Study study = entry.getValue();
+            var metrics = studyMetricsGenerator.createMetricsFromStudy(study);
+            studyMetrics.add(metrics);
+        }
+
+        return new MetricsReport(metricsPerFilePair, studyMetrics);
     }
 }

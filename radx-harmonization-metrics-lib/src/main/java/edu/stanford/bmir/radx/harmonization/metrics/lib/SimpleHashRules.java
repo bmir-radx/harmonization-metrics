@@ -22,26 +22,55 @@ public class SimpleHashRules implements HarmonizationRules {
 
     private final Map<ProgramId, Map<String, String>> tier1Map;
     private final Map<ProgramId, Set<String>> tier2Map;
+    private final Map<ProgramId, Set<String>> tier3Map;
     private final ObjectMapper mapper = new ObjectMapper();
 
-    public boolean isHarmonizable(ProgramId programId, String element) throws InvalidProgramIdException {
-        if (!(tier1Map.containsKey(programId) && tier2Map.containsKey(programId))) {
-            throw new InvalidProgramIdException(programId.toString());
+    public boolean isHarmonizable(ProgramId programId, String element, HarmonizationTier tier)
+            throws InvalidProgramIdException, InvalidHarmonizationTierException {
+        // the set of harmonizable elements contains the set of harmonized elements
+        switch (tier) {
+            case TIER1:
+                if (!tier1Map.containsKey(programId)) {
+                    throw new InvalidProgramIdException(programId.toString());
+                }
+                Map<String, String> programMap = tier1Map.get(programId);
+                return programMap.containsKey(element) || programMap.containsValue(element);
+            case TIER2:
+                if (!tier2Map.containsKey(programId)) {
+                    throw new InvalidProgramIdException(programId.toString());
+                }
+                return tier2Map.get(programId).contains(element);
+            case TIER3:
+                return false;
+            default:
+                throw new InvalidHarmonizationTierException(tier.toString());
         }
-        return tier1Map.get(programId).containsKey(element);
     }
 
-    public boolean isHarmonized(ProgramId programId, String element) throws InvalidProgramIdException {
-        if (!(tier1Map.containsKey(programId) && tier2Map.containsKey(programId))) {
-            throw new InvalidProgramIdException(programId.toString());
+    public boolean isHarmonized(ProgramId programId, String element, HarmonizationTier tier)
+            throws InvalidProgramIdException, InvalidHarmonizationTierException {
+        switch (tier) {
+            case TIER1:
+                if (!tier1Map.containsKey(programId)) {
+                    throw new InvalidProgramIdException(programId.toString());
+                }
+                return tier1Map.get(programId).containsValue(element);
+            case TIER2:
+                if (!tier2Map.containsKey(programId)) {
+                    throw new InvalidProgramIdException(programId.toString());
+                }
+                return tier2Map.get(programId).contains(element);
+            case TIER3:
+                return false;
+            default:
+                throw new InvalidHarmonizationTierException(tier.toString());
         }
-        return tier1Map.get(programId).containsKey(element) ||
-                tier2Map.get(programId).contains(element);
     }
 
     public SimpleHashRules() throws IOException, InvalidProgramIdException {
         tier1Map = readJsonToTier1Map("global_codebook_rules.json");
         tier2Map = readJsonToTier2Map("tier2_elements.json");
+        tier3Map = new HashMap<>();
     }
 
     private Map<ProgramId, Map<String, String>> readJsonToTier1Map(String fileName)

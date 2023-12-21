@@ -10,80 +10,106 @@ Helper class to generate one OrigTransformFilePairMetrics
 object for a given OrigTransformFilePair.
  */
 @Component
-public class OrigTransformFilePairMetricsGenerator {
-
-    private final HarmonizationChecker harmonizationChecker;
+public class OrigTransformFilePairMetricsGenerator extends InternalMetricsGenerator {
 
     public OrigTransformFilePairMetricsGenerator(HarmonizationChecker harmonizationChecker) {
-        this.harmonizationChecker = harmonizationChecker;
+        super(harmonizationChecker);
     }
 
     public OrigTransformFilePairMetrics createMetricsFromFilePair(OrigTransformFilePair filePair)
-            throws InvalidProgramIdException {
+            throws InvalidProgramIdException, InvalidHarmonizationTierException {
         ReducedFileName pairName = filePair.pairName();
         ProgramId programId = filePair.programId();
         StudyId studyId = filePair.studyId();
         Optional<OrigFile> origData = filePair.origFile();
         Optional<TransformFile> transformData = filePair.transformFile();
 
-        Optional<Integer> versionOrig;
-        Optional<Integer> nDataElementsOrig;
-        Optional<Integer> nHarmonizableDataElementsOrig;
-        Optional<Integer> nHarmonizedDataElementsOrig;
-
+        Optional<String> origFileName;
+        Optional<VariableSetMetrics> origMetrics;
         if (origData.isPresent()) {
-            versionOrig = Optional.of(origData.get().version());
+            origFileName = Optional.of(origData.get().fileName());
             Set<String> variableNames = origData.get().variableNames();
-            nDataElementsOrig = Optional.of(variableNames.size());
-            nHarmonizableDataElementsOrig = Optional.of(harmonizationChecker.countHarmonizableElements(programId, variableNames));
-            nHarmonizedDataElementsOrig = Optional.of(harmonizationChecker.countHarmonizedElements(programId, variableNames));
+            origMetrics = Optional.of(generateVariableSetMetrics(
+                    programId, variableNames));
         } else {
-            versionOrig = Optional.empty();
-            nDataElementsOrig = Optional.empty();
-            nHarmonizableDataElementsOrig = Optional.empty();
-            nHarmonizedDataElementsOrig = Optional.empty();
+            origFileName = Optional.empty();
+            origMetrics = Optional.empty();
         }
 
-        Optional<Integer> versionTransform;
-        Optional<Integer> nDataElementsTransform;
-        Optional<Integer> nHarmonizableDataElementsTransform;
-        Optional<Integer> nHarmonizedDataElementsTransform;
-
+        Optional<String> transformFileName;
+        Optional<VariableSetMetrics> transformMetrics;
         if (transformData.isPresent()) {
-            versionTransform = Optional.of(transformData.get().version());
+            transformFileName = Optional.of(transformData.get().fileName());
             Set<String> variableNames = transformData.get().variableNames();
-            nDataElementsTransform = Optional.of(variableNames.size());
-            nHarmonizableDataElementsTransform = Optional.of(harmonizationChecker.countHarmonizableElements(programId, variableNames));
-            nHarmonizedDataElementsTransform = Optional.of(harmonizationChecker.countHarmonizedElements(programId, variableNames));
+            transformMetrics = Optional.of(generateVariableSetMetrics(
+                    programId, variableNames));
         } else {
-            versionTransform = Optional.empty();
-            nDataElementsTransform = Optional.empty();
-            nHarmonizableDataElementsTransform = Optional.empty();
-            nHarmonizedDataElementsTransform = Optional.empty();
+            transformFileName = Optional.empty();
+            transformMetrics = Optional.empty();
         }
 
-        Integer nHarmonizableDataElements;
-        Integer nHarmonizedDataElements;
-        Integer nNonHarmonizableDataElements;
-        if (transformData.isPresent()) {
-            // this includes the case in which only the transformcopy exists
-            // and the case in which both the transformcopy and origcopy exist
-            nHarmonizableDataElements = nHarmonizableDataElementsTransform.get();
-            nHarmonizedDataElements = nHarmonizedDataElementsTransform.get();
-            nNonHarmonizableDataElements = nDataElementsTransform.get() - nHarmonizableDataElements - nHarmonizedDataElements;
-        } else {
-            // this covers the case in which only the origcopy exists, since
-            // it is impossible for an OrigTransformFilePair to exist without
-            // at least one of the origcopy or transformcopy
-            nHarmonizableDataElements = nHarmonizableDataElementsOrig.get();
-            nHarmonizedDataElements = nHarmonizedDataElementsOrig.get();
-            nNonHarmonizableDataElements = nDataElementsOrig.get() - nHarmonizableDataElements - nHarmonizedDataElements;
+        int nDataElementsOrig;
+        int nDataElementsTransform;
+        int nHarmonizableDataElementsTier1;
+        int nHarmonizableDataElementsTier2;
+        int nHarmonizableDataElementsTier3;
+        int nHarmonizedDataElementsTier1;
+        int nHarmonizedDataElementsTier2;
+        int nHarmonizedDataElementsTier3;
+        if (origMetrics.isPresent() && transformMetrics.isPresent()) {
+            nDataElementsOrig = origMetrics.get().nDataElements();
+            nDataElementsTransform = transformMetrics.get().nDataElements();
+            nHarmonizableDataElementsTier1 = Math.max(
+                    origMetrics.get().nHarmonizableDataElementsTier1(),
+                    transformMetrics.get().nHarmonizableDataElementsTier1());
+            nHarmonizableDataElementsTier2 = Math.max(
+                    origMetrics.get().nHarmonizableDataElementsTier2(),
+                    transformMetrics.get().nHarmonizableDataElementsTier2());
+            nHarmonizableDataElementsTier3 = Math.max(
+                    origMetrics.get().nHarmonizableDataElementsTier3(),
+                    transformMetrics.get().nHarmonizableDataElementsTier3());
+            nHarmonizedDataElementsTier1 = Math.max(
+                    origMetrics.get().nHarmonizedDataElementsTier1(),
+                    transformMetrics.get().nHarmonizedDataElementsTier1());
+            nHarmonizedDataElementsTier2 = Math.max(
+                    origMetrics.get().nHarmonizedDataElementsTier2(),
+                    transformMetrics.get().nHarmonizedDataElementsTier2());
+            nHarmonizedDataElementsTier3 = Math.max(
+                    origMetrics.get().nHarmonizedDataElementsTier3(),
+                    transformMetrics.get().nHarmonizedDataElementsTier3());
+        } else if (origMetrics.isPresent()) {
+            nDataElementsOrig = origMetrics.get().nDataElements();
+            nDataElementsTransform = 0;
+            nHarmonizableDataElementsTier1 = origMetrics.get().nHarmonizableDataElementsTier1();
+            nHarmonizableDataElementsTier2 = origMetrics.get().nHarmonizableDataElementsTier2();
+            nHarmonizableDataElementsTier3 = origMetrics.get().nHarmonizableDataElementsTier3();
+            nHarmonizedDataElementsTier1 = origMetrics.get().nHarmonizedDataElementsTier1();
+            nHarmonizedDataElementsTier2 = origMetrics.get().nHarmonizedDataElementsTier2();
+            nHarmonizedDataElementsTier3 = origMetrics.get().nHarmonizedDataElementsTier3();
+        } else { // only have transform metrics.
+            nDataElementsOrig = 0;
+            nDataElementsTransform = transformMetrics.get().nDataElements();
+            nHarmonizableDataElementsTier1 = transformMetrics.get().nHarmonizableDataElementsTier1();
+            nHarmonizableDataElementsTier2 = transformMetrics.get().nHarmonizableDataElementsTier2();
+            nHarmonizableDataElementsTier3 = transformMetrics.get().nHarmonizableDataElementsTier3();
+            nHarmonizedDataElementsTier1 = transformMetrics.get().nHarmonizedDataElementsTier1();
+            nHarmonizedDataElementsTier2 = transformMetrics.get().nHarmonizedDataElementsTier2();
+            nHarmonizedDataElementsTier3 = transformMetrics.get().nHarmonizedDataElementsTier3();
         }
 
-        return new OrigTransformFilePairMetrics(pairName, programId, studyId,
-                versionOrig, nDataElementsOrig, nHarmonizableDataElementsOrig,
-                nHarmonizedDataElementsOrig, versionTransform, nDataElementsTransform,
-                nHarmonizableDataElementsTransform, nHarmonizedDataElementsTransform,
-                nHarmonizableDataElements, nHarmonizedDataElements, nNonHarmonizableDataElements);
+        return new OrigTransformFilePairMetrics(
+                pairName,
+                programId,
+                studyId,
+                origFileName,
+                transformFileName,
+                nDataElementsOrig,
+                nDataElementsTransform,
+                nHarmonizableDataElementsTier1,
+                nHarmonizableDataElementsTier2,
+                nHarmonizableDataElementsTier3,
+                nHarmonizedDataElementsTier1,
+                nHarmonizedDataElementsTier2,
+                nHarmonizedDataElementsTier3);
     }
 }

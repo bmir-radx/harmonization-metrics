@@ -3,179 +3,305 @@ package edu.stanford.bmir.radx.harmonization.metrics.lib;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class OrigTransformFilePairMetricsGeneratorTest {
 
-    @Test
-    public void createMetricsFromFilePair_origOnly() throws InvalidProgramIdException {
-        String fileName = "filename";
-        ReducedFileName testName = ReducedFileName.valueOf("testName");
-        ProgramId testProgramId = ProgramId.RADXUP;
-        StudyId testStudyId = StudyId.valueOf("testStudyId");
-        Integer testVersion = 1;
-        // variableNames is a dummy. the result of the harmonization checker will be mocked
-        HashSet<String> variableNames = new HashSet<>(Arrays.asList("a", "b", "c", "d"));
-        OrigFile origData = new OrigFile(fileName, testVersion, variableNames);
-        OrigTransformFilePair filePair = new OrigTransformFilePair(
-                testName, testProgramId, testStudyId,
-                Optional.of(origData), Optional.empty());
+    StudyId studyId = StudyId.valueOf("testStudyId");
+    ProgramId programId = ProgramId.DHT;
 
-        // mock the harmonization checker for the metrics generator
-        HarmonizationChecker mockChecker = Mockito.mock(HarmonizationChecker.class);
-        Integer nHarmonizableDataElementsOrig = 2;
-        Integer nHarmonizedDataElementsOrig = 1;
-        Mockito.doReturn(nHarmonizableDataElementsOrig).when(mockChecker)
-                .countHarmonizableElements(Mockito.any(ProgramId.class), Mockito.anySet());
-        Mockito.doReturn(nHarmonizedDataElementsOrig).when(mockChecker)
-                .countHarmonizedElements(Mockito.any(ProgramId.class), Mockito.anySet());
+    /*
+    Mock an orig file. Harmonization statistics will be mocked.
+     */
+    private OrigFile generateOrigFile(int i) {
+        String origName = String.format("%d_origcopy_v%d.csv", i, i);
+        HashSet<String> origVariableNames = new HashSet<>();
+        origVariableNames.add(String.format("%d", i));
+        return new OrigFile(origName, i, origVariableNames);
+    }
 
-        // generate metrics with mocked checker
-        var metricsGenerator = new OrigTransformFilePairMetricsGenerator(mockChecker);
-        OrigTransformFilePairMetrics metrics = metricsGenerator.createMetricsFromFilePair(filePair);
+    /*
+    Mock a transform file. Harmonization statistics will be mocked.
+     */
+    private TransformFile generateTransformFile(int i) {
+        String transformName = String.format("%d_transformcopy_v%d.csv", i, i);
+        HashSet<String> transformVariableNames = new HashSet<>();
+        transformVariableNames.add(String.format("%d", i));
+        return new TransformFile(transformName, i, transformVariableNames);
+    }
 
-        // verify that the harmonization checker counter methods were called once each
-        // only for the origfile and not for the transformfile
-        Mockito.verify(mockChecker, Mockito.times(1))
-                .countHarmonizableElements(Mockito.any(ProgramId.class), Mockito.anySet());
-        Mockito.verify(mockChecker, Mockito.times(1))
-                .countHarmonizedElements(Mockito.any(ProgramId.class), Mockito.anySet());
-
-        // verify metrics have correct values
-        assertEquals(testName, metrics.pairName());
-        assertEquals(testProgramId, metrics.programId());
-        assertEquals(testStudyId, metrics.studyId());
-        assertEquals(testVersion, metrics.versionOrig().get());
-        assertEquals(variableNames.size(), metrics.nDataElementsOrig().get());
-        assertEquals(nHarmonizableDataElementsOrig, metrics.nHarmonizableDataElementsOrig().get());
-        assertEquals(nHarmonizedDataElementsOrig, metrics.nHarmonizedDataElementsOrig().get());
-        assertFalse(metrics.versionTransform().isPresent());
-        assertFalse(metrics.nDataElementsTransform().isPresent());
-        assertFalse(metrics.nHarmonizableDataElementsTransform().isPresent());
-        assertFalse(metrics.nHarmonizedDataElementsTransform().isPresent());
-        assertEquals(nHarmonizableDataElementsOrig, metrics.nMissedHarmonizableDataElements());
-        assertEquals(nHarmonizedDataElementsOrig, metrics.nHarmonizedDataElements());
-        Integer nNonHarmonizableDataElements = variableNames.size() - nHarmonizableDataElementsOrig - nHarmonizedDataElementsOrig;
-        assertEquals(nNonHarmonizableDataElements, metrics.nNonHarmonizableDataElements());
+    private OrigTransformFilePair createPairFromFiles(
+            ReducedFileName name, Optional<OrigFile> orig, Optional<TransformFile> transform) {
+        return new OrigTransformFilePair(name, programId, studyId, orig, transform);
     }
 
     @Test
-    public void createMetricsFromFilePair_transformOnly() throws InvalidProgramIdException {
-        String fileName = "filename";
-        ReducedFileName testName = ReducedFileName.valueOf("testName");
-        ProgramId testProgramId = ProgramId.RADXUP;
-        StudyId testStudyId = StudyId.valueOf("testStudyId");
-        Integer testVersion = 1;
-        // variableNames is a dummy. the result of the harmonization checker will be mocked
-        HashSet<String> variableNames = new HashSet<>(Arrays.asList("a", "b", "c", "d"));
-        TransformFile transformData = new TransformFile(fileName, testVersion, variableNames);
-        OrigTransformFilePair filePair = new OrigTransformFilePair(
-                testName, testProgramId, testStudyId,
-                Optional.empty(), Optional.of(transformData));
+    public void createMetricsFromFilePair_transformOnly()
+            throws InvalidHarmonizationTierException, InvalidProgramIdException {
+        // generate a file pair that contains only the origfile
+        ReducedFileName name = ReducedFileName.valueOf("test");
+        TransformFile transform = generateTransformFile(1);
+        OrigTransformFilePair pair = createPairFromFiles(name, Optional.empty(), Optional.of(transform));
 
         // mock the harmonization checker for the metrics generator
         HarmonizationChecker mockChecker = Mockito.mock(HarmonizationChecker.class);
-        Integer nHarmonizableDataElementsTransform = 2;
-        Integer nHarmonizedDataElementsTransform = 1;
-        Mockito.doReturn(nHarmonizableDataElementsTransform).when(mockChecker)
-                .countHarmonizableElements(Mockito.any(ProgramId.class), Mockito.anySet());
-        Mockito.doReturn(nHarmonizedDataElementsTransform).when(mockChecker)
-                .countHarmonizedElements(Mockito.any(ProgramId.class), Mockito.anySet());
+        int nHarmonizableT1 = 10;
+        int nHarmonizableT2 = 9;
+        int nHarmonizableT3 = 8;
+        int nHarmonizedT1 = 1;
+        int nHarmonizedT2 = 2;
+        int nHarmonizedT3 = 3;
+        Mockito.doReturn(nHarmonizableT1).when(mockChecker).countHarmonizableElements(
+                Mockito.any(ProgramId.class), Mockito.anySet(),
+                Mockito.eq(HarmonizationTier.TIER1));
+        Mockito.doReturn(nHarmonizableT2).when(mockChecker).countHarmonizableElements(
+                Mockito.any(ProgramId.class), Mockito.anySet(),
+                Mockito.eq(HarmonizationTier.TIER2));
+        Mockito.doReturn(nHarmonizableT3).when(mockChecker).countHarmonizableElements(
+                Mockito.any(ProgramId.class), Mockito.anySet(),
+                Mockito.eq(HarmonizationTier.TIER3));
+        Mockito.doReturn(nHarmonizedT1).when(mockChecker).countHarmonizedElements(
+                Mockito.any(ProgramId.class), Mockito.anySet(),
+                Mockito.eq(HarmonizationTier.TIER1));
+        Mockito.doReturn(nHarmonizedT2).when(mockChecker).countHarmonizedElements(
+                Mockito.any(ProgramId.class), Mockito.anySet(),
+                Mockito.eq(HarmonizationTier.TIER2));
+        Mockito.doReturn(nHarmonizedT3).when(mockChecker).countHarmonizedElements(
+                Mockito.any(ProgramId.class), Mockito.anySet(),
+                Mockito.eq(HarmonizationTier.TIER3));
 
         // generate metrics with mocked checker
         var metricsGenerator = new OrigTransformFilePairMetricsGenerator(mockChecker);
-        OrigTransformFilePairMetrics metrics = metricsGenerator.createMetricsFromFilePair(filePair);
+        OrigTransformFilePairMetrics metrics = metricsGenerator.createMetricsFromFilePair(pair);
 
-        // verify that the harmonization checker counter methods were called once each
-        // only for the transformfile and not for the origfile
+        // verify that the harmonization checker counter methods were called once
+        // for each harmonization tier, only for the transform file
         Mockito.verify(mockChecker, Mockito.times(1))
-                .countHarmonizableElements(Mockito.any(ProgramId.class), Mockito.anySet());
+                .countHarmonizableElements(
+                        Mockito.any(ProgramId.class), Mockito.anySet(),
+                        Mockito.eq(HarmonizationTier.TIER1));
         Mockito.verify(mockChecker, Mockito.times(1))
-                .countHarmonizedElements(Mockito.any(ProgramId.class), Mockito.anySet());
+                .countHarmonizableElements(
+                        Mockito.any(ProgramId.class), Mockito.anySet(),
+                        Mockito.eq(HarmonizationTier.TIER2));
+        Mockito.verify(mockChecker, Mockito.times(1))
+                .countHarmonizableElements(
+                        Mockito.any(ProgramId.class), Mockito.anySet(),
+                        Mockito.eq(HarmonizationTier.TIER3));
+        Mockito.verify(mockChecker, Mockito.times(1))
+                .countHarmonizedElements(
+                        Mockito.any(ProgramId.class), Mockito.anySet(),
+                        Mockito.eq(HarmonizationTier.TIER1));
+        Mockito.verify(mockChecker, Mockito.times(1))
+                .countHarmonizedElements(
+                        Mockito.any(ProgramId.class), Mockito.anySet(),
+                        Mockito.eq(HarmonizationTier.TIER2));
+        Mockito.verify(mockChecker, Mockito.times(1))
+                .countHarmonizedElements(
+                        Mockito.any(ProgramId.class), Mockito.anySet(),
+                        Mockito.eq(HarmonizationTier.TIER3));
 
         // verify metrics have correct values
-        assertEquals(testName, metrics.pairName());
-        assertEquals(testProgramId, metrics.programId());
-        assertEquals(testStudyId, metrics.studyId());
-        assertFalse(metrics.versionOrig().isPresent());
-        assertFalse(metrics.nDataElementsOrig().isPresent());
-        assertFalse(metrics.nHarmonizableDataElementsOrig().isPresent());
-        assertFalse(metrics.nHarmonizedDataElementsOrig().isPresent());
-        assertEquals(testVersion, metrics.versionTransform().get());
-        assertEquals(variableNames.size(), metrics.nDataElementsTransform().get());
-        assertEquals(nHarmonizableDataElementsTransform, metrics.nHarmonizableDataElementsTransform().get());
-        assertEquals(nHarmonizedDataElementsTransform, metrics.nHarmonizedDataElementsTransform().get());
-        assertEquals(nHarmonizableDataElementsTransform, metrics.nMissedHarmonizableDataElements());
-        assertEquals(nHarmonizedDataElementsTransform, metrics.nHarmonizedDataElements());
-        Integer nNonHarmonizableDataElements = variableNames.size() - nHarmonizableDataElementsTransform - nHarmonizedDataElementsTransform;
-        assertEquals(nNonHarmonizableDataElements, metrics.nNonHarmonizableDataElements());
+        assertEquals(name, metrics.pairName());
+        assertEquals(programId, metrics.programId());
+        assertEquals(studyId, metrics.studyId());
+        assertTrue(metrics.origFileName().isEmpty());
+        assertTrue(metrics.transformFileName().isPresent());
+        assertEquals(transform.fileName(), metrics.transformFileName().get());
+        assertEquals(0, metrics.nDataElementsOrig());
+        assertEquals(transform.variableNames().size(), metrics.nDataElementsTransform());
+        assertEquals(nHarmonizableT1, metrics.nHarmonizableDataElementsTier1());
+        assertEquals(nHarmonizableT2, metrics.nHarmonizableDataElementsTier2());
+        assertEquals(nHarmonizableT3, metrics.nHarmonizableDataElementsTier3());
+        assertEquals(nHarmonizedT1, metrics.nHarmonizedDataElementsTier1());
+        assertEquals(nHarmonizedT2, metrics.nHarmonizedDataElementsTier2());
+        assertEquals(nHarmonizedT3, metrics.nHarmonizedDataElementsTier3());
     }
 
     @Test
-    public void createMetricsFromFilePair_origAndTransform() throws InvalidProgramIdException {
-        String fileName = "filename";
-        ReducedFileName testName = ReducedFileName.valueOf("testName");
-        ProgramId testProgramId = ProgramId.RADXUP;
-        StudyId testStudyId = StudyId.valueOf("testStudyId");
-        Integer origVersion = 1;
-        Integer transformVersion = 2;
-        // the values in  the below sets are meaningless except to give them the correct size
-        HashSet<String> origVariableNames = new HashSet<>(Arrays.asList("a", "b", "c", "d", "e"));
-        HashSet<String> transformVariableNames = new HashSet<>(Arrays.asList("a", "b", "x", "y", "z"));
-        OrigFile origData = new OrigFile(fileName, origVersion, origVariableNames);
-        TransformFile transformData = new TransformFile(fileName, transformVersion, transformVariableNames);
-        OrigTransformFilePair filePair = new OrigTransformFilePair(
-                testName, testProgramId, testStudyId,
-                Optional.of(origData), Optional.of(transformData));
+    public void createMetricsFromFilePair_origOnly()
+            throws InvalidHarmonizationTierException, InvalidProgramIdException {
+        // generate a file pair that contains only the origfile
+        ReducedFileName name = ReducedFileName.valueOf("test");
+        OrigFile orig = generateOrigFile(1);
+        OrigTransformFilePair pair = createPairFromFiles(name, Optional.of(orig), Optional.empty());
 
         // mock the harmonization checker for the metrics generator
         HarmonizationChecker mockChecker = Mockito.mock(HarmonizationChecker.class);
-        // mocked behavior says that there are 3 harmonizable data elements
-        // and one harmonized data element in the origcopy
-        Integer nHarmonizableDataElementsOrig = 3;
-        Integer nHarmonizedDataElementsOrig = 1;
-        Mockito.doReturn(nHarmonizableDataElementsOrig).when(mockChecker)
-                .countHarmonizableElements(Mockito.any(ProgramId.class), Mockito.eq(origVariableNames));
-        Mockito.doReturn(nHarmonizedDataElementsOrig).when(mockChecker)
-                .countHarmonizedElements(Mockito.any(ProgramId.class), Mockito.eq(origVariableNames));
-        // mocked behavior says that there are 4 harmonized data elements in the transformcopy
-        Integer nHarmonizableDataElementsTransform = 0;
-        Integer nHarmonizedDataElementsTransform = 4;
-        Mockito.doReturn(nHarmonizableDataElementsTransform).when(mockChecker)
-                .countHarmonizableElements(Mockito.any(ProgramId.class), Mockito.eq(transformVariableNames));
-        Mockito.doReturn(nHarmonizedDataElementsTransform).when(mockChecker)
-                .countHarmonizedElements(Mockito.any(ProgramId.class), Mockito.eq(transformVariableNames));
+        int nHarmonizableT1 = 10;
+        int nHarmonizableT2 = 9;
+        int nHarmonizableT3 = 8;
+        int nHarmonizedT1 = 1;
+        int nHarmonizedT2 = 2;
+        int nHarmonizedT3 = 3;
+        Mockito.doReturn(nHarmonizableT1).when(mockChecker).countHarmonizableElements(
+                Mockito.any(ProgramId.class), Mockito.anySet(),
+                Mockito.eq(HarmonizationTier.TIER1));
+        Mockito.doReturn(nHarmonizableT2).when(mockChecker).countHarmonizableElements(
+                Mockito.any(ProgramId.class), Mockito.anySet(),
+                Mockito.eq(HarmonizationTier.TIER2));
+        Mockito.doReturn(nHarmonizableT3).when(mockChecker).countHarmonizableElements(
+                Mockito.any(ProgramId.class), Mockito.anySet(),
+                Mockito.eq(HarmonizationTier.TIER3));
+        Mockito.doReturn(nHarmonizedT1).when(mockChecker).countHarmonizedElements(
+                Mockito.any(ProgramId.class), Mockito.anySet(),
+                Mockito.eq(HarmonizationTier.TIER1));
+        Mockito.doReturn(nHarmonizedT2).when(mockChecker).countHarmonizedElements(
+                Mockito.any(ProgramId.class), Mockito.anySet(),
+                Mockito.eq(HarmonizationTier.TIER2));
+        Mockito.doReturn(nHarmonizedT3).when(mockChecker).countHarmonizedElements(
+                Mockito.any(ProgramId.class), Mockito.anySet(),
+                Mockito.eq(HarmonizationTier.TIER3));
 
         // generate metrics with mocked checker
         var metricsGenerator = new OrigTransformFilePairMetricsGenerator(mockChecker);
-        OrigTransformFilePairMetrics metrics = metricsGenerator.createMetricsFromFilePair(filePair);
+        OrigTransformFilePairMetrics metrics = metricsGenerator.createMetricsFromFilePair(pair);
 
-        // verify that the harmonization checker counter methods were called twice each
-        Mockito.verify(mockChecker, Mockito.times(2))
-                .countHarmonizableElements(Mockito.any(ProgramId.class), Mockito.anySet());
-        Mockito.verify(mockChecker, Mockito.times(2))
-                .countHarmonizedElements(Mockito.any(ProgramId.class), Mockito.anySet());
+        // verify that the harmonization checker counter methods were called once
+        // for each harmonization tier, only for the origfile
+        Mockito.verify(mockChecker, Mockito.times(1))
+                .countHarmonizableElements(
+                        Mockito.any(ProgramId.class), Mockito.anySet(),
+                        Mockito.eq(HarmonizationTier.TIER1));
+        Mockito.verify(mockChecker, Mockito.times(1))
+                .countHarmonizableElements(
+                        Mockito.any(ProgramId.class), Mockito.anySet(),
+                        Mockito.eq(HarmonizationTier.TIER2));
+        Mockito.verify(mockChecker, Mockito.times(1))
+                .countHarmonizableElements(
+                        Mockito.any(ProgramId.class), Mockito.anySet(),
+                        Mockito.eq(HarmonizationTier.TIER3));
+        Mockito.verify(mockChecker, Mockito.times(1))
+                .countHarmonizedElements(
+                        Mockito.any(ProgramId.class), Mockito.anySet(),
+                        Mockito.eq(HarmonizationTier.TIER1));
+        Mockito.verify(mockChecker, Mockito.times(1))
+                .countHarmonizedElements(
+                        Mockito.any(ProgramId.class), Mockito.anySet(),
+                        Mockito.eq(HarmonizationTier.TIER2));
+        Mockito.verify(mockChecker, Mockito.times(1))
+                .countHarmonizedElements(
+                        Mockito.any(ProgramId.class), Mockito.anySet(),
+                        Mockito.eq(HarmonizationTier.TIER3));
 
         // verify metrics have correct values
-        assertEquals(testName, metrics.pairName());
-        assertEquals(testProgramId, metrics.programId());
-        assertEquals(testStudyId, metrics.studyId());
-        assertEquals(origVersion, metrics.versionOrig().get());
-        assertEquals(origVariableNames.size(), metrics.nDataElementsOrig().get());
-        assertEquals(nHarmonizableDataElementsOrig, metrics.nHarmonizableDataElementsOrig().get());
-        assertEquals(nHarmonizedDataElementsOrig, metrics.nHarmonizedDataElementsOrig().get());
-        assertEquals(transformVersion, metrics.versionTransform().get());
-        assertEquals(transformVariableNames.size(), metrics.nDataElementsTransform().get());
-        assertEquals(nHarmonizableDataElementsTransform, metrics.nHarmonizableDataElementsTransform().get());
-        assertEquals(nHarmonizedDataElementsTransform, metrics.nHarmonizedDataElementsTransform().get());
-        assertEquals(nHarmonizableDataElementsTransform, metrics.nMissedHarmonizableDataElements());
-        assertEquals(nHarmonizedDataElementsTransform, metrics.nHarmonizedDataElements());
-        Integer nNonHarmonizableDataElements = transformVariableNames.size() - nHarmonizableDataElementsTransform - nHarmonizedDataElementsTransform;
-        assertEquals(nNonHarmonizableDataElements, metrics.nNonHarmonizableDataElements());
+        assertEquals(name, metrics.pairName());
+        assertEquals(programId, metrics.programId());
+        assertEquals(studyId, metrics.studyId());
+        assertTrue(metrics.origFileName().isPresent());
+        assertEquals(orig.fileName(), metrics.origFileName().get());
+        assertTrue(metrics.transformFileName().isEmpty());
+        assertEquals(orig.variableNames().size(), metrics.nDataElementsOrig());
+        assertEquals(0, metrics.nDataElementsTransform());
+        assertEquals(nHarmonizableT1, metrics.nHarmonizableDataElementsTier1());
+        assertEquals(nHarmonizableT2, metrics.nHarmonizableDataElementsTier2());
+        assertEquals(nHarmonizableT3, metrics.nHarmonizableDataElementsTier3());
+        assertEquals(nHarmonizedT1, metrics.nHarmonizedDataElementsTier1());
+        assertEquals(nHarmonizedT2, metrics.nHarmonizedDataElementsTier2());
+        assertEquals(nHarmonizedT3, metrics.nHarmonizedDataElementsTier3());
+    }
+    @Test
+    public void createMetricsFromFilePair_completePair()
+            throws InvalidHarmonizationTierException, InvalidProgramIdException {
+        // generate a file pair that contains the orig and transform files
+        ReducedFileName name = ReducedFileName.valueOf("test");
+        OrigFile orig = generateOrigFile(1);
+        TransformFile transform = generateTransformFile(1);
+        OrigTransformFilePair pair = createPairFromFiles(
+                name, Optional.of(orig), Optional.of(transform));
+
+        // mock the harmonization checker for the metrics generator
+        // sometimes variables can be lost or gained when generating the
+        // transform file if harmonization rules were applied incorrectly
+        HarmonizationChecker mockChecker = Mockito.mock(HarmonizationChecker.class);
+        int nHarmonizableOrigT1 = 10;
+        int nHarmonizableOrigT2 = 9;
+        int nHarmonizableOrigT3 = 8;
+        int nHarmonizableTransformT1 = 8;
+        int nHarmonizableTransformT2 = 7;
+        int nHarmonizableTransformT3 = 9;
+        int nHarmonizedOrigT1 = 1;
+        int nHarmonizedOrigT2 = 2;
+        int nHarmonizedOrigT3 = 0;
+        int nHarmonizedTransformT1 = 7;
+        int nHarmonizedTransformT2 = 5;
+        int nHarmonizedTransformT3 = 9;
+        // first time is for the orig file. second is for the transform.
+        Mockito.doReturn(nHarmonizableOrigT1).doReturn(nHarmonizableTransformT1)
+                .when(mockChecker).countHarmonizableElements(
+                        Mockito.any(ProgramId.class), Mockito.anySet(),
+                        Mockito.eq(HarmonizationTier.TIER1));
+        Mockito.doReturn(nHarmonizableOrigT2).doReturn(nHarmonizableTransformT2)
+                .when(mockChecker).countHarmonizableElements(
+                        Mockito.any(ProgramId.class), Mockito.anySet(),
+                        Mockito.eq(HarmonizationTier.TIER2));
+        Mockito.doReturn(nHarmonizableOrigT3).doReturn(nHarmonizableTransformT3)
+                .when(mockChecker).countHarmonizableElements(
+                        Mockito.any(ProgramId.class), Mockito.anySet(),
+                        Mockito.eq(HarmonizationTier.TIER3));
+        Mockito.doReturn(nHarmonizedOrigT1).doReturn(nHarmonizedTransformT1)
+                .when(mockChecker).countHarmonizedElements(
+                        Mockito.any(ProgramId.class), Mockito.anySet(),
+                        Mockito.eq(HarmonizationTier.TIER1));
+        Mockito.doReturn(nHarmonizedOrigT2).doReturn(nHarmonizedTransformT2)
+                .when(mockChecker).countHarmonizedElements(
+                        Mockito.any(ProgramId.class), Mockito.anySet(),
+                        Mockito.eq(HarmonizationTier.TIER2));
+        Mockito.doReturn(nHarmonizedOrigT3).doReturn(nHarmonizedTransformT3)
+                .when(mockChecker).countHarmonizedElements(
+                        Mockito.any(ProgramId.class), Mockito.anySet(),
+                        Mockito.eq(HarmonizationTier.TIER3));
+
+        // generate metrics with mocked checker
+        var metricsGenerator = new OrigTransformFilePairMetricsGenerator(mockChecker);
+        OrigTransformFilePairMetrics metrics = metricsGenerator.createMetricsFromFilePair(pair);
+
+        // verify that the harmonization checker counter methods were called twice
+        // for each harmonization tier, once for the orig and once for the transform
+        Mockito.verify(mockChecker, Mockito.times(2))
+                .countHarmonizableElements(
+                        Mockito.any(ProgramId.class), Mockito.anySet(),
+                        Mockito.eq(HarmonizationTier.TIER1));
+        Mockito.verify(mockChecker, Mockito.times(2))
+                .countHarmonizableElements(
+                        Mockito.any(ProgramId.class), Mockito.anySet(),
+                        Mockito.eq(HarmonizationTier.TIER2));
+        Mockito.verify(mockChecker, Mockito.times(2))
+                .countHarmonizableElements(
+                        Mockito.any(ProgramId.class), Mockito.anySet(),
+                        Mockito.eq(HarmonizationTier.TIER3));
+        Mockito.verify(mockChecker, Mockito.times(2))
+                .countHarmonizedElements(
+                        Mockito.any(ProgramId.class), Mockito.anySet(),
+                        Mockito.eq(HarmonizationTier.TIER1));
+        Mockito.verify(mockChecker, Mockito.times(2))
+                .countHarmonizedElements(
+                        Mockito.any(ProgramId.class), Mockito.anySet(),
+                        Mockito.eq(HarmonizationTier.TIER2));
+        Mockito.verify(mockChecker, Mockito.times(2))
+                .countHarmonizedElements(
+                        Mockito.any(ProgramId.class), Mockito.anySet(),
+                        Mockito.eq(HarmonizationTier.TIER3));
+
+        // verify metrics have correct values
+        assertEquals(name, metrics.pairName());
+        assertEquals(programId, metrics.programId());
+        assertEquals(studyId, metrics.studyId());
+        assertTrue(metrics.origFileName().isPresent());
+        assertEquals(orig.fileName(), metrics.origFileName().get());
+        assertTrue(metrics.transformFileName().isPresent());
+        assertEquals(transform.fileName(), metrics.transformFileName().get());
+        assertEquals(orig.variableNames().size(), metrics.nDataElementsOrig());
+        assertEquals(transform.variableNames().size(), metrics.nDataElementsTransform());
+        assertEquals(nHarmonizableOrigT1, metrics.nHarmonizableDataElementsTier1());
+        assertEquals(nHarmonizableOrigT2, metrics.nHarmonizableDataElementsTier2());
+        assertEquals(nHarmonizableTransformT3, metrics.nHarmonizableDataElementsTier3());
+        assertEquals(nHarmonizedTransformT1, metrics.nHarmonizedDataElementsTier1());
+        assertEquals(nHarmonizedTransformT2, metrics.nHarmonizedDataElementsTier2());
+        assertEquals(nHarmonizedTransformT3, metrics.nHarmonizedDataElementsTier3());
     }
 }

@@ -2,6 +2,7 @@ package edu.stanford.bmir.radx.harmonization.metrics.lib;
 
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -58,6 +59,30 @@ public class DataFileProcessor {
             }
         }
         return dataFilePairMap;
+    }
+
+    public Map<StudyId, Study> organizeFilePairsByStudy(
+            Map<ReducedFileName, OrigTransformFilePair> pairMap) {
+        Map<StudyId, List<OrigTransformFilePair>> studyIdToPairs = new HashMap<>();
+        Map<StudyId, ProgramId> studyIdToProgramId = new HashMap<>();
+        for (var pair: pairMap.values()) {
+            StudyId studyId = pair.studyId();
+            if (!studyIdToPairs.containsKey(studyId)) {
+                studyIdToPairs.put(studyId, new ArrayList<>());
+            }
+            if (!studyIdToProgramId.containsKey(studyId)) {
+                studyIdToProgramId.put(studyId, pair.programId());
+            }
+            studyIdToPairs.get(studyId).add(pair);
+        }
+
+        Map<StudyId, Study> studyMap = new HashMap<>();
+        for (var studyId: studyIdToPairs.keySet()) {
+            Study study = new Study(
+                    studyId, studyIdToProgramId.get(studyId), studyIdToPairs.get(studyId));
+            studyMap.put(studyId, study);
+        }
+        return studyMap;
     }
 
     private Set<String> preprocessVariableNames(List<String> variableNames) {
