@@ -85,21 +85,23 @@ public class CsvWriter {
                 String.valueOf(metrics.nHarmonizableDataElementsTier1()),
                 String.valueOf(metrics.nHarmonizableDataElementsTier2()),
                 String.valueOf(metrics.nHarmonizableDataElementsTier3()),
-                String.valueOf(percentHarmonizable),
+                String.format("%.2f", percentHarmonizable),
                 String.valueOf(metrics.nHarmonizedDataElementsTier1()),
                 String.valueOf(metrics.nHarmonizedDataElementsTier2()),
                 String.valueOf(metrics.nHarmonizedDataElementsTier3()),
-                String.valueOf(percentHarmonized)
+                String.format("%.2f", percentHarmonized),
         };
         return line;
     }
 
     private String[] getStudyRow(StudyMetrics metrics) {
-        Double percentHarmonizable = ((double) (metrics.nUniqueHarmonizableDataElementsTier1()
+        Double percentHarmonizable = 100 * ((double) (
+                metrics.nUniqueHarmonizableDataElementsTier1()
                 + metrics.nUniqueHarmonizableDataElementsTier2()
                 + metrics.nUniqueHarmonizableDataElementsTier3())
                 / metrics.nUniqueDataElements());
-        Double percentHarmonized = ((double) (metrics.nUniqueHarmonizedDataElementsTier1()
+        Double percentHarmonized = 100 * ((double) (
+                metrics.nUniqueHarmonizedDataElementsTier1()
                 + metrics.nUniqueHarmonizedDataElementsTier2()
                 + metrics.nUniqueHarmonizedDataElementsTier3())
                 / metrics.nUniqueDataElements());
@@ -111,11 +113,11 @@ public class CsvWriter {
                 String.valueOf(metrics.nUniqueHarmonizableDataElementsTier1()),
                 String.valueOf(metrics.nUniqueHarmonizableDataElementsTier2()),
                 String.valueOf(metrics.nUniqueHarmonizableDataElementsTier3()),
-                String.valueOf(percentHarmonizable),
+                String.format("%.2f", percentHarmonizable),
                 String.valueOf(metrics.nUniqueHarmonizedDataElementsTier1()),
                 String.valueOf(metrics.nUniqueHarmonizedDataElementsTier2()),
                 String.valueOf(metrics.nUniqueHarmonizedDataElementsTier3()),
-                String.valueOf(percentHarmonized)
+                String.format("%.2f", percentHarmonized),
         };
         return line;
     }
