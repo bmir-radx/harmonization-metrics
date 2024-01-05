@@ -109,7 +109,7 @@ public class CsvWriter {
                 String.valueOf(metrics.nOrigTransformFilePairs()),
                 String.valueOf(metrics.nUniqueDataElements()),
                 String.valueOf(metrics.nUniqueHarmonizableDataElementsTier1()),
-                String.valueOf(metrics.nUniqueHarmonizableDataElementsTier3()),
+                String.valueOf(metrics.nUniqueHarmonizableDataElementsTier2()),
                 String.valueOf(metrics.nUniqueHarmonizableDataElementsTier3()),
                 String.valueOf(percentHarmonizable),
                 String.valueOf(metrics.nUniqueHarmonizedDataElementsTier1()),
