@@ -10,7 +10,9 @@ import java.util.List;
 @Component
 public class CsvWriter {
 
-    public void writeStudyReport(List<StudyMetrics> studyMetrics, String filePath) throws IOException {
+    public void writeStudyReport(
+            List<StudyMetrics> studyMetrics,
+            String filePath) throws IOException {
         try (CSVWriter writer = new CSVWriter(new FileWriter(filePath))) {
             String[] headers = {
                     "Study ID",
@@ -33,11 +35,14 @@ public class CsvWriter {
                 writer.writeNext(line);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println(String.format("Failed while writing to %s", filePath));
+            throw e;
         }
     }
 
-    public void writeFilePairReport(List<OrigTransformFilePairMetrics> pairMetrics, String filePath) throws IOException {
+    public void writeFilePairReport(
+            List<OrigTransformFilePairMetrics> pairMetrics,
+            String filePath) throws IOException {
         try (CSVWriter writer = new CSVWriter(new FileWriter(filePath))) {
             String[] headers = {
                     "File Name (Orig)",
@@ -62,7 +67,8 @@ public class CsvWriter {
                 writer.writeNext(line);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println(String.format("Failed while writing to %s", filePath));
+            throw e;
         }
     }
 
