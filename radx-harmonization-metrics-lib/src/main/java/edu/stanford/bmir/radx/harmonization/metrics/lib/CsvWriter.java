@@ -73,14 +73,6 @@ public class CsvWriter {
     }
 
     private String[] getPairRow(OrigTransformFilePairMetrics metrics) {
-        Double percentHarmonizable = ((double) (metrics.nHarmonizableDataElementsTier1()
-                + metrics.nHarmonizableDataElementsTier2()
-                + metrics.nHarmonizableDataElementsTier3())
-                / Math.max(metrics.nDataElementsOrig(), metrics.nDataElementsTransform()));
-        Double percentHarmonized = ((double) (metrics.nHarmonizedDataElementsTier1()
-                + metrics.nHarmonizedDataElementsTier2()
-                + metrics.nHarmonizedDataElementsTier3())
-                / Math.max(metrics.nDataElementsOrig(), metrics.nDataElementsTransform()));
         String[] line = {
                 metrics.origFileName().orElse(null),
                 metrics.transformFileName().orElse(null),
@@ -91,26 +83,16 @@ public class CsvWriter {
                 String.valueOf(metrics.nHarmonizableDataElementsTier1()),
                 String.valueOf(metrics.nHarmonizableDataElementsTier2()),
                 String.valueOf(metrics.nHarmonizableDataElementsTier3()),
-                String.format("%.2f", percentHarmonizable),
+                String.format("%.2f", metrics.percentHarmonizable()),
                 String.valueOf(metrics.nHarmonizedDataElementsTier1()),
                 String.valueOf(metrics.nHarmonizedDataElementsTier2()),
                 String.valueOf(metrics.nHarmonizedDataElementsTier3()),
-                String.format("%.2f", percentHarmonized),
+                String.format("%.2f", metrics.percentHarmonized()),
         };
         return line;
     }
 
     private String[] getStudyRow(StudyMetrics metrics) {
-        Double percentHarmonizable = 100 * ((double) (
-                metrics.nUniqueHarmonizableDataElementsTier1()
-                + metrics.nUniqueHarmonizableDataElementsTier2()
-                + metrics.nUniqueHarmonizableDataElementsTier3())
-                / metrics.nUniqueDataElements());
-        Double percentHarmonized = 100 * ((double) (
-                metrics.nUniqueHarmonizedDataElementsTier1()
-                + metrics.nUniqueHarmonizedDataElementsTier2()
-                + metrics.nUniqueHarmonizedDataElementsTier3())
-                / metrics.nUniqueDataElements());
         String[] line = {
                 metrics.studyId().value(),
                 metrics.programId().toString(),
@@ -119,11 +101,11 @@ public class CsvWriter {
                 String.valueOf(metrics.nUniqueHarmonizableDataElementsTier1()),
                 String.valueOf(metrics.nUniqueHarmonizableDataElementsTier2()),
                 String.valueOf(metrics.nUniqueHarmonizableDataElementsTier3()),
-                String.format("%.2f", percentHarmonizable),
+                String.format("%.2f", metrics.percentHarmonizable()),
                 String.valueOf(metrics.nUniqueHarmonizedDataElementsTier1()),
                 String.valueOf(metrics.nUniqueHarmonizedDataElementsTier2()),
                 String.valueOf(metrics.nUniqueHarmonizedDataElementsTier3()),
-                String.format("%.2f", percentHarmonized),
+                String.format("%.2f", metrics.percentHarmonized()),
         };
         return line;
     }

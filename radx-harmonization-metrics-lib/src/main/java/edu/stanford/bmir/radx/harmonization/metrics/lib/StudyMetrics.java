@@ -11,7 +11,9 @@ public record StudyMetrics(
         Integer nUniqueHarmonizableDataElementsTier1,
         Integer nUniqueHarmonizableDataElementsTier2,
         Integer nUniqueHarmonizableDataElementsTier3,
+        Double percentHarmonizable,
         Integer nUniqueHarmonizedDataElementsTier1,
         Integer nUniqueHarmonizedDataElementsTier2,
-        Integer nUniqueHarmonizedDataElementsTier3) {
+        Integer nUniqueHarmonizedDataElementsTier3,
+        Double percentHarmonized) {
 }

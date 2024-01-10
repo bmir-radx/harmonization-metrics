@@ -18,9 +18,11 @@ public record OrigTransformFilePairMetrics(
         Integer nHarmonizableDataElementsTier1,
         Integer nHarmonizableDataElementsTier2,
         Integer nHarmonizableDataElementsTier3,
+        Double percentHarmonizable,
         Integer nHarmonizedDataElementsTier1,
         Integer nHarmonizedDataElementsTier2,
-        Integer nHarmonizedDataElementsTier3) {
+        Integer nHarmonizedDataElementsTier3,
+        Double percentHarmonized) {
 
     public boolean hasHarmonizedDataElement() {
         return nHarmonizedDataElementsTier1 + nHarmonizedDataElementsTier2 + nHarmonizedDataElementsTier3 > 0;

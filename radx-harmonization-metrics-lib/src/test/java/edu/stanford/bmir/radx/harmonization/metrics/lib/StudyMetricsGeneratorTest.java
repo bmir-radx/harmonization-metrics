@@ -80,6 +80,9 @@ public class StudyMetricsGeneratorTest {
                         Mockito.anySet(),
                         Mockito.any(HarmonizationTier.class));
 
+        Double percentHarmonizable = 100 * (6.0 / 9.0);
+        Double percentHarmonized = 100 * (6.0 / 9.0);
+
         // verify metrics have correct values
         assertEquals(studyId, metrics.studyId());
         assertEquals(programId, metrics.programId());
@@ -89,8 +92,10 @@ public class StudyMetricsGeneratorTest {
         assertEquals(3, metrics.nUniqueHarmonizableDataElementsTier1());
         assertEquals(2, metrics.nUniqueHarmonizableDataElementsTier2());
         assertEquals(1, metrics.nUniqueHarmonizableDataElementsTier3());
+        assertEquals(percentHarmonizable, metrics.percentHarmonizable());
         assertEquals(3, metrics.nUniqueHarmonizedDataElementsTier1());
         assertEquals(2, metrics.nUniqueHarmonizedDataElementsTier2());
         assertEquals(1, metrics.nUniqueHarmonizedDataElementsTier3());
+        assertEquals(percentHarmonized, metrics.percentHarmonized());
     }
 }

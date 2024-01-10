@@ -81,6 +81,17 @@ public class StudyMetricsGenerator extends InternalMetricsGenerator {
                 metricsOrig.nHarmonizedDataElementsTier3(),
                 metricsTransform.nHarmonizedDataElementsTier3());
 
+        Double percentHarmonizable = 100 * ((double) (
+                nUniqueHarmonizableDataElementsTier1
+                        + nUniqueHarmonizableDataElementsTier2
+                        + nUniqueHarmonizableDataElementsTier3)
+                / nUniqueDataElements);
+        Double percentHarmonized = 100 * ((double) (
+                nUniqueHarmonizedDataElementsTier1
+                        + nUniqueHarmonizedDataElementsTier2
+                        + nUniqueHarmonizedDataElementsTier3)
+                / nUniqueDataElements);
+
         return new StudyMetrics(
                 studyId,
                 programId,
@@ -89,8 +100,10 @@ public class StudyMetricsGenerator extends InternalMetricsGenerator {
                 nUniqueHarmonizableDataElementsTier1,
                 nUniqueHarmonizableDataElementsTier2,
                 nUniqueHarmonizableDataElementsTier3,
+                percentHarmonizable,
                 nUniqueHarmonizedDataElementsTier1,
                 nUniqueHarmonizedDataElementsTier2,
-                nUniqueHarmonizedDataElementsTier3);
+                nUniqueHarmonizedDataElementsTier3,
+                percentHarmonized);
     }
 }

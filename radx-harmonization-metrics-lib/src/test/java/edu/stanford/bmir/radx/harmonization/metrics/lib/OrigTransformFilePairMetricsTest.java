@@ -24,6 +24,8 @@ class OrigTransformFilePairMetricsTest {
         int nHarmonizedDataElementsTier2 = 1;
         int nHarmonizedDataElementsTier3 = 1;
         int nDataElements = 3;
+        Double percentHarmonizable = 100.;
+        Double percentHarmonized = 100.;
         var metrics = new OrigTransformFilePairMetrics(
                 testName,
                 testProgramId,
@@ -35,9 +37,11 @@ class OrigTransformFilePairMetricsTest {
                 nHarmonizableDataElementsTier1,
                 nHarmonizableDataElementsTier2,
                 nHarmonizableDataElementsTier3,
+                percentHarmonizable,
                 nHarmonizedDataElementsTier1,
                 nHarmonizedDataElementsTier2,
-                nHarmonizedDataElementsTier3);
+                nHarmonizedDataElementsTier3,
+                percentHarmonized);
         assertTrue(metrics.hasHarmonizedDataElement());
     }
 
@@ -52,6 +56,8 @@ class OrigTransformFilePairMetricsTest {
         int nHarmonizedDataElementsTier2 = 0;
         int nHarmonizedDataElementsTier3 = 0;
         int nDataElements = 3;
+        Double percentHarmonizable = 100.;
+        Double percentHarmonized = 0.;
         var metrics = new OrigTransformFilePairMetrics(
                 testName,
                 testProgramId,
@@ -63,9 +69,11 @@ class OrigTransformFilePairMetricsTest {
                 nHarmonizableDataElementsTier1,
                 nHarmonizableDataElementsTier2,
                 nHarmonizableDataElementsTier3,
+                percentHarmonizable,
                 nHarmonizedDataElementsTier1,
                 nHarmonizedDataElementsTier2,
-                nHarmonizedDataElementsTier3);
+                nHarmonizedDataElementsTier3,
+                percentHarmonized);
         assertFalse(metrics.hasHarmonizedDataElement());
     }
 }
