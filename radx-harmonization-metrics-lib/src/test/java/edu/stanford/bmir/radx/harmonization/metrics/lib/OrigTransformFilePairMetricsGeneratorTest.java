@@ -105,10 +105,10 @@ class OrigTransformFilePairMetricsGeneratorTest {
                         Mockito.any(ProgramId.class), Mockito.anySet(),
                         Mockito.eq(HarmonizationTier.TIER3));
 
-        Double percentHarmonizable = (double) (
+        Double percentHarmonizable = 100 * (double) (
                 nHarmonizableT1 + nHarmonizableT2 + nHarmonizableT3) /
                 transform.variableNames().size();
-        Double percentHarmonized = (double) (
+        Double percentHarmonized = 100 * (double) (
                 nHarmonizedT1 + nHarmonizedT2 + nHarmonizedT3) /
                 transform.variableNames().size();
 
@@ -197,10 +197,10 @@ class OrigTransformFilePairMetricsGeneratorTest {
                         Mockito.any(ProgramId.class), Mockito.anySet(),
                         Mockito.eq(HarmonizationTier.TIER3));
 
-        Double percentHarmonizable = (double) (
+        Double percentHarmonizable = 100 * (double) (
                 nHarmonizableT1 + nHarmonizableT2 + nHarmonizableT3) /
                 orig.variableNames().size();
-        Double percentHarmonized = (double) (
+        Double percentHarmonized = 100 * (double) (
                 nHarmonizedT1 + nHarmonizedT2 + nHarmonizedT3) /
                 orig.variableNames().size();
 
@@ -306,10 +306,10 @@ class OrigTransformFilePairMetricsGeneratorTest {
                         Mockito.any(ProgramId.class), Mockito.anySet(),
                         Mockito.eq(HarmonizationTier.TIER3));
 
-        Double percentHarmonizable = (double) (
+        Double percentHarmonizable = 100 * (double) (
                 nHarmonizableOrigT1 + nHarmonizableOrigT2 + nHarmonizableTransformT3) /
                 Math.max(orig.variableNames().size(), transform.variableNames().size());
-        Double percentHarmonized = (double) (
+        Double percentHarmonized = 100 * (double) (
                 nHarmonizedTransformT1 + nHarmonizedTransformT2 + nHarmonizedTransformT3) /
                 Math.max(orig.variableNames().size(), transform.variableNames().size());
 

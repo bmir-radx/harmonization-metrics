@@ -97,13 +97,15 @@ public class OrigTransformFilePairMetricsGenerator extends InternalMetricsGenera
             nHarmonizedDataElementsTier3 = transformMetrics.get().nHarmonizedDataElementsTier3();
         }
 
-        Double percentHarmonizable = ((double) (nHarmonizableDataElementsTier1
-                + nHarmonizableDataElementsTier2
-                + nHarmonizableDataElementsTier3)
+        Double percentHarmonizable = 100 * ((double) (
+                nHarmonizableDataElementsTier1
+                    + nHarmonizableDataElementsTier2
+                    + nHarmonizableDataElementsTier3)
                 / Math.max(nDataElementsOrig, nDataElementsTransform));
-        Double percentHarmonized = ((double) (nHarmonizedDataElementsTier1
-                + nHarmonizedDataElementsTier2
-                + nHarmonizedDataElementsTier3)
+        Double percentHarmonized = 100 * ((double) (
+                nHarmonizedDataElementsTier1
+                    + nHarmonizedDataElementsTier2
+                    + nHarmonizedDataElementsTier3)
                 / Math.max(nDataElementsOrig, nDataElementsTransform));
 
         return new OrigTransformFilePairMetrics(
