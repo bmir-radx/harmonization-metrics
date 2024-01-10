@@ -2,8 +2,8 @@ package edu.stanford.bmir.radx.harmonization.metrics.lib;
 
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +30,7 @@ public class MetricsCalculator {
     public MetricsReport computeHarmonizationMetrics(List<DataFileExternal> dataFiles)
             throws InvalidProgramIdException, InvalidOrigTransformCategoryException,
             NoVersionNumberException, InvalidHarmonizationTierException {
+        LocalDate date = LocalDate.now();
         // per file pair metrics
         Map<ReducedFileName, OrigTransformFilePair> filePairMap = dataFileProcessor.processDataFiles(dataFiles);
         List<OrigTransformFilePairMetrics> metricsPerFilePair = new ArrayList<>();
@@ -47,6 +48,6 @@ public class MetricsCalculator {
             studyMetrics.add(metrics);
         }
 
-        return new MetricsReport(metricsPerFilePair, studyMetrics);
+        return new MetricsReport(date, metricsPerFilePair, studyMetrics);
     }
 }
