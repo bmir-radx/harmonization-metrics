@@ -2,8 +2,12 @@ package edu.stanford.bmir.radx.harmonization.metrics.app;
 
 import edu.stanford.bmir.radx.harmonization.metrics.lib.CsvWriter;
 import edu.stanford.bmir.radx.harmonization.metrics.lib.DataFileExternal;
+import edu.stanford.bmir.radx.harmonization.metrics.lib.InvalidHarmonizationTierException;
+import edu.stanford.bmir.radx.harmonization.metrics.lib.InvalidOrigTransformCategoryException;
+import edu.stanford.bmir.radx.harmonization.metrics.lib.InvalidProgramIdException;
 import edu.stanford.bmir.radx.harmonization.metrics.lib.MetricsCalculator;
 import edu.stanford.bmir.radx.harmonization.metrics.lib.MetricsReport;
+import edu.stanford.bmir.radx.harmonization.metrics.lib.NoVersionNumberException;
 import edu.stanford.bmir.radx.harmonization.metrics.lib.TrialDataProcessor;
 import org.springframework.stereotype.Component;
 import picocli.CommandLine;
@@ -36,14 +40,18 @@ public class CalculateMetricsCommand implements Callable<Integer> {
             description = "Path of CSV to write orig-transform file pair metrics.")
     protected String pairCsv;
 
-    public CalculateMetricsCommand(MetricsCalculator metricsCalculator, TrialDataProcessor trialDataProcessor, CsvWriter csvWriter) {
+    public CalculateMetricsCommand(MetricsCalculator metricsCalculator,
+                                   TrialDataProcessor trialDataProcessor,
+                                   CsvWriter csvWriter) {
         this.metricsCalculator = metricsCalculator;
         this.trialDataProcessor = trialDataProcessor;
         this.csvWriter = csvWriter;
     }
 
     @Override
-    public Integer call() throws Exception {
+    public Integer call() throws IOException,NoVersionNumberException,
+            InvalidOrigTransformCategoryException, InvalidHarmonizationTierException,
+            InvalidProgramIdException {
         List<DataFileExternal> externalData = trialDataProcessor.readExternalData(fileName);
         MetricsReport metrics = metricsCalculator.computeHarmonizationMetrics(externalData);
         csvWriter.writeStudyReport(metrics.studyMetrics(), studyCsv);
