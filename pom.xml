@@ -12,9 +12,9 @@
     </parent>
 
     <groupId>edu.stanford.bmir.radx</groupId>
-    <artifactId>harmonization-metrics</artifactId>
-    <version>0.0.1</version>
-    <name>harmonization-metrics</name>
+    <artifactId>radx-harmonization-metrics</artifactId>
+    <version>1.0.0</version>
+    <name>radx-harmonization-metrics</name>
     <description>RADx Data Hub Harmonization Metrics</description>
     <packaging>pom</packaging>
 
@@ -29,5 +29,16 @@
         <module>radx-harmonization-metrics-lib</module>
         <module>radx-harmonization-metrics-app</module>
     </modules>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
 
 </project>
