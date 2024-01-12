@@ -7,9 +7,9 @@ This class contains the information expected for each data file
 to have harmonization metrics computed. See MetricsCalculator.
 
 Everything is a string here, but the library will convert values
-into the relevant types once the "external" data is processed.
+into the relevant types once the data from the input is processed.
  */
-public record DataFileExternal(
+public record DataFileInput(
         String fileName,
         String program,
         String studyId,

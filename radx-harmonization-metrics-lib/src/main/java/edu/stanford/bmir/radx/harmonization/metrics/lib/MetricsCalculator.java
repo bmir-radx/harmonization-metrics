@@ -27,7 +27,7 @@ public class MetricsCalculator {
         this.studyMetricsGenerator = studyMetricsGenerator;
     }
 
-    public MetricsReport computeHarmonizationMetrics(List<DataFileExternal> dataFiles)
+    public MetricsReport computeHarmonizationMetrics(List<DataFileInput> dataFiles)
             throws InvalidProgramIdException, InvalidOrigTransformCategoryException,
             NoVersionNumberException, InvalidHarmonizationTierException {
         LocalDate date = LocalDate.now();

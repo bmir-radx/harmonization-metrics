@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 /*
-This processor takes DataFileExternal objects and converts
+This processor takes DataFileInput objects and converts
 them into DataFile and OrigTransformFilePair objects.
  */
 @Component
@@ -30,17 +30,17 @@ public class DataFileProcessor {
     internal form that connects data files whose names differ only by version number
     and the origcopy/transformcopy label.
      */
-    public Map<ReducedFileName, OrigTransformFilePair> processDataFiles(List<DataFileExternal> externalDataFiles)
+    public Map<ReducedFileName, OrigTransformFilePair> processDataFiles(List<DataFileInput> inputDataFiles)
             throws InvalidProgramIdException, InvalidOrigTransformCategoryException, NoVersionNumberException {
         Map<ReducedFileName, OrigTransformFilePair> dataFilePairMap = new HashMap<>();
-        for (DataFileExternal externalDataFile: externalDataFiles) {
+        for (DataFileInput inputDataFile: inputDataFiles) {
             // pull relevant information out of external representation of the data file
-            StudyId studyId = StudyId.valueOf(externalDataFile.studyId());
-            ProgramId programId = ProgramId.fromString(externalDataFile.program());
-            OrigTransformCategory otIdentifier = OrigTransformCategory.fromString(externalDataFile.category());
-            int version = fileNameExtractor.extractVersion(externalDataFile.fileName());
-            ReducedFileName name = fileNameExtractor.extractReducedFileName(externalDataFile.fileName());
-            Set<String> variableNames = preprocessVariableNames(externalDataFile.variableNames());
+            StudyId studyId = StudyId.valueOf(inputDataFile.studyId());
+            ProgramId programId = ProgramId.fromString(inputDataFile.program());
+            OrigTransformCategory otIdentifier = OrigTransformCategory.fromString(inputDataFile.category());
+            int version = fileNameExtractor.extractVersion(inputDataFile.fileName());
+            ReducedFileName name = fileNameExtractor.extractReducedFileName(inputDataFile.fileName());
+            Set<String> variableNames = preprocessVariableNames(inputDataFile.variableNames());
 
             // store the information in the internal data file pair representation
             if (!dataFilePairMap.containsKey(name)) {
@@ -49,11 +49,11 @@ public class DataFileProcessor {
             OrigTransformFilePair currentPair = dataFilePairMap.get(name);
             switch(otIdentifier) {
                 case TRANSFORM:
-                    TransformFile transformFile = new TransformFile(externalDataFile.fileName(), version, variableNames);
+                    TransformFile transformFile = new TransformFile(inputDataFile.fileName(), version, variableNames);
                     dataFilePairMap.put(name, currentPair.updateTransformData(transformFile));
                     break;
                 case ORIG:
-                    OrigFile origFile = new OrigFile(externalDataFile.fileName(), version, variableNames);
+                    OrigFile origFile = new OrigFile(inputDataFile.fileName(), version, variableNames);
                     dataFilePairMap.put(name, currentPair.updateOrigData(origFile));
                     break;
             }

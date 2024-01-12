@@ -1,7 +1,7 @@
 package edu.stanford.bmir.radx.harmonization.metrics.app;
 
 import edu.stanford.bmir.radx.harmonization.metrics.lib.CsvWriter;
-import edu.stanford.bmir.radx.harmonization.metrics.lib.DataFileExternal;
+import edu.stanford.bmir.radx.harmonization.metrics.lib.DataFileInput;
 import edu.stanford.bmir.radx.harmonization.metrics.lib.InvalidHarmonizationTierException;
 import edu.stanford.bmir.radx.harmonization.metrics.lib.InvalidOrigTransformCategoryException;
 import edu.stanford.bmir.radx.harmonization.metrics.lib.InvalidProgramIdException;
@@ -49,11 +49,11 @@ public class CalculateMetricsCommand implements Callable<Integer> {
     }
 
     @Override
-    public Integer call() throws IOException,NoVersionNumberException,
+    public Integer call() throws IOException, NoVersionNumberException,
             InvalidOrigTransformCategoryException, InvalidHarmonizationTierException,
             InvalidProgramIdException {
-        List<DataFileExternal> externalData = trialDataProcessor.readExternalData(fileName);
-        MetricsReport metrics = metricsCalculator.computeHarmonizationMetrics(externalData);
+        List<DataFileInput> inputData = trialDataProcessor.readInputData(fileName);
+        MetricsReport metrics = metricsCalculator.computeHarmonizationMetrics(inputData);
         csvWriter.writeStudyReport(metrics.studyMetrics(), studyCsv);
         csvWriter.writeFilePairReport(metrics.pairMetrics(), pairCsv);
         return 0;

@@ -14,41 +14,41 @@ import java.util.List;
 /*
 This is a helper class to support testing. Information about data files,
 including the file names, data element headers, etc., are read in from
-a .json file and converted to DataFileExternal objects.
+a .json file and converted to DataFileInput objects.
 
 This should not be used by the Data Hub. The Data Hub should generate
-DataFileExternal objects directly from the stored data files instead.
+DataFileInput objects directly from the stored data files instead.
  */
 @Component
 public class TrialDataProcessor {
 
     private final ObjectMapper mapper = new ObjectMapper();
 
-    public List<DataFileExternal> readExternalData(String fileName) throws IOException {
+    public List<DataFileInput> readInputData(String fileName) throws IOException {
         return readJsonToList(fileName);
     }
 
-    private List<DataFileExternal> readJsonToList(String fileName) throws IOException {
+    private List<DataFileInput> readJsonToList(String fileName) throws IOException {
         File file = new File(fileName);
         InputStream inputStream = new FileInputStream(file);
         String jsonString = new String(inputStream.readAllBytes());
         JsonNode tree = mapper.readTree(jsonString);
 
-        List<DataFileExternal> trialDataFiles = new ArrayList<>();
+        List<DataFileInput> trialDataFiles = new ArrayList<>();
         for (JsonNode node: tree) {
-            trialDataFiles.add(createExternalDataFileFromNode(node));
+            trialDataFiles.add(createDataFileInputFromNode(node));
         }
 
         return trialDataFiles;
     }
 
-    private DataFileExternal createExternalDataFileFromNode(JsonNode node) {
+    private DataFileInput createDataFileInputFromNode(JsonNode node) {
         String fileName = node.get("filename").textValue();
         String program = node.get("program").textValue();
         String studyId = node.get("study_id").textValue();
         String category = node.get("category").textValue();
         List<String> variableNames = mapper.convertValue(node.get("variables"), List.class);
 
-        return new DataFileExternal(fileName, program, studyId, category, variableNames);
+        return new DataFileInput(fileName, program, studyId, category, variableNames);
     }
 }

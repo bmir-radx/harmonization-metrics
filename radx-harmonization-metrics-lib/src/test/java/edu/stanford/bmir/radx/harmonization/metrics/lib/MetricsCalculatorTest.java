@@ -72,7 +72,7 @@ class MetricsCalculatorTest {
         Mockito.doReturn(mockStudyMap).when(mockFileProcessor).organizeFilePairsByStudy(Mockito.eq(mockPairMap));
 
         // run the calculator with a fake input (empty list)
-        List<DataFileExternal> fakeInput = new ArrayList<>();
+        List<DataFileInput> fakeInput = new ArrayList<>();
         MetricsReport report = calculator.computeHarmonizationMetrics(fakeInput);
 
         // validate that the right number of entries appear for the pair metrics
