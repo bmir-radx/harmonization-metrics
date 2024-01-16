@@ -37,8 +37,10 @@ and the category is also constrained to be one of the following two:
 - `orig`
 - `transform`
 
-Below is an example of the library usage after the user has inputs that fit
-the expected format.
+Below is an example of the library usage with some pseudocode for converting
+data file records from another data store (e.g., a database) into the `DataFileInput`
+format expected by the library.
+The implementation of the command line interface also follows this example.
 ```java
 @Component
 public class Wrapper {
@@ -49,10 +51,18 @@ public class Wrapper {
         this.calculator = calculator;
     }
     
-    public get_metrics(List<DataFileInput> data) {
-        MetricsReport metrics = calculator.computeHarmonizationMetrics(data);
+    public loadDataAndCalculateMetrics() {
+        List<Object> rawData = readDataFromDataStore();
+        List<DataFileInput> inputData = convertRawData(rawData);
+        MetricsReport metrics = calculator.computeHarmonizationMetrics(inputData);
         // use the metrics for other things, e.g., 
         // store to database, write to file, etc.
     }
-}
+
+    private List<DataFileInput> convertRawData(List<Object> rawData) {
+        // For each data file record (raw data), obtain the file name,
+        // study ID, program ID, whether the file is "orig" or "transform",
+        // and the set of variable names from each raw data object, and
+        // then use this information to create a DataFileInput object.
+    }
 ```
