@@ -22,11 +22,11 @@ public class CsvWriter {
                     "Unique Harmonizable Variables (Tier-1)",
                     "Unique Harmonizable Variables (Tier-2)",
                     "Unique Harmonizable Variables (Tier-3)",
-                    "% Harmonizable",
+                    "Total Harmonizable Variables",
                     "Unique Harmonized Variables (Tier-1)",
                     "Unique Harmonized Variables (Tier-2)",
                     "Unique Harmonized Variables (Tier-3)",
-                    "% Harmonized"
+                    "Total Harmonized Variables"
             };
             writer.writeNext(headers);
 
@@ -54,11 +54,11 @@ public class CsvWriter {
                     "Unique Harmonizable Variables (Tier-1)",
                     "Unique Harmonizable Variables (Tier-2)",
                     "Unique Harmonizable Variables (Tier-3)",
-                    "% Harmonizable",
+                    "Total Harmonizable Variables",
                     "Unique Harmonized Variables (Tier-1)",
                     "Unique Harmonized Variables (Tier-2)",
                     "Unique Harmonized Variables (Tier-3)",
-                    "% Harmonized"
+                    "Total Harmonized Variables"
             };
             writer.writeNext(headers);
 
@@ -83,11 +83,11 @@ public class CsvWriter {
                 String.valueOf(metrics.nHarmonizableDataElementsTier1()),
                 String.valueOf(metrics.nHarmonizableDataElementsTier2()),
                 String.valueOf(metrics.nHarmonizableDataElementsTier3()),
-                String.format("%.2f", metrics.percentHarmonizable()),
+                String.valueOf(metrics.totalHarmonizable()),
                 String.valueOf(metrics.nHarmonizedDataElementsTier1()),
                 String.valueOf(metrics.nHarmonizedDataElementsTier2()),
                 String.valueOf(metrics.nHarmonizedDataElementsTier3()),
-                String.format("%.2f", metrics.percentHarmonized()),
+                String.valueOf(metrics.totalHarmonized()),
         };
         return line;
     }
@@ -101,11 +101,11 @@ public class CsvWriter {
                 String.valueOf(metrics.nUniqueHarmonizableDataElementsTier1()),
                 String.valueOf(metrics.nUniqueHarmonizableDataElementsTier2()),
                 String.valueOf(metrics.nUniqueHarmonizableDataElementsTier3()),
-                String.format("%.2f", metrics.percentHarmonizable()),
+                String.valueOf(metrics.totalHarmonizable()),
                 String.valueOf(metrics.nUniqueHarmonizedDataElementsTier1()),
                 String.valueOf(metrics.nUniqueHarmonizedDataElementsTier2()),
                 String.valueOf(metrics.nUniqueHarmonizedDataElementsTier3()),
-                String.format("%.2f", metrics.percentHarmonized()),
+                String.valueOf(metrics.totalHarmonized()),
         };
         return line;
     }

@@ -59,24 +59,12 @@ public class OrigTransformFilePairMetricsGenerator extends InternalMetricsGenera
         if (origMetrics.isPresent() && transformMetrics.isPresent()) {
             nDataElementsOrig = origMetrics.get().nDataElements();
             nDataElementsTransform = transformMetrics.get().nDataElements();
-            nHarmonizableDataElementsTier1 = Math.max(
-                    origMetrics.get().nHarmonizableDataElementsTier1(),
-                    transformMetrics.get().nHarmonizableDataElementsTier1());
-            nHarmonizableDataElementsTier2 = Math.max(
-                    origMetrics.get().nHarmonizableDataElementsTier2(),
-                    transformMetrics.get().nHarmonizableDataElementsTier2());
-            nHarmonizableDataElementsTier3 = Math.max(
-                    origMetrics.get().nHarmonizableDataElementsTier3(),
-                    transformMetrics.get().nHarmonizableDataElementsTier3());
-            nHarmonizedDataElementsTier1 = Math.max(
-                    origMetrics.get().nHarmonizedDataElementsTier1(),
-                    transformMetrics.get().nHarmonizedDataElementsTier1());
-            nHarmonizedDataElementsTier2 = Math.max(
-                    origMetrics.get().nHarmonizedDataElementsTier2(),
-                    transformMetrics.get().nHarmonizedDataElementsTier2());
-            nHarmonizedDataElementsTier3 = Math.max(
-                    origMetrics.get().nHarmonizedDataElementsTier3(),
-                    transformMetrics.get().nHarmonizedDataElementsTier3());
+            nHarmonizableDataElementsTier1 = origMetrics.get().nHarmonizableDataElementsTier1();
+            nHarmonizableDataElementsTier2 = origMetrics.get().nHarmonizableDataElementsTier2();
+            nHarmonizableDataElementsTier3 = origMetrics.get().nHarmonizableDataElementsTier3();
+            nHarmonizedDataElementsTier1 = transformMetrics.get().nHarmonizedDataElementsTier1();
+            nHarmonizedDataElementsTier2 = transformMetrics.get().nHarmonizedDataElementsTier2();
+            nHarmonizedDataElementsTier3 = transformMetrics.get().nHarmonizedDataElementsTier3();
         } else if (origMetrics.isPresent()) {
             nDataElementsOrig = origMetrics.get().nDataElements();
             nDataElementsTransform = 0;
@@ -97,16 +85,12 @@ public class OrigTransformFilePairMetricsGenerator extends InternalMetricsGenera
             nHarmonizedDataElementsTier3 = transformMetrics.get().nHarmonizedDataElementsTier3();
         }
 
-        Double percentHarmonizable = 100 * ((double) (
-                nHarmonizableDataElementsTier1
-                    + nHarmonizableDataElementsTier2
-                    + nHarmonizableDataElementsTier3)
-                / Math.max(nDataElementsOrig, nDataElementsTransform));
-        Double percentHarmonized = 100 * ((double) (
-                nHarmonizedDataElementsTier1
-                    + nHarmonizedDataElementsTier2
-                    + nHarmonizedDataElementsTier3)
-                / Math.max(nDataElementsOrig, nDataElementsTransform));
+        Integer totalHarmonizable = nHarmonizableDataElementsTier1
+                + nHarmonizableDataElementsTier2
+                + nHarmonizableDataElementsTier3;
+        Integer totalHarmonized = nHarmonizedDataElementsTier1
+                + nHarmonizedDataElementsTier2
+                + nHarmonizedDataElementsTier3;
 
         return new OrigTransformFilePairMetrics(
                 pairName,
@@ -119,10 +103,10 @@ public class OrigTransformFilePairMetricsGenerator extends InternalMetricsGenera
                 nHarmonizableDataElementsTier1,
                 nHarmonizableDataElementsTier2,
                 nHarmonizableDataElementsTier3,
-                percentHarmonizable,
+                totalHarmonizable,
                 nHarmonizedDataElementsTier1,
                 nHarmonizedDataElementsTier2,
                 nHarmonizedDataElementsTier3,
-                percentHarmonized);
+                totalHarmonized);
     }
 }

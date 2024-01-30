@@ -105,12 +105,8 @@ class OrigTransformFilePairMetricsGeneratorTest {
                         Mockito.any(ProgramId.class), Mockito.anySet(),
                         Mockito.eq(HarmonizationTier.TIER3));
 
-        Double percentHarmonizable = 100 * (double) (
-                nHarmonizableT1 + nHarmonizableT2 + nHarmonizableT3) /
-                transform.variableNames().size();
-        Double percentHarmonized = 100 * (double) (
-                nHarmonizedT1 + nHarmonizedT2 + nHarmonizedT3) /
-                transform.variableNames().size();
+        int totalHarmonizable = nHarmonizableT1 + nHarmonizableT2 + nHarmonizableT3;
+        int totalHarmonized = nHarmonizedT1 + nHarmonizedT2 + nHarmonizedT3;
 
         // verify metrics have correct values
         assertEquals(name, metrics.pairName());
@@ -124,11 +120,11 @@ class OrigTransformFilePairMetricsGeneratorTest {
         assertEquals(nHarmonizableT1, metrics.nHarmonizableDataElementsTier1());
         assertEquals(nHarmonizableT2, metrics.nHarmonizableDataElementsTier2());
         assertEquals(nHarmonizableT3, metrics.nHarmonizableDataElementsTier3());
-        assertEquals(percentHarmonizable, metrics.percentHarmonizable());
+        assertEquals(totalHarmonizable, metrics.totalHarmonizable());
         assertEquals(nHarmonizedT1, metrics.nHarmonizedDataElementsTier1());
         assertEquals(nHarmonizedT2, metrics.nHarmonizedDataElementsTier2());
         assertEquals(nHarmonizedT3, metrics.nHarmonizedDataElementsTier3());
-        assertEquals(percentHarmonized, metrics.percentHarmonized());
+        assertEquals(totalHarmonized, metrics.totalHarmonized());
     }
 
     @Test
@@ -197,12 +193,8 @@ class OrigTransformFilePairMetricsGeneratorTest {
                         Mockito.any(ProgramId.class), Mockito.anySet(),
                         Mockito.eq(HarmonizationTier.TIER3));
 
-        Double percentHarmonizable = 100 * (double) (
-                nHarmonizableT1 + nHarmonizableT2 + nHarmonizableT3) /
-                orig.variableNames().size();
-        Double percentHarmonized = 100 * (double) (
-                nHarmonizedT1 + nHarmonizedT2 + nHarmonizedT3) /
-                orig.variableNames().size();
+        int totalHarmonizable = nHarmonizableT1 + nHarmonizableT2 + nHarmonizableT3;
+        int totalHarmonized = nHarmonizedT1 + nHarmonizedT2 + nHarmonizedT3;
 
         // verify metrics have correct values
         assertEquals(name, metrics.pairName());
@@ -216,11 +208,11 @@ class OrigTransformFilePairMetricsGeneratorTest {
         assertEquals(nHarmonizableT1, metrics.nHarmonizableDataElementsTier1());
         assertEquals(nHarmonizableT2, metrics.nHarmonizableDataElementsTier2());
         assertEquals(nHarmonizableT3, metrics.nHarmonizableDataElementsTier3());
-        assertEquals(percentHarmonizable, metrics.percentHarmonizable());
+        assertEquals(totalHarmonizable, metrics.totalHarmonizable());
         assertEquals(nHarmonizedT1, metrics.nHarmonizedDataElementsTier1());
         assertEquals(nHarmonizedT2, metrics.nHarmonizedDataElementsTier2());
         assertEquals(nHarmonizedT3, metrics.nHarmonizedDataElementsTier3());
-        assertEquals(percentHarmonized, metrics.percentHarmonized());
+        assertEquals(totalHarmonized, metrics.totalHarmonized());
     }
 
     @Test
@@ -306,12 +298,8 @@ class OrigTransformFilePairMetricsGeneratorTest {
                         Mockito.any(ProgramId.class), Mockito.anySet(),
                         Mockito.eq(HarmonizationTier.TIER3));
 
-        Double percentHarmonizable = 100 * (double) (
-                nHarmonizableOrigT1 + nHarmonizableOrigT2 + nHarmonizableTransformT3) /
-                Math.max(orig.variableNames().size(), transform.variableNames().size());
-        Double percentHarmonized = 100 * (double) (
-                nHarmonizedTransformT1 + nHarmonizedTransformT2 + nHarmonizedTransformT3) /
-                Math.max(orig.variableNames().size(), transform.variableNames().size());
+        int totalHarmonizable = nHarmonizableOrigT1 + nHarmonizableOrigT2 + nHarmonizableOrigT3;
+        int totalHarmonized = nHarmonizedTransformT1 + nHarmonizedTransformT2 + nHarmonizedTransformT3;
 
         // verify metrics have correct values
         assertEquals(name, metrics.pairName());
@@ -325,11 +313,11 @@ class OrigTransformFilePairMetricsGeneratorTest {
         assertEquals(transform.variableNames().size(), metrics.nDataElementsTransform());
         assertEquals(nHarmonizableOrigT1, metrics.nHarmonizableDataElementsTier1());
         assertEquals(nHarmonizableOrigT2, metrics.nHarmonizableDataElementsTier2());
-        assertEquals(nHarmonizableTransformT3, metrics.nHarmonizableDataElementsTier3());
-        assertEquals(percentHarmonizable, metrics.percentHarmonizable());
+        assertEquals(nHarmonizableOrigT3, metrics.nHarmonizableDataElementsTier3());
+        assertEquals(totalHarmonizable, metrics.totalHarmonizable());
         assertEquals(nHarmonizedTransformT1, metrics.nHarmonizedDataElementsTier1());
         assertEquals(nHarmonizedTransformT2, metrics.nHarmonizedDataElementsTier2());
         assertEquals(nHarmonizedTransformT3, metrics.nHarmonizedDataElementsTier3());
-        assertEquals(percentHarmonized, metrics.percentHarmonized());
+        assertEquals(totalHarmonized, metrics.totalHarmonized());
     }
 }

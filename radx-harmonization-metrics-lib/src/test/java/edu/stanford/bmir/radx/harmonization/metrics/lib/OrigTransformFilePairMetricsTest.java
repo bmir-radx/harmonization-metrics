@@ -24,8 +24,12 @@ class OrigTransformFilePairMetricsTest {
         int nHarmonizedDataElementsTier2 = 1;
         int nHarmonizedDataElementsTier3 = 1;
         int nDataElements = 3;
-        Double percentHarmonizable = 100.;
-        Double percentHarmonized = 100.;
+        int totalHarmonizable = nHarmonizableDataElementsTier1
+                + nHarmonizableDataElementsTier2
+                + nHarmonizableDataElementsTier3;
+        int totalHarmonized = nHarmonizedDataElementsTier1
+                + nHarmonizedDataElementsTier2
+                + nHarmonizedDataElementsTier3;
         var metrics = new OrigTransformFilePairMetrics(
                 testName,
                 testProgramId,
@@ -37,11 +41,11 @@ class OrigTransformFilePairMetricsTest {
                 nHarmonizableDataElementsTier1,
                 nHarmonizableDataElementsTier2,
                 nHarmonizableDataElementsTier3,
-                percentHarmonizable,
+                totalHarmonizable,
                 nHarmonizedDataElementsTier1,
                 nHarmonizedDataElementsTier2,
                 nHarmonizedDataElementsTier3,
-                percentHarmonized);
+                totalHarmonized);
         assertTrue(metrics.hasHarmonizedDataElement());
     }
 
@@ -56,8 +60,12 @@ class OrigTransformFilePairMetricsTest {
         int nHarmonizedDataElementsTier2 = 0;
         int nHarmonizedDataElementsTier3 = 0;
         int nDataElements = 3;
-        Double percentHarmonizable = 100.;
-        Double percentHarmonized = 0.;
+        int totalHarmonizable = nHarmonizableDataElementsTier1
+                + nHarmonizableDataElementsTier2
+                + nHarmonizableDataElementsTier3;
+        int totalHarmonized = nHarmonizedDataElementsTier1
+                + nHarmonizedDataElementsTier2
+                + nHarmonizedDataElementsTier3;
         var metrics = new OrigTransformFilePairMetrics(
                 testName,
                 testProgramId,
@@ -69,11 +77,11 @@ class OrigTransformFilePairMetricsTest {
                 nHarmonizableDataElementsTier1,
                 nHarmonizableDataElementsTier2,
                 nHarmonizableDataElementsTier3,
-                percentHarmonizable,
+                totalHarmonizable,
                 nHarmonizedDataElementsTier1,
                 nHarmonizedDataElementsTier2,
                 nHarmonizedDataElementsTier3,
-                percentHarmonized);
+                totalHarmonized);
         assertFalse(metrics.hasHarmonizedDataElement());
     }
 }
