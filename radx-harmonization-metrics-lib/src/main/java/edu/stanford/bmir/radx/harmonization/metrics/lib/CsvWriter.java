@@ -7,6 +7,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
+import static java.lang.Math.max;
+
 @Component
 public class CsvWriter {
 
@@ -17,7 +19,7 @@ public class CsvWriter {
             String[] headers = {
                     "Study ID",
                     "DCC",
-                    "Number Orig-Transform Pairs",
+                    "Number of Data Files",
                     "Unique Variables",
                     "Unique Harmonizable Variables (Tier-1)",
                     "Unique Harmonizable Variables (Tier-2)",
@@ -45,12 +47,11 @@ public class CsvWriter {
             String filePath) throws IOException {
         try (CSVWriter writer = new CSVWriter(new FileWriter(filePath))) {
             String[] headers = {
-                    "File Name (Orig)",
-                    "File Name (Transform)",
+                    "File Name (Pre-harmonization)",
+                    "File Name (Post-harmonization)",
                     "Study ID",
                     "DCC",
-                    "Unique Variables (Orig)",
-                    "Unique Variables (Transform)",
+                    "Unique Variables",
                     "Unique Harmonizable Variables (Tier-1)",
                     "Unique Harmonizable Variables (Tier-2)",
                     "Unique Harmonizable Variables (Tier-3)",
@@ -78,8 +79,7 @@ public class CsvWriter {
                 metrics.transformFileName().orElse(null),
                 metrics.studyId().value(),
                 metrics.programId().toString(),
-                String.valueOf(metrics.nDataElementsOrig()),
-                String.valueOf(metrics.nDataElementsTransform()),
+                String.valueOf(max(metrics.nDataElementsOrig(), metrics.nDataElementsTransform())),
                 String.valueOf(metrics.nHarmonizableDataElementsTier1()),
                 String.valueOf(metrics.nHarmonizableDataElementsTier2()),
                 String.valueOf(metrics.nHarmonizableDataElementsTier3()),
