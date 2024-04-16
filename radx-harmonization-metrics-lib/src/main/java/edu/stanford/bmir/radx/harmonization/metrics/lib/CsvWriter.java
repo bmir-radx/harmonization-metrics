@@ -20,14 +20,14 @@ public class CsvWriter {
                     "Study ID",
                     "DCC",
                     "Number of Data Files",
-                    "Unique Variables",
-                    "Unique Harmonizable Variables (Tier-1)",
-                    "Unique Harmonizable Variables (Tier-2)",
-                    "Unique Harmonizable Variables (Tier-3)",
+                    "Total Variables",
+                    "Harmonizable Variables (Tier-1)",
+                    "Harmonizable Variables (Tier-2)",
+                    "Harmonizable Variables (Tier-3)",
                     "Total Harmonizable Variables",
-                    "Unique Harmonized Variables (Tier-1)",
-                    "Unique Harmonized Variables (Tier-2)",
-                    "Unique Harmonized Variables (Tier-3)",
+                    "Harmonized Variables (Tier-1)",
+                    "Harmonized Variables (Tier-2)",
+                    "Harmonized Variables (Tier-3)",
                     "Total Harmonized Variables"
             };
             writer.writeNext(headers);
@@ -51,14 +51,14 @@ public class CsvWriter {
                     "File Name (Post-harmonization)",
                     "Study ID",
                     "DCC",
-                    "Unique Variables",
-                    "Unique Harmonizable Variables (Tier-1)",
-                    "Unique Harmonizable Variables (Tier-2)",
-                    "Unique Harmonizable Variables (Tier-3)",
+                    "Total Variables",
+                    "Harmonizable Variables (Tier-1)",
+                    "Harmonizable Variables (Tier-2)",
+                    "Harmonizable Variables (Tier-3)",
                     "Total Harmonizable Variables",
-                    "Unique Harmonized Variables (Tier-1)",
-                    "Unique Harmonized Variables (Tier-2)",
-                    "Unique Harmonized Variables (Tier-3)",
+                    "Harmonized Variables (Tier-1)",
+                    "Harmonized Variables (Tier-2)",
+                    "Harmonized Variables (Tier-3)",
                     "Total Harmonized Variables"
             };
             writer.writeNext(headers);
