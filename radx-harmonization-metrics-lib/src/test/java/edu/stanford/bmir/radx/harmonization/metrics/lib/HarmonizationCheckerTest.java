@@ -91,9 +91,9 @@ public class HarmonizationCheckerTest {
                 programId, variables, HarmonizationTier.TIER2).size();
         int nHarmonizedTier3 = checker.filterHarmonizedElements(
                 programId, variables, HarmonizationTier.TIER3).size();
-        assertEquals(6, nHarmonizableTier1);
-        assertEquals(4, nHarmonizableTier2);
-        assertEquals(2, nHarmonizableTier3);
+        assertEquals(3, nHarmonizableTier1);
+        assertEquals(2, nHarmonizableTier2);
+        assertEquals(1, nHarmonizableTier3);
         assertEquals(3, nHarmonizedTier1);
         assertEquals(2, nHarmonizedTier2);
         assertEquals(1, nHarmonizedTier3);

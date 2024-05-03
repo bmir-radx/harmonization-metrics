@@ -1,6 +1,7 @@
 package edu.stanford.bmir.radx.harmonization.metrics.lib;
 
 import java.util.Optional;
+import java.util.Set;
 
 /*
 Metrics per OrigTransformFilePair. Each OrigTransformFilePair
@@ -22,7 +23,17 @@ public record OrigTransformFilePairMetrics(
         Integer nHarmonizedDataElementsTier1,
         Integer nHarmonizedDataElementsTier2,
         Integer nHarmonizedDataElementsTier3,
-        Integer totalHarmonized) {
+        Integer totalHarmonized,
+        Set<String> dataElementsOrig,
+        Set<String> dataElementsTransform,
+        Set<String> harmonizableDataElementsTier1,
+        Set<String> harmonizableDataElementsTier2,
+        Set<String> harmonizableDataElementsTier3,
+        Set<String> harmonizableDataElements,
+        Set<String> harmonizedDataElementsTier1,
+        Set<String> harmonizedDataElementsTier2,
+        Set<String> harmonizedDataElementsTier3,
+        Set<String> harmonizedDataElements) {
 
     public boolean hasHarmonizedDataElement() {
         return nHarmonizedDataElementsTier1 + nHarmonizedDataElementsTier2 + nHarmonizedDataElementsTier3 > 0;

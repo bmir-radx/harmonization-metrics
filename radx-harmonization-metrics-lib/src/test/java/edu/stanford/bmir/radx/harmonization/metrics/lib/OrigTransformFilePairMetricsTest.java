@@ -2,6 +2,7 @@ package edu.stanford.bmir.radx.harmonization.metrics.lib;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.HashSet;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -45,7 +46,17 @@ class OrigTransformFilePairMetricsTest {
                 nHarmonizedDataElementsTier1,
                 nHarmonizedDataElementsTier2,
                 nHarmonizedDataElementsTier3,
-                totalHarmonized);
+                totalHarmonized,
+                new HashSet<>(),
+                new HashSet<>(),
+                new HashSet<>(),
+                new HashSet<>(),
+                new HashSet<>(),
+                new HashSet<>(),
+                new HashSet<>(),
+                new HashSet<>(),
+                new HashSet<>(),
+                new HashSet<>());
         assertTrue(metrics.hasHarmonizedDataElement());
     }
 
@@ -81,7 +92,17 @@ class OrigTransformFilePairMetricsTest {
                 nHarmonizedDataElementsTier1,
                 nHarmonizedDataElementsTier2,
                 nHarmonizedDataElementsTier3,
-                totalHarmonized);
+                totalHarmonized,
+                new HashSet<>(),
+                new HashSet<>(),
+                new HashSet<>(),
+                new HashSet<>(),
+                new HashSet<>(),
+                new HashSet<>(),
+                new HashSet<>(),
+                new HashSet<>(),
+                new HashSet<>(),
+                new HashSet<>());
         assertFalse(metrics.hasHarmonizedDataElement());
     }
 }

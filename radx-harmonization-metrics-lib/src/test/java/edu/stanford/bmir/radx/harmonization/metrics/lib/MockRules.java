@@ -51,7 +51,7 @@ public class MockRules implements HarmonizationRules {
             default:
                 programMap = tier3Map.get(programId);
         }
-        return programMap.containsKey(element) || programMap.containsValue(element);
+        return programMap.containsKey(element);
     }
 
     public boolean isHarmonized(ProgramId programId, String element, HarmonizationTier tier) {

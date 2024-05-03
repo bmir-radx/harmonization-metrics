@@ -120,8 +120,8 @@ class OrigTransformFilePairMetricsGeneratorTest {
                         Mockito.any(ProgramId.class), Mockito.anySet(),
                         Mockito.eq(HarmonizationTier.TIER3));
 
-        int totalHarmonizable = nHarmonizableT1 + nHarmonizableT2 + nHarmonizableT3;
-        int totalHarmonized = nHarmonizedT1 + nHarmonizedT2 + nHarmonizedT3;
+        int totalHarmonizable = 10;
+        int totalHarmonized = 3;
 
         // verify metrics have correct values
         assertEquals(name, metrics.pairName());
@@ -214,8 +214,8 @@ class OrigTransformFilePairMetricsGeneratorTest {
                         Mockito.any(ProgramId.class), Mockito.anySet(),
                         Mockito.eq(HarmonizationTier.TIER3));
 
-        int totalHarmonizable = nHarmonizableT1 + nHarmonizableT2 + nHarmonizableT3;
-        int totalHarmonized = nHarmonizedT1 + nHarmonizedT2 + nHarmonizedT3;
+        int totalHarmonizable = 10;
+        int totalHarmonized = 3;
 
         // verify metrics have correct values
         assertEquals(name, metrics.pairName());
@@ -325,8 +325,8 @@ class OrigTransformFilePairMetricsGeneratorTest {
                         Mockito.any(ProgramId.class), Mockito.anySet(),
                         Mockito.eq(HarmonizationTier.TIER3));
 
-        int totalHarmonizable = nHarmonizableOrigT1 + nHarmonizableOrigT2 + nHarmonizableOrigT3;
-        int totalHarmonized = nHarmonizedTransformT1 + nHarmonizedTransformT2 + nHarmonizedTransformT3;
+        int totalHarmonizable = 10;
+        int totalHarmonized = 9;
 
         // verify metrics have correct values
         assertEquals(name, metrics.pairName());

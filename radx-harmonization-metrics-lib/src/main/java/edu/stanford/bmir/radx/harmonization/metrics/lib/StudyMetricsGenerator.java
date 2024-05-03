@@ -39,19 +39,11 @@ public class StudyMetricsGenerator extends InternalMetricsGenerator {
             updateUniqueVariables(pair, uniqueVariablesOrig, uniqueVariablesTransform);
         }
 
-        VariableSetMetrics metricsOrig = generateVariableSetMetrics(
+        HarmonizedVariableSets origVariables = filterVariablesByHarmonization(
                 programId, uniqueVariablesOrig);
-        VariableSetMetrics metricsTransform = generateVariableSetMetrics(
+        HarmonizedVariableSets transformVariables = filterVariablesByHarmonization(
                 programId, uniqueVariablesTransform);
 
-
-        int nUniqueDataElements;
-        int nUniqueHarmonizableDataElementsTier1;
-        int nUniqueHarmonizableDataElementsTier2;
-        int nUniqueHarmonizableDataElementsTier3;
-        int nUniqueHarmonizedDataElementsTier1;
-        int nUniqueHarmonizedDataElementsTier2;
-        int nUniqueHarmonizedDataElementsTier3;
 
         // there can be discrepancies in the number of data elements
         // between the two files in the pair, so pick the larger one
@@ -60,33 +52,50 @@ public class StudyMetricsGenerator extends InternalMetricsGenerator {
         // the harmonized data elements can vary. If the transform
         // file exists, this number should be higher. If it does not,
         // an origcopy can still contain some harmonized data elements,
-        nUniqueDataElements = Math.max(
-                metricsOrig.nDataElements(), metricsTransform.nDataElements());
-        nUniqueHarmonizableDataElementsTier1 = Math.max(
-                metricsOrig.nHarmonizableDataElementsTier1(),
-                metricsTransform.nHarmonizableDataElementsTier1());
-        nUniqueHarmonizableDataElementsTier2 = Math.max(
-                metricsOrig.nHarmonizableDataElementsTier2(),
-                metricsTransform.nHarmonizableDataElementsTier2());
-        nUniqueHarmonizableDataElementsTier3 = Math.max(
-                metricsOrig.nHarmonizableDataElementsTier3(),
-                metricsTransform.nHarmonizableDataElementsTier3());
-        nUniqueHarmonizedDataElementsTier1 = Math.max(
-                metricsOrig.nHarmonizedDataElementsTier1(),
-                metricsTransform.nHarmonizedDataElementsTier1());
-        nUniqueHarmonizedDataElementsTier2 = Math.max(
-                metricsOrig.nHarmonizedDataElementsTier2(),
-                metricsTransform.nHarmonizedDataElementsTier2());
-        nUniqueHarmonizedDataElementsTier3 = Math.max(
-                metricsOrig.nHarmonizedDataElementsTier3(),
-                metricsTransform.nHarmonizedDataElementsTier3());
+        int nUniqueDataElements = Math.max(
+                origVariables.dataElements().size(),
+                transformVariables.dataElements().size());
 
-        Integer totalHarmonizable = nUniqueHarmonizableDataElementsTier1
-                + nUniqueHarmonizableDataElementsTier2
-                + nUniqueHarmonizableDataElementsTier3;
-        Integer totalHarmonized = nUniqueHarmonizedDataElementsTier1
-                + nUniqueHarmonizedDataElementsTier2
-                + nUniqueHarmonizedDataElementsTier3;
+        Set<String> harmonizableDataElementsTier1 = new HashSet<>();
+        harmonizableDataElementsTier1.addAll(origVariables.harmonizableDataElementsTier1());
+        harmonizableDataElementsTier1.addAll(transformVariables.harmonizableDataElementsTier1());
+        int nUniqueHarmonizableDataElementsTier1 = harmonizableDataElementsTier1.size();
+
+        Set<String> harmonizableDataElementsTier2 = new HashSet<>();
+        harmonizableDataElementsTier2.addAll(origVariables.harmonizableDataElementsTier2());
+        harmonizableDataElementsTier2.addAll(transformVariables.harmonizableDataElementsTier2());
+        int nUniqueHarmonizableDataElementsTier2 = harmonizableDataElementsTier2.size();
+
+        Set<String> harmonizableDataElementsTier3 = new HashSet<>();
+        harmonizableDataElementsTier3.addAll(origVariables.harmonizableDataElementsTier3());
+        harmonizableDataElementsTier3.addAll(transformVariables.harmonizableDataElementsTier3());
+        int nUniqueHarmonizableDataElementsTier3 = harmonizableDataElementsTier3.size();
+
+        Set<String> harmonizedDataElementsTier1 = new HashSet<>();
+        harmonizedDataElementsTier1.addAll(origVariables.harmonizedDataElementsTier1());
+        harmonizedDataElementsTier1.addAll(transformVariables.harmonizedDataElementsTier1());
+        int nUniqueHarmonizedDataElementsTier1 = harmonizedDataElementsTier1.size();
+
+        Set<String> harmonizedDataElementsTier2 = new HashSet<>();
+        harmonizedDataElementsTier2.addAll(origVariables.harmonizedDataElementsTier2());
+        harmonizedDataElementsTier2.addAll(transformVariables.harmonizedDataElementsTier2());
+        int nUniqueHarmonizedDataElementsTier2 = harmonizedDataElementsTier2.size();
+
+        Set<String> harmonizedDataElementsTier3 = new HashSet<>();
+        harmonizedDataElementsTier3.addAll(origVariables.harmonizedDataElementsTier3());
+        harmonizedDataElementsTier3.addAll(transformVariables.harmonizedDataElementsTier3());
+        int nUniqueHarmonizedDataElementsTier3 = harmonizedDataElementsTier3.size();
+
+        Set<String> harmonizableDataElements = new HashSet<>();
+        harmonizableDataElements.addAll(harmonizableDataElementsTier1);
+        harmonizableDataElements.addAll(harmonizableDataElementsTier2);
+        harmonizableDataElements.addAll(harmonizableDataElementsTier3);
+        int totalHarmonizable = harmonizableDataElements.size();
+        Set<String> harmonizedDataElements = new HashSet<>();
+        harmonizedDataElements.addAll(harmonizedDataElementsTier1);
+        harmonizedDataElements.addAll(harmonizedDataElementsTier2);
+        harmonizedDataElements.addAll(harmonizedDataElementsTier3);
+        int totalHarmonized = harmonizedDataElements.size();
 
         return new StudyMetrics(
                 studyId,
@@ -100,6 +109,14 @@ public class StudyMetricsGenerator extends InternalMetricsGenerator {
                 nUniqueHarmonizedDataElementsTier1,
                 nUniqueHarmonizedDataElementsTier2,
                 nUniqueHarmonizedDataElementsTier3,
-                totalHarmonized);
+                totalHarmonized,
+                harmonizableDataElementsTier1,
+                harmonizableDataElementsTier2,
+                harmonizableDataElementsTier3,
+                harmonizableDataElements,
+                harmonizedDataElementsTier1,
+                harmonizedDataElementsTier2,
+                harmonizedDataElementsTier3,
+                harmonizedDataElements);
     }
 }

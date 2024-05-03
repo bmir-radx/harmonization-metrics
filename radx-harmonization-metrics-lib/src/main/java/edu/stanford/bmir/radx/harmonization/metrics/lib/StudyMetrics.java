@@ -1,5 +1,7 @@
 package edu.stanford.bmir.radx.harmonization.metrics.lib;
 
+import java.util.Set;
+
 /*
 aggregates OrigTransformFilePairMetrics by StudyId
  */
@@ -15,5 +17,13 @@ public record StudyMetrics(
         Integer nUniqueHarmonizedDataElementsTier1,
         Integer nUniqueHarmonizedDataElementsTier2,
         Integer nUniqueHarmonizedDataElementsTier3,
-        Integer totalHarmonized) {
+        Integer totalHarmonized,
+        Set<String> harmonizableDataElementsTier1,
+        Set<String> harmonizableDataElementsTier2,
+        Set<String> harmonizableDataElementsTier3,
+        Set<String> harmonizableDataElements,
+        Set<String> harmonizedDataElementsTier1,
+        Set<String> harmonizedDataElementsTier2,
+        Set<String> harmonizedDataElementsTier3,
+        Set<String> harmonizedDataElements) {
 }
