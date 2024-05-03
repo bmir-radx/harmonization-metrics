@@ -2,6 +2,7 @@ package edu.stanford.bmir.radx.harmonization.metrics.lib;
 
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /*
@@ -17,27 +18,27 @@ public class HarmonizationChecker {
         harmonizationRules = rules;
     }
 
-    public int countHarmonizableElements(
+    public Set<String> filterHarmonizableElements(
             ProgramId programId, Set<String> elements, HarmonizationTier tier)
             throws InvalidProgramIdException, InvalidHarmonizationTierException {
-        var nHarmonizableElements = 0;
+        Set<String> harmonizableElements = new HashSet<>();
         for (var element: elements) {
             if (harmonizationRules.isHarmonizable(programId, element, tier)) {
-                nHarmonizableElements++;
+                harmonizableElements.add(element);
             }
         }
-        return nHarmonizableElements;
+        return harmonizableElements;
     }
 
-    public int countHarmonizedElements(
+    public Set<String> filterHarmonizedElements(
             ProgramId programId, Set<String> elements, HarmonizationTier tier)
             throws InvalidProgramIdException, InvalidHarmonizationTierException {
-        int nHarmonizedElements = 0;
+        Set<String> harmonizedElements = new HashSet<>();
         for (String element: elements) {
             if (harmonizationRules.isHarmonized(programId, element, tier)) {
-                nHarmonizedElements++;
+                harmonizedElements.add(element);
             }
         }
-        return nHarmonizedElements;
+        return harmonizedElements;
     }
 }

@@ -5,6 +5,7 @@ import org.mockito.Mockito;
 
 import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -39,6 +40,14 @@ class OrigTransformFilePairMetricsGeneratorTest {
         return new OrigTransformFilePair(name, programId, studyId, orig, transform);
     }
 
+    private Set<String> generateVariableSet(int n) {
+        Set<String> variables = new HashSet<>();
+        for (int i = 0; i < n; i++) {
+            variables.add(String.valueOf(i));
+        }
+        return variables;
+    }
+
     @Test
     public void createMetricsFromFilePair_transformOnly()
             throws InvalidHarmonizationTierException, InvalidProgramIdException {
@@ -55,24 +64,30 @@ class OrigTransformFilePairMetricsGeneratorTest {
         int nHarmonizedT1 = 1;
         int nHarmonizedT2 = 2;
         int nHarmonizedT3 = 3;
-        Mockito.doReturn(nHarmonizableT1).when(mockChecker).countHarmonizableElements(
-                Mockito.any(ProgramId.class), Mockito.anySet(),
-                Mockito.eq(HarmonizationTier.TIER1));
-        Mockito.doReturn(nHarmonizableT2).when(mockChecker).countHarmonizableElements(
-                Mockito.any(ProgramId.class), Mockito.anySet(),
-                Mockito.eq(HarmonizationTier.TIER2));
-        Mockito.doReturn(nHarmonizableT3).when(mockChecker).countHarmonizableElements(
-                Mockito.any(ProgramId.class), Mockito.anySet(),
-                Mockito.eq(HarmonizationTier.TIER3));
-        Mockito.doReturn(nHarmonizedT1).when(mockChecker).countHarmonizedElements(
-                Mockito.any(ProgramId.class), Mockito.anySet(),
-                Mockito.eq(HarmonizationTier.TIER1));
-        Mockito.doReturn(nHarmonizedT2).when(mockChecker).countHarmonizedElements(
-                Mockito.any(ProgramId.class), Mockito.anySet(),
-                Mockito.eq(HarmonizationTier.TIER2));
-        Mockito.doReturn(nHarmonizedT3).when(mockChecker).countHarmonizedElements(
-                Mockito.any(ProgramId.class), Mockito.anySet(),
-                Mockito.eq(HarmonizationTier.TIER3));
+        Mockito.doReturn(generateVariableSet(nHarmonizableT1))
+                .when(mockChecker).filterHarmonizableElements(
+                    Mockito.any(ProgramId.class), Mockito.anySet(),
+                    Mockito.eq(HarmonizationTier.TIER1));
+        Mockito.doReturn(generateVariableSet(nHarmonizableT2))
+                .when(mockChecker).filterHarmonizableElements(
+                    Mockito.any(ProgramId.class), Mockito.anySet(),
+                    Mockito.eq(HarmonizationTier.TIER2));
+        Mockito.doReturn(generateVariableSet(nHarmonizableT3))
+                .when(mockChecker).filterHarmonizableElements(
+                    Mockito.any(ProgramId.class), Mockito.anySet(),
+                    Mockito.eq(HarmonizationTier.TIER3));
+        Mockito.doReturn(generateVariableSet(nHarmonizedT1))
+                .when(mockChecker).filterHarmonizedElements(
+                    Mockito.any(ProgramId.class), Mockito.anySet(),
+                    Mockito.eq(HarmonizationTier.TIER1));
+        Mockito.doReturn(generateVariableSet(nHarmonizedT2))
+                .when(mockChecker).filterHarmonizedElements(
+                    Mockito.any(ProgramId.class), Mockito.anySet(),
+                    Mockito.eq(HarmonizationTier.TIER2));
+        Mockito.doReturn(generateVariableSet(nHarmonizedT3))
+                .when(mockChecker).filterHarmonizedElements(
+                    Mockito.any(ProgramId.class), Mockito.anySet(),
+                    Mockito.eq(HarmonizationTier.TIER3));
 
         // generate metrics with mocked checker
         var metricsGenerator = new OrigTransformFilePairMetricsGenerator(mockChecker);
@@ -81,27 +96,27 @@ class OrigTransformFilePairMetricsGeneratorTest {
         // verify that the harmonization checker counter methods were called once
         // for each harmonization tier, only for the transform file
         Mockito.verify(mockChecker, Mockito.times(1))
-                .countHarmonizableElements(
+                .filterHarmonizableElements(
                         Mockito.any(ProgramId.class), Mockito.anySet(),
                         Mockito.eq(HarmonizationTier.TIER1));
         Mockito.verify(mockChecker, Mockito.times(1))
-                .countHarmonizableElements(
+                .filterHarmonizableElements(
                         Mockito.any(ProgramId.class), Mockito.anySet(),
                         Mockito.eq(HarmonizationTier.TIER2));
         Mockito.verify(mockChecker, Mockito.times(1))
-                .countHarmonizableElements(
+                .filterHarmonizableElements(
                         Mockito.any(ProgramId.class), Mockito.anySet(),
                         Mockito.eq(HarmonizationTier.TIER3));
         Mockito.verify(mockChecker, Mockito.times(1))
-                .countHarmonizedElements(
+                .filterHarmonizedElements(
                         Mockito.any(ProgramId.class), Mockito.anySet(),
                         Mockito.eq(HarmonizationTier.TIER1));
         Mockito.verify(mockChecker, Mockito.times(1))
-                .countHarmonizedElements(
+                .filterHarmonizedElements(
                         Mockito.any(ProgramId.class), Mockito.anySet(),
                         Mockito.eq(HarmonizationTier.TIER2));
         Mockito.verify(mockChecker, Mockito.times(1))
-                .countHarmonizedElements(
+                .filterHarmonizedElements(
                         Mockito.any(ProgramId.class), Mockito.anySet(),
                         Mockito.eq(HarmonizationTier.TIER3));
 
@@ -143,24 +158,30 @@ class OrigTransformFilePairMetricsGeneratorTest {
         int nHarmonizedT1 = 1;
         int nHarmonizedT2 = 2;
         int nHarmonizedT3 = 3;
-        Mockito.doReturn(nHarmonizableT1).when(mockChecker).countHarmonizableElements(
-                Mockito.any(ProgramId.class), Mockito.anySet(),
-                Mockito.eq(HarmonizationTier.TIER1));
-        Mockito.doReturn(nHarmonizableT2).when(mockChecker).countHarmonizableElements(
-                Mockito.any(ProgramId.class), Mockito.anySet(),
-                Mockito.eq(HarmonizationTier.TIER2));
-        Mockito.doReturn(nHarmonizableT3).when(mockChecker).countHarmonizableElements(
-                Mockito.any(ProgramId.class), Mockito.anySet(),
-                Mockito.eq(HarmonizationTier.TIER3));
-        Mockito.doReturn(nHarmonizedT1).when(mockChecker).countHarmonizedElements(
-                Mockito.any(ProgramId.class), Mockito.anySet(),
-                Mockito.eq(HarmonizationTier.TIER1));
-        Mockito.doReturn(nHarmonizedT2).when(mockChecker).countHarmonizedElements(
-                Mockito.any(ProgramId.class), Mockito.anySet(),
-                Mockito.eq(HarmonizationTier.TIER2));
-        Mockito.doReturn(nHarmonizedT3).when(mockChecker).countHarmonizedElements(
-                Mockito.any(ProgramId.class), Mockito.anySet(),
-                Mockito.eq(HarmonizationTier.TIER3));
+        Mockito.doReturn(generateVariableSet(nHarmonizableT1))
+                .when(mockChecker).filterHarmonizableElements(
+                        Mockito.any(ProgramId.class), Mockito.anySet(),
+                        Mockito.eq(HarmonizationTier.TIER1));
+        Mockito.doReturn(generateVariableSet(nHarmonizableT2))
+                .when(mockChecker).filterHarmonizableElements(
+                        Mockito.any(ProgramId.class), Mockito.anySet(),
+                        Mockito.eq(HarmonizationTier.TIER2));
+        Mockito.doReturn(generateVariableSet(nHarmonizableT3))
+                .when(mockChecker).filterHarmonizableElements(
+                        Mockito.any(ProgramId.class), Mockito.anySet(),
+                        Mockito.eq(HarmonizationTier.TIER3));
+        Mockito.doReturn(generateVariableSet(nHarmonizedT1))
+                .when(mockChecker).filterHarmonizedElements(
+                        Mockito.any(ProgramId.class), Mockito.anySet(),
+                        Mockito.eq(HarmonizationTier.TIER1));
+        Mockito.doReturn(generateVariableSet(nHarmonizedT2))
+                .when(mockChecker).filterHarmonizedElements(
+                        Mockito.any(ProgramId.class), Mockito.anySet(),
+                        Mockito.eq(HarmonizationTier.TIER2));
+        Mockito.doReturn(generateVariableSet(nHarmonizedT3))
+                .when(mockChecker).filterHarmonizedElements(
+                        Mockito.any(ProgramId.class), Mockito.anySet(),
+                        Mockito.eq(HarmonizationTier.TIER3));
 
         // generate metrics with mocked checker
         var metricsGenerator = new OrigTransformFilePairMetricsGenerator(mockChecker);
@@ -169,27 +190,27 @@ class OrigTransformFilePairMetricsGeneratorTest {
         // verify that the harmonization checker counter methods were called once
         // for each harmonization tier, only for the origfile
         Mockito.verify(mockChecker, Mockito.times(1))
-                .countHarmonizableElements(
+                .filterHarmonizableElements(
                         Mockito.any(ProgramId.class), Mockito.anySet(),
                         Mockito.eq(HarmonizationTier.TIER1));
         Mockito.verify(mockChecker, Mockito.times(1))
-                .countHarmonizableElements(
+                .filterHarmonizableElements(
                         Mockito.any(ProgramId.class), Mockito.anySet(),
                         Mockito.eq(HarmonizationTier.TIER2));
         Mockito.verify(mockChecker, Mockito.times(1))
-                .countHarmonizableElements(
+                .filterHarmonizableElements(
                         Mockito.any(ProgramId.class), Mockito.anySet(),
                         Mockito.eq(HarmonizationTier.TIER3));
         Mockito.verify(mockChecker, Mockito.times(1))
-                .countHarmonizedElements(
+                .filterHarmonizedElements(
                         Mockito.any(ProgramId.class), Mockito.anySet(),
                         Mockito.eq(HarmonizationTier.TIER1));
         Mockito.verify(mockChecker, Mockito.times(1))
-                .countHarmonizedElements(
+                .filterHarmonizedElements(
                         Mockito.any(ProgramId.class), Mockito.anySet(),
                         Mockito.eq(HarmonizationTier.TIER2));
         Mockito.verify(mockChecker, Mockito.times(1))
-                .countHarmonizedElements(
+                .filterHarmonizedElements(
                         Mockito.any(ProgramId.class), Mockito.anySet(),
                         Mockito.eq(HarmonizationTier.TIER3));
 
@@ -242,28 +263,34 @@ class OrigTransformFilePairMetricsGeneratorTest {
         int nHarmonizedTransformT2 = 5;
         int nHarmonizedTransformT3 = 9;
         // first time is for the orig file. second is for the transform.
-        Mockito.doReturn(nHarmonizableOrigT1).doReturn(nHarmonizableTransformT1)
-                .when(mockChecker).countHarmonizableElements(
+        Mockito.doReturn(generateVariableSet(nHarmonizableOrigT1))
+                .doReturn(generateVariableSet(nHarmonizableTransformT1))
+                .when(mockChecker).filterHarmonizableElements(
                         Mockito.any(ProgramId.class), Mockito.anySet(),
                         Mockito.eq(HarmonizationTier.TIER1));
-        Mockito.doReturn(nHarmonizableOrigT2).doReturn(nHarmonizableTransformT2)
-                .when(mockChecker).countHarmonizableElements(
+        Mockito.doReturn(generateVariableSet(nHarmonizableOrigT2))
+                .doReturn(generateVariableSet(nHarmonizableTransformT2))
+                .when(mockChecker).filterHarmonizableElements(
                         Mockito.any(ProgramId.class), Mockito.anySet(),
                         Mockito.eq(HarmonizationTier.TIER2));
-        Mockito.doReturn(nHarmonizableOrigT3).doReturn(nHarmonizableTransformT3)
-                .when(mockChecker).countHarmonizableElements(
+        Mockito.doReturn(generateVariableSet(nHarmonizableOrigT3))
+                .doReturn(generateVariableSet(nHarmonizableTransformT3))
+                .when(mockChecker).filterHarmonizableElements(
                         Mockito.any(ProgramId.class), Mockito.anySet(),
                         Mockito.eq(HarmonizationTier.TIER3));
-        Mockito.doReturn(nHarmonizedOrigT1).doReturn(nHarmonizedTransformT1)
-                .when(mockChecker).countHarmonizedElements(
+        Mockito.doReturn(generateVariableSet(nHarmonizedOrigT1))
+                .doReturn(generateVariableSet(nHarmonizedTransformT1))
+                .when(mockChecker).filterHarmonizedElements(
                         Mockito.any(ProgramId.class), Mockito.anySet(),
                         Mockito.eq(HarmonizationTier.TIER1));
-        Mockito.doReturn(nHarmonizedOrigT2).doReturn(nHarmonizedTransformT2)
-                .when(mockChecker).countHarmonizedElements(
+        Mockito.doReturn(generateVariableSet(nHarmonizedOrigT2))
+                .doReturn(generateVariableSet(nHarmonizedTransformT2))
+                .when(mockChecker).filterHarmonizedElements(
                         Mockito.any(ProgramId.class), Mockito.anySet(),
                         Mockito.eq(HarmonizationTier.TIER2));
-        Mockito.doReturn(nHarmonizedOrigT3).doReturn(nHarmonizedTransformT3)
-                .when(mockChecker).countHarmonizedElements(
+        Mockito.doReturn(generateVariableSet(nHarmonizedOrigT3))
+                .doReturn(generateVariableSet(nHarmonizedTransformT3))
+                .when(mockChecker).filterHarmonizedElements(
                         Mockito.any(ProgramId.class), Mockito.anySet(),
                         Mockito.eq(HarmonizationTier.TIER3));
 
@@ -274,27 +301,27 @@ class OrigTransformFilePairMetricsGeneratorTest {
         // verify that the harmonization checker counter methods were called twice
         // for each harmonization tier, once for the orig and once for the transform
         Mockito.verify(mockChecker, Mockito.times(2))
-                .countHarmonizableElements(
+                .filterHarmonizableElements(
                         Mockito.any(ProgramId.class), Mockito.anySet(),
                         Mockito.eq(HarmonizationTier.TIER1));
         Mockito.verify(mockChecker, Mockito.times(2))
-                .countHarmonizableElements(
+                .filterHarmonizableElements(
                         Mockito.any(ProgramId.class), Mockito.anySet(),
                         Mockito.eq(HarmonizationTier.TIER2));
         Mockito.verify(mockChecker, Mockito.times(2))
-                .countHarmonizableElements(
+                .filterHarmonizableElements(
                         Mockito.any(ProgramId.class), Mockito.anySet(),
                         Mockito.eq(HarmonizationTier.TIER3));
         Mockito.verify(mockChecker, Mockito.times(2))
-                .countHarmonizedElements(
+                .filterHarmonizedElements(
                         Mockito.any(ProgramId.class), Mockito.anySet(),
                         Mockito.eq(HarmonizationTier.TIER1));
         Mockito.verify(mockChecker, Mockito.times(2))
-                .countHarmonizedElements(
+                .filterHarmonizedElements(
                         Mockito.any(ProgramId.class), Mockito.anySet(),
                         Mockito.eq(HarmonizationTier.TIER2));
         Mockito.verify(mockChecker, Mockito.times(2))
-                .countHarmonizedElements(
+                .filterHarmonizedElements(
                         Mockito.any(ProgramId.class), Mockito.anySet(),
                         Mockito.eq(HarmonizationTier.TIER3));
 

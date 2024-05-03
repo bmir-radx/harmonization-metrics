@@ -70,12 +70,12 @@ public class StudyMetricsGeneratorTest {
         // times. six times because once for each tier of variables
         // and once for each of the orig and transform files.
         Mockito.verify(mockChecker, Mockito.times(6))
-                .countHarmonizableElements(
+                .filterHarmonizableElements(
                         Mockito.any(ProgramId.class),
                         Mockito.anySet(),
                         Mockito.any(HarmonizationTier.class));
         Mockito.verify(mockChecker, Mockito.times(6))
-                .countHarmonizedElements(
+                .filterHarmonizedElements(
                         Mockito.any(ProgramId.class),
                         Mockito.anySet(),
                         Mockito.any(HarmonizationTier.class));

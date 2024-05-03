@@ -41,12 +41,12 @@ public class HarmonizationCheckerTest {
         HarmonizationChecker checker = new HarmonizationChecker(rules);
 
         Set<String> variables = generateHarmonizableVariables();
-        int nHarmonizableTier1 = checker.countHarmonizableElements(
-                programId, variables, HarmonizationTier.TIER1);
-        int nHarmonizableTier2 = checker.countHarmonizableElements(
-                programId, variables, HarmonizationTier.TIER2);
-        int nHarmonizableTier3 = checker.countHarmonizableElements(
-                programId, variables, HarmonizationTier.TIER3);
+        int nHarmonizableTier1 = checker.filterHarmonizableElements(
+                programId, variables, HarmonizationTier.TIER1).size();
+        int nHarmonizableTier2 = checker.filterHarmonizableElements(
+                programId, variables, HarmonizationTier.TIER2).size();
+        int nHarmonizableTier3 = checker.filterHarmonizableElements(
+                programId, variables, HarmonizationTier.TIER3).size();
         assertEquals(3, nHarmonizableTier1);
         assertEquals(2, nHarmonizableTier2);
         assertEquals(1, nHarmonizableTier3);
@@ -60,12 +60,12 @@ public class HarmonizationCheckerTest {
         HarmonizationChecker checker = new HarmonizationChecker(rules);
 
         Set<String> variables = generateHarmonizedVariables();
-        int nHarmonizedTier1 = checker.countHarmonizedElements(
-                programId, variables, HarmonizationTier.TIER1);
-        int nHarmonizedTier2 = checker.countHarmonizedElements(
-                programId, variables, HarmonizationTier.TIER2);
-        int nHarmonizedTier3 = checker.countHarmonizedElements(
-                programId, variables, HarmonizationTier.TIER3);
+        int nHarmonizedTier1 = checker.filterHarmonizedElements(
+                programId, variables, HarmonizationTier.TIER1).size();
+        int nHarmonizedTier2 = checker.filterHarmonizedElements(
+                programId, variables, HarmonizationTier.TIER2).size();
+        int nHarmonizedTier3 = checker.filterHarmonizedElements(
+                programId, variables, HarmonizationTier.TIER3).size();
         assertEquals(3, nHarmonizedTier1);
         assertEquals(2, nHarmonizedTier2);
         assertEquals(1, nHarmonizedTier3);
@@ -79,18 +79,18 @@ public class HarmonizationCheckerTest {
         HarmonizationChecker checker = new HarmonizationChecker(rules);
 
         Set<String> variables = generateMixedVariables();
-        int nHarmonizableTier1 = checker.countHarmonizableElements(
-                programId, variables, HarmonizationTier.TIER1);
-        int nHarmonizableTier2 = checker.countHarmonizableElements(
-                programId, variables, HarmonizationTier.TIER2);
-        int nHarmonizableTier3 = checker.countHarmonizableElements(
-                programId, variables, HarmonizationTier.TIER3);
-        int nHarmonizedTier1 = checker.countHarmonizedElements(
-                programId, variables, HarmonizationTier.TIER1);
-        int nHarmonizedTier2 = checker.countHarmonizedElements(
-                programId, variables, HarmonizationTier.TIER2);
-        int nHarmonizedTier3 = checker.countHarmonizedElements(
-                programId, variables, HarmonizationTier.TIER3);
+        int nHarmonizableTier1 = checker.filterHarmonizableElements(
+                programId, variables, HarmonizationTier.TIER1).size();
+        int nHarmonizableTier2 = checker.filterHarmonizableElements(
+                programId, variables, HarmonizationTier.TIER2).size();
+        int nHarmonizableTier3 = checker.filterHarmonizableElements(
+                programId, variables, HarmonizationTier.TIER3).size();
+        int nHarmonizedTier1 = checker.filterHarmonizedElements(
+                programId, variables, HarmonizationTier.TIER1).size();
+        int nHarmonizedTier2 = checker.filterHarmonizedElements(
+                programId, variables, HarmonizationTier.TIER2).size();
+        int nHarmonizedTier3 = checker.filterHarmonizedElements(
+                programId, variables, HarmonizationTier.TIER3).size();
         assertEquals(6, nHarmonizableTier1);
         assertEquals(4, nHarmonizableTier2);
         assertEquals(2, nHarmonizableTier3);
