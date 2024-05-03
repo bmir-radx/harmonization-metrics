@@ -28,7 +28,15 @@ public class CsvWriter {
                     "Harmonized Variables (Tier-1)",
                     "Harmonized Variables (Tier-2)",
                     "Harmonized Variables (Tier-3)",
-                    "Total Harmonized Variables"
+                    "Total Harmonized Variables",
+                    "Harmonizable Variables List (Tier-1)",
+                    "Harmonizable Variables List (Tier-2)",
+                    "Harmonizable Variables List (Tier-3)",
+                    "Harmonizable Variables List",
+                    "Harmonized Variables List (Tier-1)",
+                    "Harmonized Variables List (Tier-2)",
+                    "Harmonized Variables List (Tier-3)",
+                    "Harmonized Variables List"
             };
             writer.writeNext(headers);
 
@@ -59,7 +67,15 @@ public class CsvWriter {
                     "Harmonized Variables (Tier-1)",
                     "Harmonized Variables (Tier-2)",
                     "Harmonized Variables (Tier-3)",
-                    "Total Harmonized Variables"
+                    "Total Harmonized Variables",
+                    "Harmonizable Variables List (Tier-1)",
+                    "Harmonizable Variables List (Tier-2)",
+                    "Harmonizable Variables List (Tier-3)",
+                    "Harmonizable Variables List",
+                    "Harmonized Variables List (Tier-1)",
+                    "Harmonized Variables List (Tier-2)",
+                    "Harmonized Variables List (Tier-3)",
+                    "Harmonized Variables List"
             };
             writer.writeNext(headers);
 
@@ -88,6 +104,14 @@ public class CsvWriter {
                 String.valueOf(metrics.nHarmonizedDataElementsTier2()),
                 String.valueOf(metrics.nHarmonizedDataElementsTier3()),
                 String.valueOf(metrics.totalHarmonized()),
+                String.join(";", metrics.harmonizableDataElementsTier1()),
+                String.join(";", metrics.harmonizableDataElementsTier2()),
+                String.join(";", metrics.harmonizableDataElementsTier3()),
+                String.join(";", metrics.harmonizableDataElements()),
+                String.join(";", metrics.harmonizedDataElementsTier1()),
+                String.join(";", metrics.harmonizedDataElementsTier2()),
+                String.join(";", metrics.harmonizedDataElementsTier3()),
+                String.join(";", metrics.harmonizedDataElements()),
         };
         return line;
     }
@@ -106,6 +130,14 @@ public class CsvWriter {
                 String.valueOf(metrics.nUniqueHarmonizedDataElementsTier2()),
                 String.valueOf(metrics.nUniqueHarmonizedDataElementsTier3()),
                 String.valueOf(metrics.totalHarmonized()),
+                String.join(";", metrics.harmonizableDataElementsTier1()),
+                String.join(";", metrics.harmonizableDataElementsTier2()),
+                String.join(";", metrics.harmonizableDataElementsTier3()),
+                String.join(";", metrics.harmonizableDataElements()),
+                String.join(";", metrics.harmonizedDataElementsTier1()),
+                String.join(";", metrics.harmonizedDataElementsTier2()),
+                String.join(";", metrics.harmonizedDataElementsTier3()),
+                String.join(";", metrics.harmonizedDataElements()),
         };
         return line;
     }
