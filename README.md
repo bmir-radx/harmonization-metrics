@@ -2,9 +2,10 @@
 
 A library and command line interface for computing metrics on harmonization for the RADx Data Hub.
 
-## Usage
+## Usage - Library
 
-To use the Harmonization Metrics library, add the following Maven dependency:
+To use the Harmonization Metrics programmatically, add the following Maven dependency for the library component
+of the Harmonization Metrics tool:
 
 ```
 <dependency>
@@ -99,3 +100,54 @@ public record MetricsReport(
 The `OrigTransformFilePairMetrics` and `StudyMetrics` objects are records
 that can be translated directly into records for a persistent data store.
 It is defined as follows:
+
+## Usage - Command Line
+
+The Harmonization Metrics can be produced by running it as a command line tool.
+The library and command line tool are on Maven Central:
+```
+<dependency>
+    <groupId>edu.stanford.bmir.radx</groupId>
+    <artifactId>radx-harmonization-metrics-app</artifactId>
+    <version>1.2.0</version>
+</dependency>
+<dependency>
+    <groupId>edu.stanford.bmir.radx</groupId>
+    <artifactId>radx-harmonization-metrics-lib</artifactId>
+    <version>1.2.0</version>
+</dependency>
+```
+
+Then run the jar for the application:
+```
+java -jar radx-harmonization-metrics-app-1.2.0.jar -f inputs.json -os study_metrics.csv -op dataset_metrics.csv
+```
+
+`inputs.json` is expected to have the following input structure.
+This contains the same data as expected when using the library programmatically.
+```json
+[
+  {
+    "filename": "file1.csv",
+    "program": "RADx-rad",
+    "study_id": "phs00001",
+    "category": "transform",
+    "variables": [
+      "v1",
+      "v2",
+      "v3"
+    ]
+  },
+  {
+    "filename": "file2.csv",
+    "program": "RADx-rad",
+    "study_id": "phs00002",
+    "category": "orig",
+    "variables": [
+      "v1",
+      "v2",
+      "v3"
+    ]
+  }
+]
+```
