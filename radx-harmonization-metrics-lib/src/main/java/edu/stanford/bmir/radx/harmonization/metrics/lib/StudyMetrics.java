@@ -18,6 +18,7 @@ public record StudyMetrics(
         Integer nUniqueHarmonizedDataElementsTier2,
         Integer nUniqueHarmonizedDataElementsTier3,
         Integer totalHarmonized,
+        Set<String> uniqueDataElements,
         Set<String> harmonizableDataElementsTier1,
         Set<String> harmonizableDataElementsTier2,
         Set<String> harmonizableDataElementsTier3,

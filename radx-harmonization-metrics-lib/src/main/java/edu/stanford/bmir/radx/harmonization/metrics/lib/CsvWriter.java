@@ -5,7 +5,9 @@ import org.springframework.stereotype.Component;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static java.lang.Math.max;
 
@@ -29,6 +31,7 @@ public class CsvWriter {
                     "Harmonized Variables (Tier-2)",
                     "Harmonized Variables (Tier-3)",
                     "Total Harmonized Variables",
+                    "Variable List",
                     "Harmonizable Variables List (Tier-1)",
                     "Harmonizable Variables List (Tier-2)",
                     "Harmonizable Variables List (Tier-3)",
@@ -68,6 +71,8 @@ public class CsvWriter {
                     "Harmonized Variables (Tier-2)",
                     "Harmonized Variables (Tier-3)",
                     "Total Harmonized Variables",
+                    "Variable List (Pre-harmonization)",
+                    "Variable List (Post-harmonization)",
                     "Harmonizable Variables List (Tier-1)",
                     "Harmonizable Variables List (Tier-2)",
                     "Harmonizable Variables List (Tier-3)",
@@ -90,6 +95,7 @@ public class CsvWriter {
     }
 
     private String[] getPairRow(OrigTransformFilePairMetrics metrics) {
+        Set<String> dataElementsAll = new HashSet<>();
         String[] line = {
                 metrics.origFileName().orElse(null),
                 metrics.transformFileName().orElse(null),
@@ -104,6 +110,8 @@ public class CsvWriter {
                 String.valueOf(metrics.nHarmonizedDataElementsTier2()),
                 String.valueOf(metrics.nHarmonizedDataElementsTier3()),
                 String.valueOf(metrics.totalHarmonized()),
+                String.join(";", metrics.dataElementsOrig()),
+                String.join(";", metrics.dataElementsTransform()),
                 String.join(";", metrics.harmonizableDataElementsTier1()),
                 String.join(";", metrics.harmonizableDataElementsTier2()),
                 String.join(";", metrics.harmonizableDataElementsTier3()),
@@ -130,6 +138,7 @@ public class CsvWriter {
                 String.valueOf(metrics.nUniqueHarmonizedDataElementsTier2()),
                 String.valueOf(metrics.nUniqueHarmonizedDataElementsTier3()),
                 String.valueOf(metrics.totalHarmonized()),
+                String.join(";", metrics.uniqueDataElements()),
                 String.join(";", metrics.harmonizableDataElementsTier1()),
                 String.join(";", metrics.harmonizableDataElementsTier2()),
                 String.join(";", metrics.harmonizableDataElementsTier3()),

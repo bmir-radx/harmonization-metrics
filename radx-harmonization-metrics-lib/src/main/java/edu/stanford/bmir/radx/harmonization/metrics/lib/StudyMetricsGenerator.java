@@ -52,6 +52,9 @@ public class StudyMetricsGenerator extends InternalMetricsGenerator {
         // the harmonized data elements can vary. If the transform
         // file exists, this number should be higher. If it does not,
         // an origcopy can still contain some harmonized data elements,
+        Set<String> uniqueDataElements = new HashSet<>();
+        uniqueDataElements.addAll(origVariables.dataElements());
+        uniqueDataElements.addAll(transformVariables.dataElements());
         int nUniqueDataElements = Math.max(
                 origVariables.dataElements().size(),
                 transformVariables.dataElements().size());
@@ -110,6 +113,7 @@ public class StudyMetricsGenerator extends InternalMetricsGenerator {
                 nUniqueHarmonizedDataElementsTier2,
                 nUniqueHarmonizedDataElementsTier3,
                 totalHarmonized,
+                uniqueDataElements,
                 harmonizableDataElementsTier1,
                 harmonizableDataElementsTier2,
                 harmonizableDataElementsTier3,
