@@ -10,7 +10,7 @@ To use the Harmonization Metrics library, add the following Maven dependency:
 <dependency>
     <groupId>edu.stanford.bmir.radx</groupId>
     <artifactId>radx-harmonization-metrics-lib</artifactId>
-    <version>1.0.0</version>
+    <version>1.2.0</version>
 </dependency>
 ```
 
