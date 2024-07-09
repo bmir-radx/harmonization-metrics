@@ -9,7 +9,7 @@ from typing import List
 class Program(StrEnum):
     RADXUP = "RADx-UP"
     RADXRAD = "RADx-rad"
-    RADXTECH = "RADx-Tech"
+    RADXTECH = "RADx Tech"
     DHT = "Digital Health Technologies"
 
 class Category(StrEnum):
@@ -22,7 +22,7 @@ class SheetName(StrEnum):
 class ColumnName(StrEnum):
     FILENAME = "File Name"
     PROGRAM = "RADx Program"
-    PHSID = "PHS ID"
+    PHSID = "dbGaP ID"
     VARAIBLES = "Variables"
 
 @dataclasses.dataclass

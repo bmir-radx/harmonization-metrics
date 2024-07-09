@@ -6,7 +6,7 @@ import java.util.Map;
 public enum ProgramId {
     RADXUP("RADx-UP"),
     RADXRAD("RADx-rad"),
-    RADXTECH("RADx-Tech"),
+    RADXTECH("RADx Tech"),
     DHT("Digital Health Technologies");
 
     private final String value;

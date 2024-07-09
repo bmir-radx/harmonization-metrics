@@ -10,7 +10,7 @@ public class ProgramIdTest {
     public void testValidProgramsFromString() throws InvalidProgramIdException {
         assertEquals(ProgramId.RADXUP, ProgramId.fromString("RADx-UP"));
         assertEquals(ProgramId.RADXRAD, ProgramId.fromString("RADx-rad"));
-        assertEquals(ProgramId.RADXTECH, ProgramId.fromString("RADx-Tech"));
+        assertEquals(ProgramId.RADXTECH, ProgramId.fromString("RADx Tech"));
         assertEquals(ProgramId.DHT, ProgramId.fromString("Digital Health Technologies"));
     }
 
