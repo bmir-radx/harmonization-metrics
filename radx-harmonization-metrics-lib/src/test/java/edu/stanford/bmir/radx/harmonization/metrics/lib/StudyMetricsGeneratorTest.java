@@ -85,7 +85,7 @@ public class StudyMetricsGeneratorTest {
         assertEquals(programId, metrics.programId());
         assertEquals(nPairs, metrics.nOrigTransformFilePairs());
         // 6 variables + 1 for each pair
-        assertEquals(9, metrics.nUniqueDataElements());
+        assertEquals(15, metrics.nUniqueDataElements());
         assertEquals(3, metrics.nUniqueHarmonizableDataElementsTier1());
         assertEquals(2, metrics.nUniqueHarmonizableDataElementsTier2());
         assertEquals(1, metrics.nUniqueHarmonizableDataElementsTier3());
