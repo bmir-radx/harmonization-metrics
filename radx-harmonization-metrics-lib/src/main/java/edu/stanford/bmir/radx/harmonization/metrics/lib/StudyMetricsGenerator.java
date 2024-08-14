@@ -45,19 +45,10 @@ public class StudyMetricsGenerator extends InternalMetricsGenerator {
                 programId, uniqueVariablesTransform);
 
 
-        // there can be discrepancies in the number of data elements
-        // between the two files in the pair, so pick the larger one
-        // metrics for harmonizable data elements should be the same
-        // (or as close to identical as possible), but metrics for
-        // the harmonized data elements can vary. If the transform
-        // file exists, this number should be higher. If it does not,
-        // an origcopy can still contain some harmonized data elements,
         Set<String> uniqueDataElements = new HashSet<>();
         uniqueDataElements.addAll(origVariables.dataElements());
         uniqueDataElements.addAll(transformVariables.dataElements());
-        int nUniqueDataElements = Math.max(
-                origVariables.dataElements().size(),
-                transformVariables.dataElements().size());
+        int nUniqueDataElements = uniqueDataElements.size();
 
         Set<String> harmonizableDataElementsTier1 = new HashSet<>();
         harmonizableDataElementsTier1.addAll(origVariables.harmonizableDataElementsTier1());
@@ -94,6 +85,7 @@ public class StudyMetricsGenerator extends InternalMetricsGenerator {
         harmonizableDataElements.addAll(harmonizableDataElementsTier2);
         harmonizableDataElements.addAll(harmonizableDataElementsTier3);
         int totalHarmonizable = harmonizableDataElements.size();
+
         Set<String> harmonizedDataElements = new HashSet<>();
         harmonizedDataElements.addAll(harmonizedDataElementsTier1);
         harmonizedDataElements.addAll(harmonizedDataElementsTier2);
