@@ -13,7 +13,7 @@
 
     <groupId>edu.stanford.bmir.radx</groupId>
     <artifactId>radx-harmonization-metrics-lib</artifactId>
-    <version>1.2.1</version>
+    <version>1.2.2</version>
     <name>radx-harmonization-metrics-lib</name>
     <description>RADx Data Hub Harmonization Metrics Library</description>
     <packaging>jar</packaging>
